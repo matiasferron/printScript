@@ -1,0 +1,6 @@
+rootProject.name = 'printscript'
+include 'lexer'
+include 'parser'
+include 'interpreter'
+include 'cli'
+
