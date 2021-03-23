@@ -1,6 +1,7 @@
 package lexer.factory;
 
 import lexer.Lexer;
+import lexer.LexerImpl;
 import lexer.factory.LexerFactory;
 
 public class LexerFactoryImpl implements LexerFactory {
@@ -11,6 +12,6 @@ public class LexerFactoryImpl implements LexerFactory {
 
     @Override
     public Lexer createLexer() {
-        return null;
+        return new LexerImpl();
     }
 }
