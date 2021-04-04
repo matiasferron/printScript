@@ -1,9 +1,10 @@
 package parser;
 
+import statement.Statement;
 import token.Token;
 
 import java.util.List;
 
 public interface Parser {
-    public void parse(List<Token> tokens);
+    public List<Statement> parse();
 }
