@@ -6,8 +6,9 @@ import visitor.ExpressionVisitor;
 
 public class BinaryExpression implements Expression {
 
-    private Expression left, right;
-    private Token operator;
+    private final Expression left;
+    private final Expression right;
+    private final Token operator;
 
     public BinaryExpression(Expression left, Expression right, Token operator) {
         this.left = left;

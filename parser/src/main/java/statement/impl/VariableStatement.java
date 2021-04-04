@@ -8,10 +8,10 @@ import visitor.StatementVisitor;
 
 public class VariableStatement implements Statement {
 
-    private Token name;
-    private Expression expression;
-    private TokenType type;
-    private Token keyWord;
+    private final Token name;
+    private final Expression expression;
+    private final TokenType type;
+    private final Token keyWord;
 
     public VariableStatement(Token name, Expression expression, TokenType type, Token keyWord) {
         this.name = name;

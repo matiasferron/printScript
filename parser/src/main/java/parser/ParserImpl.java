@@ -96,13 +96,15 @@ public class ParserImpl implements Parser {
     }
 
 
+    // chain of responsibility?
     private Expression assignment() {
         Expression expr = addition();
 
         if (match(EQUALS)) {
-            Token equals = tokens.getCurrent();
+            Token equals = tokens.getCurrentAndAdvance();
             Expression value = assignment();
 
+            // vale la pena hacer un get de los tokens en todas las expressiones solo para evitar este instace of?
             if (expr instanceof VariableExpression) {
                 Token name = ((VariableExpression)expr).getName();
                 return new AssigmentExpression(name, value);
@@ -119,7 +121,7 @@ public class ParserImpl implements Parser {
         Expression expr = multiplication();
 
         if (match(MINUS, PLUS)) {
-            Token operator = tokens.getCurrent();
+            Token operator = tokens.getCurrentAndAdvance();
             Expression right = multiplication();
             expr = new BinaryExpression(expr, right, operator);
         }
@@ -131,7 +133,7 @@ public class ParserImpl implements Parser {
         Expression expr = unary();
 
         if (match(DIVISION, MULTIPLICATION)) {
-            Token operator = tokens.getCurrent();
+            Token operator = tokens.getCurrentAndAdvance();
             Expression right = unary();
             expr = new BinaryExpression(expr, right, operator);
         }
@@ -141,7 +143,7 @@ public class ParserImpl implements Parser {
 
     private Expression unary() {
         if (match(MINUS)) {
-            Token operator = tokens.getCurrent();
+            Token operator = tokens.getCurrentAndAdvance();
             Expression right = unary();
             return new UnaryExpression(operator, right);
         }
@@ -152,11 +154,11 @@ public class ParserImpl implements Parser {
     private Expression primary() {
 
         if (match(NUMBER, STRING)) {
-            return new LiteralExpression(tokens.getCurrent().getValue());
+            return new LiteralExpression(tokens.getCurrentAndAdvance().getValue());
         }
 
         if (match(IDENTIFIER)) {
-            return new VariableExpression(tokens.getCurrent());
+            return new VariableExpression(tokens.getCurrentAndAdvance());
         }
 
         if (match(LPAREN)) {
@@ -167,6 +169,8 @@ public class ParserImpl implements Parser {
 
         throw new ParseException("Expect expression.", tokens.getCurrent());
     }
+
+    // aux method
 
     private boolean match(TokenType... types) {
         for (TokenType type : types) {
@@ -180,7 +184,6 @@ public class ParserImpl implements Parser {
     }
 
 
-    // aux method
     private Token consume(TokenType type, String message) {
         if (tokens.check(type)) return tokens.advance();
         throw new ParseException(message, tokens.getCurrent());

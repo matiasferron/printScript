@@ -4,8 +4,8 @@ import token.Token;
 
 public class ParseException extends RuntimeException{
 
-    private String message;
-    private Token token;
+    private final String message;
+    private final Token token;
 
     public ParseException(String message, Token token) {
         this.message = message;
