@@ -2,7 +2,7 @@ package exception;
 
 import token.Token;
 
-public class LexerException {
+public abstract class LexerException extends Exception {
 
     private String message;
     private Token token;

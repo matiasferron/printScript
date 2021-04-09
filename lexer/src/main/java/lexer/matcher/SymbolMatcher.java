@@ -1,18 +1,21 @@
 package lexer.matcher;
 
+import exception.LexerException;
+import token.Position;
+import token.Token;
 import token.TokenType;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SymbolMatcher implements Matcher {
+public class SymbolMatcher extends Matcher {
 
     private Map<String, TokenType> acceptedTokens;
 
     public SymbolMatcher() {
         this.acceptedTokens = new HashMap<>();
         this.acceptedTokens.put(";", TokenType.SEMICOLON );
-//        this.acceptedTokens.put(TokenType.COLON, ":"); lo dejo asi para el number y string type
+        this.acceptedTokens.put(":", TokenType.COLON);
         this.acceptedTokens.put(".", TokenType.DOT );
         this.acceptedTokens.put( "*", TokenType.MULTIPLICATION);
         this.acceptedTokens.put("/", TokenType.DIVISION );
@@ -21,17 +24,14 @@ public class SymbolMatcher implements Matcher {
         this.acceptedTokens.put("+", TokenType.PLUS );
         this.acceptedTokens.put("-", TokenType.MINUS);
         this.acceptedTokens.put("=", TokenType.EQUALS );
-
-    }
-
-
-    @Override
-    public TokenType matchAndReturnType(String toMatch) {
-        return this.acceptedTokens.getOrDefault(toMatch, TokenType.UNKNOWN);
     }
 
     @Override
-    public boolean doesMatch(String toMatch) {
-        return this.acceptedTokens.containsKey(toMatch);
+    public Token matchAndBuildToken(Position position) throws LexerException {
+        return getTokenBuilder().withPosition(position).
+                withType(this.acceptedTokens.get(this.getAccumulator().toString())).
+                withValue(this.getAccumulator().toString())
+                .build();
     }
+
 }

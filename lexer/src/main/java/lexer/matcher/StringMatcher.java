@@ -2,16 +2,6 @@ package lexer.matcher;
 
 import token.TokenType;
 
-public class StringMatcher implements Matcher {
+public class StringMatcher extends Matcher {
 
-
-    @Override
-    public TokenType matchAndReturnType(String toMatch) {
-        return null;
-    }
-
-    @Override
-    public boolean doesMatch(String toMatch) {
-        return false;
-    }
 }
