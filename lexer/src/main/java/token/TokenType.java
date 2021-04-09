@@ -12,7 +12,7 @@ public enum TokenType {
     LPAREN, RPAREN, SEMICOLON, COLON, SINGLE_QUOTE, DOUBLE_QUOTE, DOT,
 
     //other - any variable identifier - unknown token for error handling
-    IDENTIFIER, UNKNOWN
+    IDENTIFIER, NUMBER_TYPE, STRING_TYPE, UNKNOWN
 
     //eof?
 }
