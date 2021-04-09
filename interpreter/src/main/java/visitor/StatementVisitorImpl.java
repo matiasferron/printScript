@@ -11,7 +11,7 @@ import static token.TokenType.*;
 
 public class StatementVisitorImpl implements  StatementVisitor{
     private final Interpreter interpreter;
-    private ExpressionVisitor expressionVisitor;
+    private final ExpressionVisitor expressionVisitor;
 
     public StatementVisitorImpl(Interpreter interpreter, ExpressionVisitor expressionVisitor) {
         this.interpreter = interpreter;
@@ -41,12 +41,12 @@ public class StatementVisitorImpl implements  StatementVisitor{
             interpreter.addVariableDefinition(statement.getName().getValue(), statement.getKeyWord().getTokenType(), statement.getType(), null);
             return;
         }
-        if (statement.getType() == NUMBER){ //NUMBER_TYPE
+        if (statement.getType() == NUMBER_TYPE){
             if (!(value instanceof Number)){ // lo mismo, aca si toto decide usar strings siempre tende que usar el token y no el instaceOf
                 throw new InterpretException(statement.getName(), "Expected a Number");
             }
         }
-        if (statement.getType() == STRING){ //STRING_TYPE
+        if (statement.getType() == STRING_TYPE){
             if (!(value instanceof String)){
                 throw new InterpretException(statement.getName(), "Expected a String");
             }

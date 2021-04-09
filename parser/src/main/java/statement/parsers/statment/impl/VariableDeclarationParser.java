@@ -4,6 +4,7 @@ import exception.ParseException;
 import expression.Expression;
 import statement.Statement;
 import statement.impl.VariableStatement;
+import statement.parsers.expression.CommonExpressionParser;
 import statement.parsers.statment.StatementParser;
 import token.Token;
 import token.TokenType;
@@ -18,6 +19,10 @@ import static utils.parserUtils.match;
 public class VariableDeclarationParser extends StatementParser {
 
 
+    public VariableDeclarationParser(CommonExpressionParser expressionParser) {
+        super(expressionParser);
+    }
+
     @Override
     public Statement parse(TokenWrapper tokens) {
         Token keyword = tokens.getCurrent();
@@ -31,7 +36,7 @@ public class VariableDeclarationParser extends StatementParser {
                 type = checkTypeAssignation(tokens);
             }
             if (match(tokens, EQUALS)) {
-                initializer = generateExpression(tokens);
+                initializer = expressionParser.parse(tokens);
             }
 
             consume(tokens, SEMICOLON, "Expect ';' after variable declaration.");
