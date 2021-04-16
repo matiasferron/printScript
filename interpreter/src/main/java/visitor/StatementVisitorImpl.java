@@ -38,21 +38,21 @@ public class StatementVisitorImpl implements  StatementVisitor{
             value = statement.getExpression().accept(expressionVisitor);
         }
         if (value == null){
-            interpreter.addVariableDefinition(statement.getName().getValue(), statement.getKeyWord().getTokenType(), statement.getType(), null);
+            interpreter.addVariableDefinition(statement.getName().getTokenValue(), statement.getKeyWord().getTokenType(), statement.getType(), null);
             return;
         }
-        if (statement.getType() == NUMBER_TYPE){
+        if (statement.getType() == NUMBERTYPE){
             if (!(value instanceof Number)){ // lo mismo, aca si toto decide usar strings siempre tende que usar el token y no el instaceOf
                 throw new InterpretException(statement.getName(), "Expected a Number");
             }
         }
-        if (statement.getType() == STRING_TYPE){
+        if (statement.getType() == STRINGTYPE){
             if (!(value instanceof String)){
                 throw new InterpretException(statement.getName(), "Expected a String");
             }
         }
 
-        interpreter.addVariableDefinition(statement.getName().getValue(), statement.getKeyWord().getTokenType(), statement.getType(), value);
+        interpreter.addVariableDefinition(statement.getName().getTokenValue(), statement.getKeyWord().getTokenType(), statement.getType(), value);
     }
 
 }
