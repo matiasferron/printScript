@@ -14,9 +14,12 @@ public class AcceptedTokens {
     private void init() {
         tokenFormats.put(TokenType.PLUS , "[+]");
         tokenFormats.put(TokenType.MINUS , "[-]");
-        tokenFormats.put(TokenType.STAR , "[*]");
-        tokenFormats.put(TokenType.SLASH, "[/]");
+        tokenFormats.put(TokenType.MULTIPLICATION , "[*]");
+        tokenFormats.put(TokenType.DIVISION, "[/]");
         tokenFormats.put(TokenType.EQUALS , "=");
+        tokenFormats.put(TokenType.EQUALSEQUALS, "==");
+        tokenFormats.put(TokenType.NOTEQUALS, "!=");
+        tokenFormats.put(TokenType.NOT, "[!]");
         tokenFormats.put(TokenType.LPAREN , "[(]");
         tokenFormats.put(TokenType.RPAREN , "[)]");
         tokenFormats.put(TokenType.LBRACKET , "[{]");

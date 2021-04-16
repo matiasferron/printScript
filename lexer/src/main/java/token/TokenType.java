@@ -5,9 +5,12 @@ public enum TokenType {
 
     PLUS,
     MINUS,
-    STAR,
-    SLASH,
+    MULTIPLICATION,
+    DIVISION,
     EQUALS,
+    EQUALSEQUALS,
+    NOTEQUALS,
+    NOT,
     LPAREN,
     RPAREN,
     LBRACKET,
@@ -35,5 +38,6 @@ public enum TokenType {
     NEWLINE,
     EOF,
     UNKNOWN;
-
 }
+
+
