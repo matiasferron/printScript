@@ -48,6 +48,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor{
 
     @Override
     public Object visitLiteral(LiteralExpression expression) {
+        // todo aca como es string voy a tener que castear los strings con el token type a su respectuvo valor
         return expression.getValue();
     }
 
@@ -68,6 +69,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor{
     }
 
     private void isNumberType(Token operator, Object leaf) {
+        // todo esto tambien cambia si son strings
         if (leaf instanceof Double) return;
         throw new InterpretException(operator, "Operand must be a number.");
     }

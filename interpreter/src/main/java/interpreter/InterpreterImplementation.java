@@ -4,7 +4,6 @@ import exception.InterpretException;
 import statement.Statement;
 import token.Token;
 import token.TokenType;
-import visitor.ExpressionVisitor;
 import visitor.StatementVisitorImpl;
 import visitor.ExpressionVisitorImpl;
 
@@ -20,7 +19,7 @@ public class InterpreterImplementation implements Interpreter{
 
     // todo el expressionVisitor no tiene que recibir el interpete
     // pasarle el expressionVisitor como parametro al statmentvisitor?
-    private final ExpressionVisitor expressionVisitor = new ExpressionVisitorImpl(this);
+    private final ExpressionVisitorImpl expressionVisitor = new ExpressionVisitorImpl(this);
     private final StatementVisitorImpl visitor = new StatementVisitorImpl(this, expressionVisitor);
 
     @Override
