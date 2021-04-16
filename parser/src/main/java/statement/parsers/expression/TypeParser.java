@@ -15,7 +15,7 @@ public class TypeParser extends CommonExpressionParser{
     @Override
     public Expression parse(TokenWrapper tokens) {
         if (match(tokens, NUMBER, STRING)) {
-            return new LiteralExpression(tokens.getCurrentAndAdvance().getValue());
+            return new LiteralExpression(tokens.getCurrentAndAdvance().getTokenValue());
         }
 
         if (match(tokens, IDENTIFIER)) {

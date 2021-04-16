@@ -51,11 +51,11 @@ public class VariableDeclarationParser extends StatementParser {
 
     private TokenType checkTypeAssignation(TokenWrapper tokens){
         switch (tokens.getCurrent().getTokenType()){
-            case NUMBER_TYPE: {
-                return NUMBER;
+            case NUMBERTYPE: {
+                return NUMBERTYPE;
             }
-            case STRING_TYPE: {
-                return STRING;
+            case STRINGTYPE: {
+                return STRINGTYPE;
             }
             default: {
                 throw new ParseException("Need to specify variable type", tokens.getCurrent());

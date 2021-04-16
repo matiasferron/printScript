@@ -34,8 +34,8 @@ public class InterpreterImplementation implements Interpreter{
     // in other class?
     //
     public Object get(Token name) {
-        if (values.containsKey(name.getValue())){
-            return values.get(name.getValue()).getValue();
+        if (values.containsKey(name.getTokenValue())){
+            return values.get(name.getTokenValue()).getValue();
         }
 
         throw new InterpretException(name, "Variable not found");
@@ -46,16 +46,16 @@ public class InterpreterImplementation implements Interpreter{
     }
 
     public void setVariableValue(Token varName, Object value) {
-        if (values.containsKey(varName.getValue())) {
-            VariableDefinitionDataImplementation variable = values.get(varName.getValue());
+        if (values.containsKey(varName.getTokenValue())) {
+            VariableDefinitionDataImplementation variable = values.get(varName.getTokenValue());
             if(variable.getVarDefinitionKey() == LET){
                 switch (variable.getType()){
-                    case NUMBER_TYPE: {
+                    case NUMBERTYPE: {
                         if (!(value instanceof Number)) { // queda definir lo del Objeto o string con tokens
                             throw new InterpretException(varName, "Expected a number");
                         }
                     }
-                    case STRING_TYPE: {
+                    case STRINGTYPE: {
                         if (!(value instanceof String)){
                             throw new InterpretException(varName, "Expected a string");
                         }
@@ -63,12 +63,12 @@ public class InterpreterImplementation implements Interpreter{
                 }
 
                 variable.setValue(value);
-                values.put(varName.getValue(), variable);
+                values.put(varName.getTokenValue(), variable);
                 return;
             } else {
                 throw new InterpretException(varName, "Constant cannot be changed");
             }
         }
-        throw new InterpretException(varName, "Undefined variable '" + varName.getValue() + "'.");
+        throw new InterpretException(varName, "Undefined variable '" + varName.getTokenValue() + "'.");
     }
 }

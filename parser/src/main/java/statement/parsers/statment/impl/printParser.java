@@ -7,8 +7,7 @@ import statement.parsers.expression.CommonExpressionParser;
 import statement.parsers.statment.StatementParser;
 import token.TokenWrapper;
 
-import static token.TokenType.PRINTLN;
-import static token.TokenType.SEMICOLON;
+import static token.TokenType.*;
 import static utils.parserUtils.consume;
 import static utils.parserUtils.match;
 
@@ -19,7 +18,7 @@ public class printParser extends StatementParser {
 
     @Override
     public Statement parse(TokenWrapper tokens) {
-        if (match(tokens, PRINTLN)) {
+        if (match(tokens, PRINT)) {
             Expression value = expressionParser.parse(tokens);
             consume(tokens, SEMICOLON, "Expect ';' after value.");
             return new PrintStatement(value);
