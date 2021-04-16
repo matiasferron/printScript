@@ -12,8 +12,8 @@ import static utils.parserUtils.consume;
 import static utils.parserUtils.match;
 
 public class printParser extends StatementParser {
-    public printParser(CommonExpressionParser expressionParser) {
-        super(expressionParser);
+    public printParser( ) {
+        super();
     }
 
     @Override

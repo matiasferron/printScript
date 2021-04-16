@@ -34,11 +34,11 @@ public class TokenWrapperImp implements TokenWrapper{
 
     @Override
     public boolean hasMoreTokens() {
-        return position < tokens.size();
+        return position < (tokens.size() - 1);
     }
 
     public boolean check(TokenType type) {
-        if (hasMoreTokens()) return false;
+        if (!hasMoreTokens()) return false;
         return getCurrent().getTokenType() == type;
     }
 }
