@@ -6,9 +6,11 @@ import interpreter.Interpreter;
 import token.Token;
 
 import static token.TokenType.MINUS;
+import static token.TokenType.PLUS;
 
 public class ExpressionVisitorImpl implements ExpressionVisitor{
 
+    // todo auxiliary class instead of interpreter
     private final Interpreter interpreter;
 
     public ExpressionVisitorImpl(Interpreter interpreter) {
@@ -56,6 +58,10 @@ public class ExpressionVisitorImpl implements ExpressionVisitor{
         if (expression.getOperator().getTokenType() == MINUS) {
             checkNumbersType(expression.getOperator(), right);
             return -(double) right;
+        }
+        if (expression.getOperator().getTokenType() == PLUS) {
+            checkNumbersType(expression.getOperator(), right);
+            return +(double) right;
         }
 
         return null;

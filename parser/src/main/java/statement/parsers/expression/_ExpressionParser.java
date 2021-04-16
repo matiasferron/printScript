@@ -10,7 +10,7 @@ import static token.TokenType.*;
 import static utils.parserUtils.consume;
 import static utils.parserUtils.match;
 
-public class ExpressionParser {
+public class _ExpressionParser {
 
     public static Expression generateExpression(TokenWrapper tokens) {
         return assignment(tokens);
@@ -51,26 +51,26 @@ public class ExpressionParser {
     }
 
     private static Expression multiplication(TokenWrapper tokens) {
-        Expression expr = unary(tokens);
+        Expression expr = primary(tokens);
 
         if (match(tokens, DIVISION, MULTIPLICATION)) {
             Token operator = tokens.getCurrentAndAdvance();
-            Expression right = unary(tokens);
+            Expression right = primary(tokens);
             expr = new BinaryExpression(expr, right, operator);
         }
 
         return expr;
     }
 
-    private static Expression unary(TokenWrapper tokens) {
-        if (match(tokens, MINUS)) {
-            Token operator = tokens.getCurrentAndAdvance();
-            Expression right = unary(tokens);
-            return new UnaryExpression(operator, right);
-        }
-
-        return primary(tokens);
-    }
+//    private static Expression unary(TokenWrapper tokens) {
+//        if (match(tokens, MINUS, PLUS)) {
+//            Token operator = tokens.getCurrentAndAdvance();
+//            Expression right = unary(tokens);
+//            return new UnaryExpression(operator, right);
+//        }
+//
+//        return primary(tokens);
+//    }
 
     private static Expression primary(TokenWrapper tokens) {
 

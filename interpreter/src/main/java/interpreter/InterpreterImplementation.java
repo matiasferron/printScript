@@ -50,12 +50,12 @@ public class InterpreterImplementation implements Interpreter{
             VariableDefinitionDataImplementation variable = values.get(varName.getValue());
             if(variable.getVarDefinitionKey() == LET){
                 switch (variable.getType()){
-                    case NUMBER: {
+                    case NUMBER_TYPE: {
                         if (!(value instanceof Number)) { // queda definir lo del Objeto o string con tokens
                             throw new InterpretException(varName, "Expected a number");
                         }
                     }
-                    case STRING: {
+                    case STRING_TYPE: {
                         if (!(value instanceof String)){
                             throw new InterpretException(varName, "Expected a string");
                         }

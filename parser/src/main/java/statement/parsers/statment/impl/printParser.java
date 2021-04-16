@@ -7,7 +7,6 @@ import statement.parsers.expression.CommonExpressionParser;
 import statement.parsers.statment.StatementParser;
 import token.TokenWrapper;
 
-import static statement.parsers.expression.ExpressionParser.generateExpression;
 import static token.TokenType.PRINTLN;
 import static token.TokenType.SEMICOLON;
 import static utils.parserUtils.consume;

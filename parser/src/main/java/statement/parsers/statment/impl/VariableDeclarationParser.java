@@ -10,7 +10,6 @@ import token.Token;
 import token.TokenType;
 import token.TokenWrapper;
 
-import static statement.parsers.expression.ExpressionParser.generateExpression;
 import static token.TokenType.*;
 import static token.TokenType.SEMICOLON;
 import static utils.parserUtils.consume;
@@ -19,6 +18,7 @@ import static utils.parserUtils.match;
 public class VariableDeclarationParser extends StatementParser {
 
 
+    // Todo pasarle una lista con los expression parser que podria parsear este statment. Asi cada statment tiene sus pisibles expresiones parseables??
     public VariableDeclarationParser(CommonExpressionParser expressionParser) {
         super(expressionParser);
     }
@@ -51,10 +51,10 @@ public class VariableDeclarationParser extends StatementParser {
 
     private TokenType checkTypeAssignation(TokenWrapper tokens){
         switch (tokens.getCurrent().getTokenType()){
-            case NUMBER: {
+            case NUMBER_TYPE: {
                 return NUMBER;
             }
-            case STRING: {
+            case STRING_TYPE: {
                 return STRING;
             }
             default: {
