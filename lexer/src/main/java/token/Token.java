@@ -1,9 +1,12 @@
 package token;
 
+
 public interface Token {
 
     TokenType getTokenType();
-    String getValue();
+    String getTokenValue();
     Position getPosition();
+    void updatePosition(int line, int col);
+
 
 }

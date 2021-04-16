@@ -1,64 +1,76 @@
 package lexer;
 
-import exception.LexerException;
-import lexer.matcher.*;
-import lexer.state.*;
-import token.Position;
-import token.Token;
-import token.builder.TokenBuilder;
-import token.builder.TokenBuilderImpl;
+import token.*;
 
+
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class LexerImpl implements Lexer {
 
-    private List<Matcher> matchers = new ArrayList<>();
+    private final AcceptedTokens acceptedTokens;
+    private final TokenFactory tokenFactory;
 
     private int line = 0;
     private int column = 0;
-    private int currentIndex = 0;
 
-    void init() {
-        this.matchers.add(new IdentifierMatcher());
-        this.matchers.add(new KeyWordMatcher());
-        this.matchers.add(new StringMatcher());
-        this.matchers.add(new NumberMatcher());
-        this.matchers.add(new SymbolMatcher());
+    public LexerImpl() {
+        this.tokenFactory = TokenFactory.newTokenFactory();
+        this.acceptedTokens = new AcceptedTokens();
     }
 
     @Override
-    public List<Token> lex(Stream<Character> code) {
-        List<Token> resultTokens = new ArrayList<>();
+    public List<Token> lex(Stream<Character> stream) {
 
+        ArrayList<Token> resultTokens = new ArrayList<>();
 
-        while (!this.endOfFile(code)) {
-            resultTokens.add(this.getToken());
+        Matcher matcher = getMatcher(stream);
+
+        while (matcher.find()) {
+            for (TokenType tokenType: acceptedTokens.getTokenTypes()) {
+              if(matcher.group(tokenType.name()) != null)  {
+                  Token token = tokenFactory.create(tokenType,
+                          matcher.group(tokenType.name()),
+                          new Position(this.line, this.column));
+                  resultTokens.add(token);
+                  this.column += matcher.group(tokenType.name()).length();
+
+                  if(isNewLine(token)) {
+                     this.column = 0;
+                     this.line++;
+                  }
+              }
+            }
         }
 
+
+
+//        resultTokens.add(tokenFactory.create(TokenType.EOF, "",new Position(this.line, this.column)));
         return resultTokens;
     }
 
-    private Token getToken() {
-        for (Matcher matcher : this.matchers) {
-           try {
-               return matcher.matchAndBuildToken(new Position(this.line, this.column));
-           } catch (LexerException e) {
-               System.out.println(e.getMessage());
-           }
+
+    private Matcher getMatcher(Stream<Character> input) {
+        StringBuilder tokenPatternsBuffer = new StringBuilder();
+        for (TokenType tokenType: acceptedTokens.getTokenTypes()){
+            tokenPatternsBuffer.append(String.format("|(?<%s>%s)", tokenType.name(), acceptedTokens.getPatternByTokenType(tokenType)));
         }
-        throw new Error();
+
+        return Pattern.compile(tokenPatternsBuffer.substring(1)).matcher(input
+                .map(Objects::toString)
+                .collect(Collectors.joining())
+        );
     }
 
-    private boolean endOfFile(Stream<Character> code) {
-        return this.currentIndex > code.toArray().length;
+    private boolean isNewLine(Token token) {
+        return token.getTokenType() == TokenType.NEWLINE;
     }
 
-    private char getCharacter(Stream<Character> code){
-        return Arrays.toString(code.toArray()).charAt(currentIndex);
-    }
 
 }
