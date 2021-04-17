@@ -284,4 +284,20 @@ public class ParserTest {
 
         assertEquals(true, true);
     }
+
+
+    @Test
+    public void test09_parse_Combine_boolean_condition_statement(){
+
+        String toMatch = "let a = 5>(3+3);";
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
+
+        List<Statement> parsedStatment = parser.parse();
+
+        for (Statement s: parsedStatment) {
+            System.out.println(s);
+        }
+
+        assertEquals(true, true);
+    }
 }
