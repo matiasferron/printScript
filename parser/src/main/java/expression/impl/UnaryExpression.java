@@ -20,6 +20,16 @@ public class UnaryExpression implements Expression {
         return expressionVisitor.visitUnary(this);
     }
 
+    @Override
+    public Token getToken() {
+        return operator;
+    }
+
+    @Override
+    public Expression getExpression() {
+        return right;
+    }
+
     public Expression getRight() {
         return right;
     }

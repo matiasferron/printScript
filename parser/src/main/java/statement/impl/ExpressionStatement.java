@@ -17,6 +17,7 @@ public class ExpressionStatement implements Statement {
         statementVisitor.visitExpressionStatement(this);
     }
 
+    @Override
     public Expression getExpression() {
         return expression;
     }

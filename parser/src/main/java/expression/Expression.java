@@ -5,5 +5,6 @@ import visitor.ExpressionVisitor;
 
 public interface Expression {
     Object accept(ExpressionVisitor expressionVisitor); // todo cambiar a String
-//    Token getToken();
+    Token getToken();
+    Expression getExpression();
 }

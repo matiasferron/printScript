@@ -89,7 +89,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor{
     public Object visitAssignment(AssigmentExpression expression) {
         Object value = expression.getExpression().accept(this);
 
-        interpreter.setVariableValue(expression.getName(), value);
+        interpreter.setVariableValue(expression.getToken(), value);
         return value;
     }
 }

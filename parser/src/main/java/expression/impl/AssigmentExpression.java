@@ -6,8 +6,8 @@ import visitor.ExpressionVisitor;
 
 public class AssigmentExpression implements Expression {
 
-    private Expression expression;
-    private Token name;
+    private final Expression expression;
+    private final Token name;
 
     public AssigmentExpression(Token name, Expression expression) {
         this.expression = expression;
@@ -19,11 +19,13 @@ public class AssigmentExpression implements Expression {
         return expressionVisitor.visitAssignment(this);
     }
 
+    @Override
     public Expression getExpression() {
         return expression;
     }
 
-    public Token getName() {
+    @Override
+    public Token getToken() {
         return name;
     }
 }

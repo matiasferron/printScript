@@ -3,6 +3,7 @@ package statement.parsers.expression;
 import exception.ParseException;
 import expression.Expression;
 import expression.impl.*;
+import statement.Statement;
 import token.Token;
 import token.TokenWrapper;
 
@@ -73,9 +74,31 @@ public class _ExpressionParser {
 //    }
 
     private static Expression primary(TokenWrapper tokens) {
+        // todo cambiarlo por un switch
+//        switch (tokens.getCurrent().getTokenType()){
+//            case STRING:{
+//                return new LiteralExpression(tokens.getCurrentAndAdvance().getTokenValue());
+//            }
+//            case NUMBER:{
+//                return new LiteralExpression(Double.parseDouble(tokens.getCurrentAndAdvance().getTokenValue()));
+//            }
+//        }
 
-        if (match(tokens, NUMBER, STRING)) {
+        if (match(tokens, STRING)) {
             return new LiteralExpression(tokens.getCurrentAndAdvance().getTokenValue());
+        }
+
+        if (match(tokens, NUMBER)) {
+            return new LiteralExpression(Double.parseDouble(tokens.getCurrentAndAdvance().getTokenValue()));
+        }
+
+        if (match(tokens, FALSE)) {
+            tokens.advance();
+            return new LiteralExpression(false);
+        }
+        if (match(tokens, TRUE)) {
+            tokens.advance();
+            return new LiteralExpression(true);
         }
 
         if (match(tokens, IDENTIFIER)) {

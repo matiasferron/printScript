@@ -11,6 +11,7 @@ import statement.Statement;
 import statement.impl.PrintStatement;
 import statement.parsers.statment.StatementParser;
 import statement.parsers.statment.impl.ExpressionStatementParser;
+import statement.parsers.statment.impl.IfStatementParser;
 import statement.parsers.statment.impl.VariableDeclarationParser;
 import statement.parsers.statment.impl.printParser;
 import token.*;
@@ -33,6 +34,20 @@ public class ParserTest {
         printParser.setNextParser(expressionStatementParser);
 
         return variableDeclarationParser;
+    }
+
+    static StatementParser generateIFEnvironment() {
+        StatementParser variableDeclarationParser = new VariableDeclarationParser();
+        StatementParser printParser = new printParser();
+        StatementParser expressionStatementParser = new ExpressionStatementParser();
+        StatementParser ifStatementParser = new IfStatementParser();
+
+
+        ifStatementParser.setNextParser(variableDeclarationParser);
+        variableDeclarationParser.setNextParser(printParser);
+        printParser.setNextParser(expressionStatementParser);
+
+        return ifStatementParser;
     }
 
     static List<Token> generateStringToTokens(String message) {
@@ -190,6 +205,21 @@ public class ParserTest {
         Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateEnvironment());
 
         List<Statement> parsedStatment = parser.parse();
+
+        assertEquals(true, true);
+    }
+
+    @Test
+    public void test06_parse_If_statement(){
+
+        String toMatch = "if(true){ let a = 5;};";
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
+
+        List<Statement> parsedStatment = parser.parse();
+
+        for (Statement s: parsedStatment) {
+            System.out.println(s);
+        }
 
         assertEquals(true, true);
     }

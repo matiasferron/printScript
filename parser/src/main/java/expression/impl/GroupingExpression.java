@@ -1,6 +1,7 @@
 package expression.impl;
 
 import expression.Expression;
+import token.Token;
 import visitor.ExpressionVisitor;
 
 public class GroupingExpression implements Expression {
@@ -16,7 +17,11 @@ public class GroupingExpression implements Expression {
         return expressionVisitor.visitGrouping(this);
     }
 
+    @Override
     public Expression getExpression() {
         return expression;
     }
+
+    @Override
+    public Token getToken(){ return null;}
 }

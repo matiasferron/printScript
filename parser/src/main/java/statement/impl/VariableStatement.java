@@ -33,6 +33,7 @@ public class VariableStatement implements Statement {
         return name;
     }
 
+    @Override
     public Expression getExpression() {
         return expression;
     }

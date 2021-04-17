@@ -18,6 +18,16 @@ public class VariableExpression implements Expression {
         return expressionVisitor.visitVariable(this);
     }
 
+    @Override
+    public Token getToken() {
+        return name;
+    }
+
+    @Override
+    public Expression getExpression() {
+        return null;
+    }
+
     public Token getName() {
         return name;
     }
