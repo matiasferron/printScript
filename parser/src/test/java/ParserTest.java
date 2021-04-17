@@ -1,3 +1,6 @@
+import expression.impl.BinaryExpression;
+import expression.impl.GroupingExpression;
+import expression.impl.LiteralExpression;
 import lexer.Lexer;
 import lexer.factory.LexerFactory;
 import lexer.factory.LexerFactoryImpl;
@@ -5,25 +8,23 @@ import org.junit.Test;
 import parser.Parser;
 import parser.ParserImpl;
 import statement.Statement;
+import statement.impl.PrintStatement;
 import statement.parsers.statment.StatementParser;
 import statement.parsers.statment.impl.ExpressionStatementParser;
 import statement.parsers.statment.impl.VariableDeclarationParser;
 import statement.parsers.statment.impl.printParser;
-import token.Token;
+import token.*;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class ParserTest {
 
-    private final LexerFactory lexerFactory = LexerFactoryImpl.newLexerFactory();
-    private final Lexer lexer = lexerFactory.createLexer();
-
-    @Test
-    public void test01_should_parse_declaration(){
+    static StatementParser generateEnvironment() {
         StatementParser variableDeclarationParser = new VariableDeclarationParser();
         StatementParser printParser = new printParser();
         StatementParser expressionStatementParser = new ExpressionStatementParser();
@@ -31,12 +32,22 @@ public class ParserTest {
         variableDeclarationParser.setNextParser(printParser);
         printParser.setNextParser(expressionStatementParser);
 
-        String toMatch = "let a: number = 2;";
-        Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
+        return variableDeclarationParser;
+    }
 
-        List<Token> output = lexer.lex(input);
+    static List<Token> generateStringToTokens(String message) {
 
-        Parser parser = new ParserImpl(output, variableDeclarationParser);
+        final LexerFactory lexerFactory = LexerFactoryImpl.newLexerFactory();
+        final Lexer lexer = lexerFactory.createLexer();
+
+        Stream<Character> input = message.chars().mapToObj(intValue -> (char) intValue);
+
+        return lexer.lex(input);
+    }
+    @Test
+    public void test01_should_parse_declaration(){
+
+        Parser parser = new ParserImpl(generateStringToTokens("let a: number = 2;"), generateEnvironment());
 
         List<Statement> parsedStatment = parser.parse();
 
@@ -44,24 +55,16 @@ public class ParserTest {
             System.out.println(s);
         }
 
+        // todo. matcher de las estructuras de los objetos
         assertEquals(true, true);
     }
 
     @Test
     public void test02_should_parse_declaration(){
-        StatementParser variableDeclarationParser = new VariableDeclarationParser();
-        StatementParser printParser = new printParser();
-        StatementParser expressionStatementParser = new ExpressionStatementParser();
-
-        variableDeclarationParser.setNextParser(printParser);
-        printParser.setNextParser(expressionStatementParser);
 
         String toMatch = "let a: number = 2; a = 6;";
-        Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
 
-        List<Token> output = lexer.lex(input);
-
-        Parser parser = new ParserImpl(output, variableDeclarationParser);
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateEnvironment());
 
         List<Statement> parsedStatment = parser.parse();
 
@@ -74,19 +77,35 @@ public class ParserTest {
 
     @Test
     public void test03_should_parse_string_declaration(){
-        StatementParser variableDeclarationParser = new VariableDeclarationParser();
-        StatementParser printParser = new printParser();
-        StatementParser expressionStatementParser = new ExpressionStatementParser();
-
-        variableDeclarationParser.setNextParser(printParser);
-        printParser.setNextParser(expressionStatementParser);
 
         String toMatch = "const b:string = '6'; print(6 + 6);";
-        Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
 
-        List<Token> output = lexer.lex(input);
 
-        Parser parser = new ParserImpl(output, variableDeclarationParser);
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateEnvironment());
+
+        List<Statement> parsedStatment = parser.parse();
+
+        PrintStatement printStatement = new PrintStatement(
+                new GroupingExpression(
+                        new BinaryExpression(
+                                new LiteralExpression("6"),
+                                new LiteralExpression("6"),
+                                new TokenFactory().create(TokenType.PLUS, "+", new Position(0, 25)))));
+
+        for (Statement s: parsedStatment) {
+            System.out.println(s);
+        }
+
+        assertEquals(true, true);
+    }
+
+
+    @Test       // todo fix iguala a un number y no rompe.
+    public void test04_should_parse_string_declaration(){
+
+        String toMatch = "const b:string = 6;";
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateEnvironment());
+
 
         List<Statement> parsedStatment = parser.parse();
 
@@ -98,27 +117,79 @@ public class ParserTest {
     }
 
 
-    @Test       // todo Have to fail
-    public void test04_should_parse_string_declaration(){
-        StatementParser variableDeclarationParser = new VariableDeclarationParser();
-        StatementParser printParser = new printParser();
-        StatementParser expressionStatementParser = new ExpressionStatementParser();
+    @Test
+    public void test05_should_parse_multiplication(){
 
-        variableDeclarationParser.setNextParser(printParser);
-        printParser.setNextParser(expressionStatementParser);
-
-        String toMatch = "const b:string = 6;";
-        Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
-
-        List<Token> output = lexer.lex(input);
-
-        Parser parser = new ParserImpl(output, variableDeclarationParser);
+        String toMatch = "const b:number = 6*(9+7);";
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateEnvironment());
 
         List<Statement> parsedStatment = parser.parse();
 
         for (Statement s: parsedStatment) {
             System.out.println(s);
         }
+
+        assertEquals(true, true);
+    }
+
+    @Test
+    public void test06_should_parse_Division(){
+
+        String toMatch = "const b:number = 6/(9/7);";
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateEnvironment());
+
+        List<Statement> parsedStatment = parser.parse();
+
+        for (Statement s: parsedStatment) {
+            System.out.println(s);
+        }
+
+        assertEquals(true, true);
+    }
+
+    @Test
+    public void test06_fail_parse_statement_without_SEMICOLON(){
+
+        String toMatch = "const b:number = 6/(9/7)";
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateEnvironment());
+
+        try {
+            List<Statement> parsedStatment = parser.parse();
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+
+        assertEquals(true, true);
+    }
+
+
+    @Test
+    public void test06_fail_parse_statement_without_type_Declaration(){
+
+        String toMatch = "const b: = 6";
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateEnvironment());
+
+        try {
+            List<Statement> parsedStatment = parser.parse();
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+
+        assertEquals(true, true);
+    }
+
+    @Test
+    public void test06_parse_multiple_statement(){
+
+        String toMatch = "const a:number = 6;" +
+                "b = 7;" +
+                "print(b);"
+                ;
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateEnvironment());
+
+        List<Statement> parsedStatment = parser.parse();
 
         assertEquals(true, true);
     }
