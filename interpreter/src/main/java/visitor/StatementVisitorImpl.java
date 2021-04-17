@@ -4,6 +4,7 @@ import exception.InterpretException;
 
 import interpreter.Interpreter;
 import statement.impl.ExpressionStatement;
+import statement.impl.IfStatement;
 import statement.impl.PrintStatement;
 import statement.impl.VariableStatement;
 
@@ -53,6 +54,11 @@ public class StatementVisitorImpl implements  StatementVisitor{
         }
 
         interpreter.addVariableDefinition(statement.getName().getTokenValue(), statement.getKeyWord().getTokenType(), statement.getType(), value);
+    }
+
+    @Override
+    public void visitIfStatement(IfStatement statement) {
+        // todo
     }
 
 }

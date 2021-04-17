@@ -20,11 +20,11 @@ public class _ExpressionParser {
 
     // chain of responsibility?
     private static Expression assignment(TokenWrapper tokens) {
-        Expression expr = addition(tokens);
+        Expression expr = comparison(tokens);
 
         if (match(tokens, EQUALS)) {
             Token equals = tokens.getCurrentAndAdvance();
-            Expression value = assignment(tokens);
+            Expression value = comparison(tokens);
 
             // vale la pena hacer un get de los tokens en todas las expressiones solo para evitar este instace of?
             if (expr instanceof VariableExpression) {
@@ -33,6 +33,19 @@ public class _ExpressionParser {
             }
 
             throw new ParseException("Invalid assignment target.", equals);
+        }
+
+        return expr;
+    }
+
+    // todo no tiene que estar disponible en la version 1.0
+    private static Expression comparison(TokenWrapper tokens) {
+        Expression expr = addition(tokens);
+
+        if (match(tokens, GREATER, GREATEREQ, LESS, LESSEQ)) {
+            Token operator = tokens.getCurrentAndAdvance();
+            Expression right = addition(tokens);
+            expr = new BinaryExpression(expr, right, operator);
         }
 
         return expr;
@@ -62,16 +75,6 @@ public class _ExpressionParser {
 
         return expr;
     }
-
-//    private static Expression unary(TokenWrapper tokens) {
-//        if (match(tokens, MINUS, PLUS)) {
-//            Token operator = tokens.getCurrentAndAdvance();
-//            Expression right = unary(tokens);
-//            return new UnaryExpression(operator, right);
-//        }
-//
-//        return primary(tokens);
-//    }
 
     private static Expression primary(TokenWrapper tokens) {
         // todo cambiarlo por un switch

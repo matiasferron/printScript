@@ -63,6 +63,9 @@ public class VariableDeclarationParser extends StatementParser {
             case STRINGTYPE: {
                 return STRINGTYPE;
             }
+            case BOOLEAN: {
+                return BOOLEAN;
+            }
             default: {
                 throw new ParseException("Need to specify variable type", tokens.getCurrent());
             }
