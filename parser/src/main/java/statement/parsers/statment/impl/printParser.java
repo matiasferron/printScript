@@ -4,6 +4,7 @@ import expression.Expression;
 import statement.Statement;
 import statement.impl.PrintStatement;
 import statement.parsers.expression.CommonExpressionParser;
+import statement.parsers.expression._ExpressionParser;
 import statement.parsers.statment.StatementParser;
 import token.TokenWrapper;
 
@@ -19,7 +20,8 @@ public class printParser extends StatementParser {
     @Override
     public Statement parse(TokenWrapper tokens) {
         if (match(tokens, PRINT)) {
-            Expression value = expressionParser.parse(tokens);
+            tokens.advance();
+            Expression value = _ExpressionParser.generateExpression(tokens);
             consume(tokens, SEMICOLON, "Expect ';' after value.");
             return new PrintStatement(value);
         }

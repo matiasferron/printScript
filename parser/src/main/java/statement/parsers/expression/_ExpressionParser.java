@@ -83,6 +83,7 @@ public class _ExpressionParser {
         }
 
         if (match(tokens, LPAREN)) {
+            tokens.advance();
             Expression expr = generateExpression(tokens);
             consume(tokens, RPAREN, "Expect ')' after expression.");
             return new GroupingExpression(expr);

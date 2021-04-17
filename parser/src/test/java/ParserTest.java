@@ -46,4 +46,80 @@ public class ParserTest {
 
         assertEquals(true, true);
     }
+
+    @Test
+    public void test02_should_parse_declaration(){
+        StatementParser variableDeclarationParser = new VariableDeclarationParser();
+        StatementParser printParser = new printParser();
+        StatementParser expressionStatementParser = new ExpressionStatementParser();
+
+        variableDeclarationParser.setNextParser(printParser);
+        printParser.setNextParser(expressionStatementParser);
+
+        String toMatch = "let a: number = 2; a = 6;";
+        Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
+
+        List<Token> output = lexer.lex(input);
+
+        Parser parser = new ParserImpl(output, variableDeclarationParser);
+
+        List<Statement> parsedStatment = parser.parse();
+
+        for (Statement s: parsedStatment) {
+            System.out.println(s);
+        }
+
+        assertEquals(true, true);
+    }
+
+    @Test
+    public void test03_should_parse_string_declaration(){
+        StatementParser variableDeclarationParser = new VariableDeclarationParser();
+        StatementParser printParser = new printParser();
+        StatementParser expressionStatementParser = new ExpressionStatementParser();
+
+        variableDeclarationParser.setNextParser(printParser);
+        printParser.setNextParser(expressionStatementParser);
+
+        String toMatch = "const b:string = '6'; print(6 + 6);";
+        Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
+
+        List<Token> output = lexer.lex(input);
+
+        Parser parser = new ParserImpl(output, variableDeclarationParser);
+
+        List<Statement> parsedStatment = parser.parse();
+
+        for (Statement s: parsedStatment) {
+            System.out.println(s);
+        }
+
+        assertEquals(true, true);
+    }
+
+
+    @Test       // todo Have to fail
+    public void test04_should_parse_string_declaration(){
+        StatementParser variableDeclarationParser = new VariableDeclarationParser();
+        StatementParser printParser = new printParser();
+        StatementParser expressionStatementParser = new ExpressionStatementParser();
+
+        variableDeclarationParser.setNextParser(printParser);
+        printParser.setNextParser(expressionStatementParser);
+
+        String toMatch = "const b:string = 6;";
+        Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
+
+        List<Token> output = lexer.lex(input);
+
+        Parser parser = new ParserImpl(output, variableDeclarationParser);
+
+        List<Statement> parsedStatment = parser.parse();
+
+        for (Statement s: parsedStatment) {
+            System.out.println(s);
+        }
+
+        assertEquals(true, true);
+    }
 }
