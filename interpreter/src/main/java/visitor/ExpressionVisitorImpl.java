@@ -37,6 +37,18 @@ public class ExpressionVisitorImpl implements ExpressionVisitor{
             case MULTIPLICATION:
                 checkNumbersType(expression.getOperator(), left, right);
                 return (double)left * (double)right;
+            case GREATER:
+                checkNumbersType(expression.getOperator(), left, right);
+                return (double)left > (double)right;
+            case GREATEREQ:
+                checkNumbersType(expression.getOperator(), left, right);
+                return (double)left >= (double)right;
+            case LESS:
+                checkNumbersType(expression.getOperator(), left, right);
+                return (double)left < (double)right;
+            case LESSEQ:
+                checkNumbersType(expression.getOperator(), left, right);
+                return (double)left <= (double)right;
         }
         return null;
     }
@@ -48,7 +60,6 @@ public class ExpressionVisitorImpl implements ExpressionVisitor{
 
     @Override
     public Object visitLiteral(LiteralExpression expression) {
-        // todo aca como es string voy a tener que castear los strings con el token type a su respectuvo valor
         return expression.getValue();
     }
 
