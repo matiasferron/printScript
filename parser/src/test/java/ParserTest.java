@@ -212,7 +212,7 @@ public class ParserTest {
     @Test
     public void test06_parse_If_statement(){
 
-        String toMatch = "if(true){ let a = 5;};";
+        String toMatch = "if(true){ let a = 5; const b: number = 5};";
         Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
 
         List<Statement> parsedStatment = parser.parse();

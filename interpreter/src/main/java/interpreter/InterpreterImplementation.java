@@ -7,6 +7,7 @@ import token.TokenType;
 import visitor.StatementVisitorImpl;
 import visitor.ExpressionVisitorImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import static token.TokenType.*;
 public class InterpreterImplementation implements Interpreter{
 
     private final Map<String, VariableDefinitionDataImplementation> values = new HashMap<>();
+    private final List<String> printedValues= new ArrayList<>();
 
     // todo el expressionVisitor no tiene que recibir el interpete
     // pasarle el expressionVisitor como parametro al statmentvisitor?
@@ -40,6 +42,14 @@ public class InterpreterImplementation implements Interpreter{
         throw new InterpretException(name, "Variable not found");
     }
 
+    public List<String> getPrintedValues(){
+        return  printedValues;
+    }
+
+    public void addPrintedValues(String value){
+        printedValues.add(value);
+    }
+
     public void addVariableDefinition(String varName, TokenType keyword, TokenType type, Object value) {
         values.put(varName, new VariableDefinitionDataImplementation(keyword, type, value));
     }
@@ -53,11 +63,14 @@ public class InterpreterImplementation implements Interpreter{
                         if (!(value instanceof Number)) { // queda definir lo del Objeto o string con tokens
                             throw new InterpretException(varName, "Expected a number");
                         }
+                        break;
                     }
+
                     case STRINGTYPE: {
                         if (!(value instanceof String)){
                             throw new InterpretException(varName, "Expected a string");
                         }
+                        break;
                     }
                 }
 

@@ -13,6 +13,9 @@ public interface Interpreter{
 
     Object get(Token name); //
 
+    List<String> getPrintedValues();
+    void addPrintedValues(String value);
+
     void addVariableDefinition(String name, TokenType keyword, TokenType type, Object value);
 
     void setVariableValue(Token name, Object value);

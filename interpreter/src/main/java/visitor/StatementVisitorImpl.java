@@ -29,6 +29,7 @@ public class StatementVisitorImpl implements  StatementVisitor{
     @Override
     public void visitPrintStatement(PrintStatement statement) {
         Object value = statement.getExpression().accept(expressionVisitor);
+        interpreter.addPrintedValues(value.toString());
         System.out.println(value);
     }
 

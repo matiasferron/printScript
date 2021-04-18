@@ -8,7 +8,7 @@ import token.TokenWrapper;
 public class parserUtils {
 
     public static Token consume(TokenWrapper tokens, TokenType type, String message) {
-        if (tokens.check(type)) return tokens.advance();
+        if (tokens.check(type)) return tokens.getCurrentAndAdvance();
         throw new ParseException(message, tokens.getCurrent());
     }
 
