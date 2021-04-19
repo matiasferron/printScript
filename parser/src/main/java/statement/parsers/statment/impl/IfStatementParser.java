@@ -35,7 +35,10 @@ public class IfStatementParser extends StatementParser {
 
             if (tokens.getCurrent().getTokenType() == ELSE) {
                 tokens.advance();
+                consume(tokens, LBRACKET,"Expect '{' after if condition");
                 elseBranch = nextParser.parse(tokens);
+                consume(tokens, RBRACKET,"Expect '}' after if condition");
+
             }
             consume(tokens, SEMICOLON, "Expect ';' after expression.");
             return new IfStatement(condition, conditionBranch, elseBranch);

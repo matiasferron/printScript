@@ -59,7 +59,22 @@ public class StatementVisitorImpl implements  StatementVisitor{
 
     @Override
     public void visitIfStatement(IfStatement statement) {
-        // todo
+        // todo. Esto es con un If de una unico statement .
+            // - Falta: que la variable que se decalre dentro del if no exista mas fuera de este
+            // - multi statments dentro del if
+        if (isBoolean(statement.getCondition().accept(expressionVisitor))) {
+            //true branch
+            statement.getConditionStatement().accept(this);
+        } else if (statement.getElseStatement() != null) {
+            // false branch
+            statement.getElseStatement().accept(this);
+        }
+    }
+
+    private boolean isBoolean(Object object) {
+        if (object == null) return false;
+        if (object instanceof Boolean) return (boolean)object;
+        return true;
     }
 
 }

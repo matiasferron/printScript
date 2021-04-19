@@ -9,6 +9,7 @@ import parser.ParserImpl;
 import statement.Statement;
 import statement.parsers.statment.StatementParser;
 import statement.parsers.statment.impl.ExpressionStatementParser;
+import statement.parsers.statment.impl.IfStatementParser;
 import statement.parsers.statment.impl.VariableDeclarationParser;
 import statement.parsers.statment.impl.printParser;
 import token.Token;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class interpreterTest {
 
@@ -34,6 +36,21 @@ public class interpreterTest {
         printParser.setNextParser(expressionStatementParser);
 
         return variableDeclarationParser;
+    }
+
+
+    static StatementParser generateIFEnvironment() {
+        StatementParser variableDeclarationParser = new VariableDeclarationParser();
+        StatementParser printParser = new printParser();
+        StatementParser expressionStatementParser = new ExpressionStatementParser();
+        StatementParser ifStatementParser = new IfStatementParser();
+
+
+        ifStatementParser.setNextParser(variableDeclarationParser);
+        variableDeclarationParser.setNextParser(printParser);
+        printParser.setNextParser(expressionStatementParser);
+
+        return ifStatementParser;
     }
 
     static List<Token> generateStringToTokens(String message) {
@@ -117,5 +134,47 @@ public class interpreterTest {
         interpreter.interpret(parsedStatment);
 
         assertEquals("false", interpreter.getPrintedValues().get(0));
+    }
+
+    @Test
+    public void test07_parse_If_statement(){
+
+        String toMatch = "let a = 5; if(5>3){ print(a);}else{let b = 5;};";
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
+
+
+        List<Statement> parsedStatment = parser.parse();
+
+        interpreter.interpret(parsedStatment);
+
+        assertEquals("5.0",  interpreter.getPrintedValues().get(0));
+    }
+
+    @Test
+    public void test08_parse_If_statement(){
+
+        String toMatch = "let a = 5; let b = 4; if(5<3){ print(a);}else{ print(b);};";
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
+
+
+        List<Statement> parsedStatment = parser.parse();
+
+        interpreter.interpret(parsedStatment);
+
+        assertEquals("4.0",  interpreter.getPrintedValues().get(0));
+    }
+
+    @Test
+    public void test09_parse_If_statement(){
+
+        String toMatch = "if(5>3){ let a = 5;};";
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
+
+
+        List<Statement> parsedStatment = parser.parse();
+
+        interpreter.interpret(parsedStatment);
+
+        assertTrue(true);
     }
 }
