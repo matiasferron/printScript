@@ -2,12 +2,12 @@ package visitor;
 
 import exception.InterpretException;
 
-import interpreter.Interpreter;
 import interpreter.InterpreterMemory;
 import statement.impl.ExpressionStatement;
 import statement.impl.IfStatement;
 import statement.impl.PrintStatement;
 import statement.impl.VariableStatement;
+import visitor.StatementVisitorHelpers.VisitVariableStatementHelper;
 
 import static token.TokenType.*;
 
@@ -36,26 +36,7 @@ public class StatementVisitorImpl implements  StatementVisitor{
 
     @Override
     public void visitVariableStatement(VariableStatement statement) {
-        Object value = null;
-        if (statement.getExpression() != null){
-            value = statement.getExpression().accept(expressionVisitor);
-        }
-        if (value == null){
-            interpreterMemory.addVariableDefinition(statement.getName().getTokenValue(), statement.getKeyWord().getTokenType(), statement.getType(), null);
-            return;
-        }
-        if (statement.getType() == NUMBERTYPE){
-            if (!(value instanceof Number)){ // lo mismo, aca si toto decide usar strings siempre tende que usar el token y no el instaceOf
-                throw new InterpretException(statement.getName(), "Expected a Number");
-            }
-        }
-        if (statement.getType() == STRINGTYPE){
-            if (!(value instanceof String)){
-                throw new InterpretException(statement.getName(), "Expected a String");
-            }
-        }
-
-        interpreterMemory.addVariableDefinition(statement.getName().getTokenValue(), statement.getKeyWord().getTokenType(), statement.getType(), value);
+        VisitVariableStatementHelper.visitVariableStatementHelper(statement, expressionVisitor, interpreterMemory);
     }
 
     @Override
