@@ -1,5 +1,6 @@
 import interpreter.Interpreter;
 import interpreter.InterpreterImplementation;
+import interpreter.InterpreterMemory;
 import lexer.Lexer;
 import lexer.factory.LexerFactory;
 import lexer.factory.LexerFactoryImpl;
@@ -13,6 +14,10 @@ import statement.parsers.statment.impl.IfStatementParser;
 import statement.parsers.statment.impl.VariableDeclarationParser;
 import statement.parsers.statment.impl.printParser;
 import token.Token;
+import visitor.ExpressionVisitor;
+import visitor.ExpressionVisitorImpl;
+import visitor.StatementVisitor;
+import visitor.StatementVisitorImpl;
 
 
 import java.util.List;
@@ -23,9 +28,11 @@ import static org.junit.Assert.assertTrue;
 
 public class interpreterTest {
 
-    Interpreter interpreter = new InterpreterImplementation();
-    // ExpressionVisitor expressionVisitor = new ExpressionVisitorImpl(interpreter);
-    // StatementVisitor statementVisitor = new StatementVisitorImpl(interpreter, expressionVisitor);
+    InterpreterMemory interpreterMemory = new InterpreterMemory();
+    ExpressionVisitor expressionVisitor = new ExpressionVisitorImpl(interpreterMemory);
+    StatementVisitor statementVisitor = new StatementVisitorImpl(expressionVisitor, interpreterMemory);
+    Interpreter interpreter = new InterpreterImplementation(statementVisitor);
+
 
     static StatementParser generateEnvironment() {
         StatementParser variableDeclarationParser = new VariableDeclarationParser();
@@ -70,8 +77,9 @@ public class interpreterTest {
         List<Statement> parsedStatment = parser.parse();
 
         interpreter.interpret(parsedStatment);
+        String expected = interpreterMemory.getPrintedValues().get(0);
 
-        assertEquals("2.0", interpreter.getPrintedValues().get(0));
+        assertEquals("2.0",expected);
     }
 
 
@@ -84,7 +92,7 @@ public class interpreterTest {
 
         interpreter.interpret(parsedStatment);
 
-        assertEquals("8.0", interpreter.getPrintedValues().get(0));
+        assertEquals("8.0", interpreterMemory.getPrintedValues().get(0));
     }
 
 
@@ -97,7 +105,7 @@ public class interpreterTest {
 
         interpreter.interpret(parsedStatment);
 
-        assertEquals("'5'", interpreter.getPrintedValues().get(0));
+        assertEquals("'5'", interpreterMemory.getPrintedValues().get(0));
     }
 
     @Test
@@ -109,7 +117,7 @@ public class interpreterTest {
 
         interpreter.interpret(parsedStatment);
 
-        assertEquals("7.0", interpreter.getPrintedValues().get(0));
+        assertEquals("7.0", interpreterMemory.getPrintedValues().get(0));
     }
 
     @Test
@@ -121,7 +129,7 @@ public class interpreterTest {
 
         interpreter.interpret(parsedStatment);
 
-        assertEquals("true", interpreter.getPrintedValues().get(0));
+        assertEquals("true", interpreterMemory.getPrintedValues().get(0));
     }
 
     @Test
@@ -133,7 +141,7 @@ public class interpreterTest {
 
         interpreter.interpret(parsedStatment);
 
-        assertEquals("false", interpreter.getPrintedValues().get(0));
+        assertEquals("false", interpreterMemory.getPrintedValues().get(0));
     }
 
     @Test
@@ -147,7 +155,7 @@ public class interpreterTest {
 
         interpreter.interpret(parsedStatment);
 
-        assertEquals("5.0",  interpreter.getPrintedValues().get(0));
+        assertEquals("5.0",  interpreterMemory.getPrintedValues().get(0));
     }
 
     @Test
@@ -161,7 +169,7 @@ public class interpreterTest {
 
         interpreter.interpret(parsedStatment);
 
-        assertEquals("4.0",  interpreter.getPrintedValues().get(0));
+        assertEquals("4.0",  interpreterMemory.getPrintedValues().get(0));
     }
 
     @Test

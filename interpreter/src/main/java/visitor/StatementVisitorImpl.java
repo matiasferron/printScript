@@ -3,6 +3,7 @@ package visitor;
 import exception.InterpretException;
 
 import interpreter.Interpreter;
+import interpreter.InterpreterMemory;
 import statement.impl.ExpressionStatement;
 import statement.impl.IfStatement;
 import statement.impl.PrintStatement;
@@ -11,12 +12,12 @@ import statement.impl.VariableStatement;
 import static token.TokenType.*;
 
 public class StatementVisitorImpl implements  StatementVisitor{
-    private final Interpreter interpreter;
     private final ExpressionVisitor expressionVisitor;
+    private final InterpreterMemory interpreterMemory;
 
-    public StatementVisitorImpl(Interpreter interpreter, ExpressionVisitor expressionVisitor) {
-        this.interpreter = interpreter;
+    public StatementVisitorImpl(ExpressionVisitor expressionVisitor, InterpreterMemory interpreterMemory) {
         this.expressionVisitor = expressionVisitor;
+        this.interpreterMemory = interpreterMemory;
     }
 
 
@@ -29,7 +30,7 @@ public class StatementVisitorImpl implements  StatementVisitor{
     @Override
     public void visitPrintStatement(PrintStatement statement) {
         Object value = statement.getExpression().accept(expressionVisitor);
-        interpreter.addPrintedValues(value.toString());
+        interpreterMemory.addPrintedValues(value.toString());
         System.out.println(value);
     }
 
@@ -40,7 +41,7 @@ public class StatementVisitorImpl implements  StatementVisitor{
             value = statement.getExpression().accept(expressionVisitor);
         }
         if (value == null){
-            interpreter.addVariableDefinition(statement.getName().getTokenValue(), statement.getKeyWord().getTokenType(), statement.getType(), null);
+            interpreterMemory.addVariableDefinition(statement.getName().getTokenValue(), statement.getKeyWord().getTokenType(), statement.getType(), null);
             return;
         }
         if (statement.getType() == NUMBERTYPE){
@@ -54,7 +55,7 @@ public class StatementVisitorImpl implements  StatementVisitor{
             }
         }
 
-        interpreter.addVariableDefinition(statement.getName().getTokenValue(), statement.getKeyWord().getTokenType(), statement.getType(), value);
+        interpreterMemory.addVariableDefinition(statement.getName().getTokenValue(), statement.getKeyWord().getTokenType(), statement.getType(), value);
     }
 
     @Override

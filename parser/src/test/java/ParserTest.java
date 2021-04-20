@@ -4,10 +4,13 @@ import expression.impl.LiteralExpression;
 import lexer.Lexer;
 import lexer.factory.LexerFactory;
 import lexer.factory.LexerFactoryImpl;
+import org.assertj.core.api.Assertions;
+import org.junit.Assert;
 import org.junit.Test;
 import parser.Parser;
 import parser.ParserImpl;
 import statement.Statement;
+import statement.impl.ExpressionStatement;
 import statement.impl.PrintStatement;
 import statement.parsers.statment.StatementParser;
 import statement.parsers.statment.impl.ExpressionStatementParser;
@@ -19,8 +22,7 @@ import token.*;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class ParserTest {
@@ -299,5 +301,6 @@ public class ParserTest {
         }
 
         assertEquals(true, true);
+//        Assertions.assertThat(parsedStatment.get(0)).hasSameClassAs(new ExpressionStatement());
     }
 }

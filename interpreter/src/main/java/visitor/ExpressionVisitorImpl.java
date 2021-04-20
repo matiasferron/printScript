@@ -3,18 +3,17 @@ package visitor;
 import exception.InterpretException;
 import expression.impl.*;
 import interpreter.Interpreter;
+import interpreter.InterpreterMemory;
 import token.Token;
 
 import static token.TokenType.MINUS;
 import static token.TokenType.PLUS;
 
 public class ExpressionVisitorImpl implements ExpressionVisitor{
+    private final InterpreterMemory interpreterMemory;
 
-    // todo auxiliary class instead of interpreter
-    private final Interpreter interpreter;
-
-    public ExpressionVisitorImpl(Interpreter interpreter) {
-        this.interpreter = interpreter;
+    public ExpressionVisitorImpl(InterpreterMemory interpreterMemory) {
+        this.interpreterMemory = interpreterMemory;
     }
 
     @Override
@@ -93,14 +92,14 @@ public class ExpressionVisitorImpl implements ExpressionVisitor{
 
     @Override
     public Object visitVariable(VariableExpression expression) {
-        return interpreter.get(expression.getName());
+        return interpreterMemory.get(expression.getName());
     }
 
     @Override
     public Object visitAssignment(AssigmentExpression expression) {
         Object value = expression.getExpression().accept(this);
 
-        interpreter.setVariableValue(expression.getToken(), value);
+        interpreterMemory.setVariableValue(expression.getToken(), value);
         return value;
     }
 }
