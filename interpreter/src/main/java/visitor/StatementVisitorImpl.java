@@ -11,7 +11,7 @@ import visitor.StatementVisitorHelpers.VisitVariableStatementHelper;
 
 import static token.TokenType.*;
 
-public class StatementVisitorImpl implements  StatementVisitor{
+public class StatementVisitorImpl implements StatementVisitor {
     private final ExpressionVisitor expressionVisitor;
     private final InterpreterMemory interpreterMemory;
 
@@ -41,21 +41,24 @@ public class StatementVisitorImpl implements  StatementVisitor{
 
     @Override
     public void visitIfStatement(IfStatement statement) {
-        // todo. Esto es con un If de una unico statement .
-            // - Falta: que la variable que se decalre dentro del if no exista mas fuera de este
-            // - multi statments dentro del if
+        // todo.
+        // - Falta: que la variable que se decalre dentro del if no exista mas fuera de este
         if (isBoolean(statement.getCondition().accept(expressionVisitor))) {
             //true branch
-            statement.getConditionStatement().accept(this);
-        } else if (statement.getElseStatement() != null) {
+            statement.getConditionStatement().forEach(statement1 ->
+                    statement1.accept(this)
+            );
+        } else if (statement.getElseStatement().size() != 0) {
             // false branch
-            statement.getElseStatement().accept(this);
+            statement.getElseStatement().forEach(statement1 ->
+                    statement1.accept(this)
+            );
         }
     }
 
     private boolean isBoolean(Object object) {
         if (object == null) return false;
-        if (object instanceof Boolean) return (boolean)object;
+        if (object instanceof Boolean) return (boolean) object;
         return true;
     }
 

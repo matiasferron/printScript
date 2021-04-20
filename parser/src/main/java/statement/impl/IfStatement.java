@@ -4,13 +4,15 @@ import expression.Expression;
 import statement.Statement;
 import visitor.StatementVisitor;
 
+import java.util.List;
+
 public class IfStatement implements Statement {
 
     private final Expression condition;
-    private final Statement conditionStatement;
-    private final Statement elseStatement;
+    private final List<Statement> conditionStatement;
+    private final List<Statement> elseStatement;
 
-    public IfStatement(Expression condition, Statement conditionStatement, Statement elseStatement) {
+    public IfStatement(Expression condition, List<Statement> conditionStatement, List<Statement> elseStatement) {
         this.condition = condition;
         this.conditionStatement = conditionStatement;
         this.elseStatement = elseStatement;
@@ -30,11 +32,19 @@ public class IfStatement implements Statement {
         return condition;
     }
 
-    public Statement getConditionStatement() {
+    public List<Statement> getConditionStatement() {
         return conditionStatement;
     }
 
-    public Statement getElseStatement() {
+    public List<Statement> getElseStatement() {
         return elseStatement;
+    }
+
+    void addConditionBranchStatement(Statement statement){
+        conditionStatement.add(statement);
+    }
+
+    void addElseBranchStatement(Statement statement){
+        elseStatement.add(statement);
     }
 }

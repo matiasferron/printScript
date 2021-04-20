@@ -3,16 +3,16 @@ package exception;
 import token.Token;
 
 public class InterpretException extends RuntimeException {
-    private Token operator;
-    private String message;
+    private final Token failedToken;
+    private final String errorMessage;
 
-    public InterpretException(Token operator, String message) {
-        this.operator = operator;
-        this.message = message;
+    public InterpretException(Token token, String message) {
+        this.failedToken = token;
+        this.errorMessage = message;
     }
 
     @Override
     public String getMessage() {
-        return message + " at line " + operator.getPosition().getLine();
+        return errorMessage + " at line: " + failedToken.getPosition().getLine() + " in column: " + failedToken.getPosition().getColumn();
     }
 }

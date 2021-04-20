@@ -175,7 +175,8 @@ public class interpreterTest {
     @Test
     public void test09_parse_If_statement(){
 
-        String toMatch = "if(5>3){ let a = 5;};";
+        String toMatch = "let z = 'hola'; if(5<3){ const a = 5; let b: number = 4; print(a); print(b);}else{" +
+                "print(z);};";
         Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
 
 

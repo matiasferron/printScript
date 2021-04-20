@@ -8,6 +8,9 @@ import statement.parsers.expression._ExpressionParser;
 import statement.parsers.statment.StatementParser;
 import token.TokenWrapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static token.TokenType.*;
 import static utils.parserUtils.consume;
 import static utils.parserUtils.match;
@@ -26,17 +29,22 @@ public class IfStatementParser extends StatementParser {
 
             consume(tokens, LBRACKET,"Expect '{' after if condition");
 
-            Statement conditionBranch = nextParser.parse(tokens);
+            List<Statement> conditionBranch = new ArrayList<>();
+            while (!tokens.check(RBRACKET)) {
+                conditionBranch.add(nextParser.parse(tokens));
+            }
 
             consume(tokens, RBRACKET,"Expect '}' after if condition");
 
 
-            Statement elseBranch = null;
+            List<Statement> elseBranch = new ArrayList<>();
 
             if (tokens.getCurrent().getTokenType() == ELSE) {
                 tokens.advance();
                 consume(tokens, LBRACKET,"Expect '{' after if condition");
-                elseBranch = nextParser.parse(tokens);
+                while (!tokens.check(RBRACKET)) {
+                    elseBranch.add(nextParser.parse(tokens));
+                }
                 consume(tokens, RBRACKET,"Expect '}' after if condition");
 
             }
