@@ -44,16 +44,20 @@ public class StatementVisitorImpl implements StatementVisitor {
         // todo.
         // - Falta: que la variable que se decalre dentro del if no exista mas fuera de este
         if (isBoolean(statement.getCondition().accept(expressionVisitor))) {
+            interpreterMemory.turnOnTemporalSpace();
             //true branch
             statement.getConditionStatement().forEach(statement1 ->
                     statement1.accept(this)
             );
         } else if (statement.getElseStatement().size() != 0) {
+            interpreterMemory.turnOnTemporalSpace();
             // false branch
             statement.getElseStatement().forEach(statement1 ->
                     statement1.accept(this)
             );
         }
+
+        interpreterMemory.turnOffTemporalSpace();
     }
 
     private boolean isBoolean(Object object) {

@@ -8,6 +8,7 @@ import org.junit.Test;
 import parser.Parser;
 import parser.ParserImpl;
 import statement.Statement;
+import statement.parsers.expression.*;
 import statement.parsers.statment.StatementParser;
 import statement.parsers.statment.impl.ExpressionStatementParser;
 import statement.parsers.statment.impl.IfStatementParser;
@@ -35,9 +36,19 @@ public class interpreterTest {
 
 
     static StatementParser generateEnvironment() {
-        StatementParser variableDeclarationParser = new VariableDeclarationParser();
-        StatementParser printParser = new printParser();
-        StatementParser expressionStatementParser = new ExpressionStatementParser();
+        CommonExpressionParser expressionParser = new AssigmentExpressionParser();
+        CommonExpressionParser expressionParser2 = new AdditionParser();
+        CommonExpressionParser expressionParser3 = new MultiplicationParser();
+        CommonExpressionParser expressionParser4 = new TypeParser();
+
+        expressionParser.setNextParser(expressionParser2);
+        expressionParser2.setNextParser(expressionParser3);
+        expressionParser3.setNextParser(expressionParser4);
+        expressionParser4.setNextParser(expressionParser);
+
+        StatementParser variableDeclarationParser = new VariableDeclarationParser(expressionParser);
+        StatementParser printParser = new printParser(expressionParser);
+        StatementParser expressionStatementParser = new ExpressionStatementParser(expressionParser);
 
         variableDeclarationParser.setNextParser(printParser);
         printParser.setNextParser(expressionStatementParser);
@@ -45,12 +56,24 @@ public class interpreterTest {
         return variableDeclarationParser;
     }
 
-
     static StatementParser generateIFEnvironment() {
-        StatementParser variableDeclarationParser = new VariableDeclarationParser();
-        StatementParser printParser = new printParser();
-        StatementParser expressionStatementParser = new ExpressionStatementParser();
-        StatementParser ifStatementParser = new IfStatementParser();
+        CommonExpressionParser expressionParser = new AssigmentExpressionParser();
+        CommonExpressionParser expressionParser1 = new ComparisonParser();
+        CommonExpressionParser expressionParser2 = new AdditionParser();
+        CommonExpressionParser expressionParser3 = new MultiplicationParser();
+        CommonExpressionParser expressionParser4 = new TypeParser();
+
+        expressionParser.setNextParser(expressionParser1);
+        expressionParser1.setNextParser(expressionParser2);
+        expressionParser2.setNextParser(expressionParser3);
+        expressionParser3.setNextParser(expressionParser4);
+        expressionParser4.setNextParser(expressionParser);
+
+
+        StatementParser variableDeclarationParser = new VariableDeclarationParser(expressionParser);
+        StatementParser printParser = new printParser(expressionParser);
+        StatementParser expressionStatementParser = new ExpressionStatementParser(expressionParser);
+        StatementParser ifStatementParser = new IfStatementParser(expressionParser);
 
 
         ifStatementParser.setNextParser(variableDeclarationParser);
@@ -123,7 +146,7 @@ public class interpreterTest {
     @Test
     public void test05_should_parse_declaration_with_Boolean(){
 
-        Parser parser = new ParserImpl(generateStringToTokens("let a: boolean = 5 > 3; print(a);"), generateEnvironment());
+        Parser parser = new ParserImpl(generateStringToTokens("let a: boolean = 5 > 3; print(a); a = false; print(a);"), generateIFEnvironment());
 
         List<Statement> parsedStatment = parser.parse();
 
@@ -135,7 +158,7 @@ public class interpreterTest {
     @Test
     public void test06_should_parse_declaration_with_Boolean(){
 
-        Parser parser = new ParserImpl(generateStringToTokens("let a: boolean = 5 < 3; print(a);"), generateEnvironment());
+        Parser parser = new ParserImpl(generateStringToTokens("let a: boolean = 5 < 3; print(a);"), generateIFEnvironment());
 
         List<Statement> parsedStatment = parser.parse();
 
@@ -161,7 +184,13 @@ public class interpreterTest {
     @Test
     public void test08_parse_If_statement(){
 
-        String toMatch = "let a = 5; let b = 4; if(5<3){ print(a);}else{ print(b);};";
+        String toMatch = "let a = 5; " +
+                "let b = 4; " +
+                "if(5<3){ " +
+                "print(a);" +
+                "}else{ " +
+                "print(b);" +
+                "};";
         Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
 
 
@@ -175,8 +204,15 @@ public class interpreterTest {
     @Test
     public void test09_parse_If_statement(){
 
-        String toMatch = "let z = 'hola'; if(5<3){ const a = 5; let b: number = 4; print(a); print(b);}else{" +
-                "print(z);};";
+        String toMatch = "let z = 'hola';" +
+                "if(5<3){ " +
+                "const a = 5;" +
+                "let b: number = 4;" +
+                "print(a);" +
+                "print(b);" +
+                "}else{" +
+                "print(z);" +
+                "};";
         Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
 
 
