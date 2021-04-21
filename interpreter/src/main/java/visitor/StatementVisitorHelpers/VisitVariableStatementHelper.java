@@ -16,7 +16,7 @@ public class VisitVariableStatementHelper {
             value = variableStatement.getExpression().accept(expressionVisitor);
         }
         if (value == null){
-            interpreterMemory.addVariableDefinition(variableStatement.getName().getTokenValue(), variableStatement.getKeyWord().getTokenType(), variableStatement.getType(), null);
+            interpreterMemory.addVariableDefinition(variableStatement.getName().getTokenValue(), variableStatement.getKeyWord().getTokenType(), variableStatement.getType(), null, variableStatement.getName());
             return;
         }
         if (variableStatement.getType() == NUMBERTYPE){
@@ -30,6 +30,6 @@ public class VisitVariableStatementHelper {
             }
         }
 
-        interpreterMemory.addVariableDefinition(variableStatement.getName().getTokenValue(), variableStatement.getKeyWord().getTokenType(), variableStatement.getType(), value);
+        interpreterMemory.addVariableDefinition(variableStatement.getName().getTokenValue(), variableStatement.getKeyWord().getTokenType(), variableStatement.getType(), value, variableStatement.getName());
     }
 }

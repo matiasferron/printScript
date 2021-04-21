@@ -67,8 +67,11 @@ public class InterpreterMemory {
         printedValues.add(value);
     }
 
-    public void addVariableDefinition(String varName, TokenType keyword, TokenType type, Object value) {
+    public void addVariableDefinition(String varName, TokenType keyword, TokenType type, Object value, Token name) {
         if (isTemporal) {
+            if (values.containsKey(varName)){
+                throw new InterpretException(name, "Variable " + varName + " already defined. Error");
+            }
             temporalValues.put(varName, new VariableDefinitionDataImplementation(keyword, type, value));
             return;
         }
@@ -99,6 +102,8 @@ public class InterpreterMemory {
     }
 
     private void checkType(TokenType type, Object value, Token varName) {
+        if (type == null)
+            return;
         switch (type) {
             case NUMBERTYPE: {
                 if (!(value instanceof Number)) {
@@ -127,10 +132,12 @@ public class InterpreterMemory {
     private void setTemporalVariableValue(Token varName, Object value) {
         if (values.containsKey(varName.getTokenValue())) {
             checkIfContainAndUpdate(varName, value);
+            return;
         }
 
         if (temporalValues.containsKey(varName.getTokenValue())) {
             checkIfContainTemporalValueAndUpdate(varName, value);
+            return;
         }
 
         throw new InterpretException(varName, "Undefined variable '" + varName.getTokenValue() + "'.");

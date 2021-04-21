@@ -184,10 +184,11 @@ public class interpreterTest {
     @Test
     public void test08_parse_If_statement(){
 
-        String toMatch = "let a = 5; " +
+        String toMatch = "let a: number = 5; " +
                 "let b = 4; " +
-                "if(5<3){ " +
+                "if(false){ " +
                 "print(a);" +
+                "a = 6;" +
                 "}else{ " +
                 "print(b);" +
                 "};";
@@ -213,6 +214,21 @@ public class interpreterTest {
                 "}else{" +
                 "print(z);" +
                 "};";
+        Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
+
+
+        List<Statement> parsedStatment = parser.parse();
+
+        interpreter.interpret(parsedStatment);
+
+        assertTrue(true);
+    }
+
+    @Test
+    public void test10_resign(){
+
+        String toMatch = "let z = 4';" +
+                " z = 5;";
         Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
 
 
