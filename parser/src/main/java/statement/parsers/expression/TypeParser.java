@@ -14,8 +14,21 @@ import static utils.parserUtils.match;
 public class TypeParser extends CommonExpressionParser{
     @Override
     public Expression parse(TokenWrapper tokens) {
-        if (match(tokens, NUMBER, STRING)) {
+        if (match(tokens, STRING)) {
             return new LiteralExpression(tokens.getCurrentAndAdvance().getTokenValue());
+        }
+
+        if (match(tokens, NUMBER)) {
+            return new LiteralExpression(Double.parseDouble(tokens.getCurrentAndAdvance().getTokenValue()));
+        }
+
+        if (match(tokens, FALSE)) {
+            tokens.advance();
+            return new LiteralExpression(false);
+        }
+        if (match(tokens, TRUE)) {
+            tokens.advance();
+            return new LiteralExpression(true);
         }
 
         if (match(tokens, IDENTIFIER)) {
@@ -23,6 +36,7 @@ public class TypeParser extends CommonExpressionParser{
         }
 
         if (match(tokens, LPAREN)) {
+            tokens.advance();
             Expression expr = nextParser.parse(tokens);
             consume(tokens, RPAREN, "Expect ')' after expression.");
             return new GroupingExpression(expr);

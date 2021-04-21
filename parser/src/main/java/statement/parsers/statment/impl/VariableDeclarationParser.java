@@ -5,7 +5,6 @@ import expression.Expression;
 import statement.Statement;
 import statement.impl.VariableStatement;
 import statement.parsers.expression.CommonExpressionParser;
-import statement.parsers.expression._ExpressionParser;
 import statement.parsers.statment.StatementParser;
 import token.Token;
 import token.TokenType;
@@ -19,10 +18,14 @@ import static utils.parserUtils.match;
 public class VariableDeclarationParser extends StatementParser {
 
 
-    // Todo pasarle una lista con los expression parser que podria parsear este statment. Asi cada statment tiene sus pisibles expresiones parseables??
     public VariableDeclarationParser() {
         super();
     }
+
+    public VariableDeclarationParser(CommonExpressionParser expressionParser) {
+        super(expressionParser);
+    }
+
 
     @Override
     public Statement parse(TokenWrapper tokens) {
@@ -41,7 +44,7 @@ public class VariableDeclarationParser extends StatementParser {
             }
             if (match(tokens, EQUALS)) {
                 tokens.advance();
-                initializer = _ExpressionParser.generateExpression(tokens);
+                initializer = expressionParser.parse(tokens);
             }
 
             consume(tokens, SEMICOLON, "Expect ';' after variable declaration.");

@@ -3,8 +3,7 @@ package statement.parsers.statment.impl;
 import expression.Expression;
 import statement.Statement;
 import statement.impl.IfStatement;
-import statement.impl.PrintStatement;
-import statement.parsers.expression._ExpressionParser;
+import statement.parsers.expression.CommonExpressionParser;
 import statement.parsers.statment.StatementParser;
 import token.TokenWrapper;
 
@@ -16,6 +15,10 @@ import static utils.parserUtils.consume;
 import static utils.parserUtils.match;
 
 public class IfStatementParser extends StatementParser {
+    public IfStatementParser(CommonExpressionParser expressionParser) {
+        super(expressionParser);
+    }
+
     @Override
     public Statement parse(TokenWrapper tokens) {
         if (match(tokens, IF)) {
@@ -23,7 +26,7 @@ public class IfStatementParser extends StatementParser {
 
             consume(tokens, LPAREN,"Expect '(' after 'if'");
 
-            Expression condition = _ExpressionParser.generateExpression(tokens);
+            Expression condition = expressionParser.parse(tokens);
 
             consume(tokens, RPAREN,"Expect ')' after if condition");
 
