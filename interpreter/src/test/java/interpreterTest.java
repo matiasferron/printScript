@@ -1,6 +1,6 @@
 import interpreter.Interpreter;
 import interpreter.InterpreterImplementation;
-import interpreter.InterpreterMemory;
+import interpreter.helper.InterpreterMemory;
 import lexer.Lexer;
 import lexer.factory.LexerFactory;
 import lexer.factory.LexerFactoryImpl;

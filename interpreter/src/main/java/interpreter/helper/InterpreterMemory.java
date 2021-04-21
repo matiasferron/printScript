@@ -1,6 +1,7 @@
-package interpreter;
+package interpreter.helper;
 
 import exception.InterpretException;
+import interpreter.VariableDefinitionDataImplementation;
 import token.Token;
 import token.TokenType;
 
@@ -11,7 +12,7 @@ import java.util.Map;
 
 import static token.TokenType.LET;
 
-public class InterpreterMemory {
+public class InterpreterMemory implements InterpreterHelper {
 
     private final Map<String, VariableDefinitionDataImplementation> values;
     private final List<String> printedValues;
@@ -47,18 +48,6 @@ public class InterpreterMemory {
         this.temporalValues = new HashMap<>();
     }
 
-    private Object getTempValues(Token name) {
-        if (values.containsKey(name.getTokenValue())) {
-            return values.get(name.getTokenValue()).getValue();
-        }
-
-        if (temporalValues.containsKey(name.getTokenValue())) {
-            return temporalValues.get(name.getTokenValue()).getValue();
-        }
-
-        throw new InterpretException(name, "Variable " + name.getTokenValue() + " not found");
-    }
-
     public List<String> getPrintedValues() {
         return printedValues;
     }
@@ -91,6 +80,21 @@ public class InterpreterMemory {
         }
 
         throw new InterpretException(varName, "Undefined variable '" + varName.getTokenValue() + "'.");
+    }
+
+
+    // Private methods
+
+    private Object getTempValues(Token name) {
+        if (values.containsKey(name.getTokenValue())) {
+            return values.get(name.getTokenValue()).getValue();
+        }
+
+        if (temporalValues.containsKey(name.getTokenValue())) {
+            return temporalValues.get(name.getTokenValue()).getValue();
+        }
+
+        throw new InterpretException(name, "Variable " + name.getTokenValue() + " not found");
     }
 
     private void checkIfContainAndUpdate(Token varName, Object value) {

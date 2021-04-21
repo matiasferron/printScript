@@ -1,7 +1,7 @@
 package visitor.StatementVisitorHelpers;
 
 import exception.InterpretException;
-import interpreter.InterpreterMemory;
+import interpreter.helper.InterpreterHelper;
 import statement.impl.VariableStatement;
 import visitor.ExpressionVisitor;
 
@@ -10,7 +10,7 @@ import static token.TokenType.STRINGTYPE;
 
 public class VisitVariableStatementHelper {
 
-    public static void visitVariableStatementHelper(VariableStatement variableStatement, ExpressionVisitor expressionVisitor, InterpreterMemory interpreterMemory){
+    public static void visitVariableStatementHelper(VariableStatement variableStatement, ExpressionVisitor expressionVisitor, InterpreterHelper interpreterMemory){
         Object value = null;
         if (variableStatement.getExpression() != null){
             value = variableStatement.getExpression().accept(expressionVisitor);

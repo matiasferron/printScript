@@ -1,19 +1,13 @@
 package visitor;
 
-import exception.InterpretException;
 import expression.impl.*;
-import interpreter.Interpreter;
-import interpreter.InterpreterMemory;
-import token.Token;
+import interpreter.helper.InterpreterHelper;
 import visitor.ExpressionVisitorHelpers.VisitBinaryHelper;
 
-import static token.TokenType.MINUS;
-import static token.TokenType.PLUS;
-
 public class ExpressionVisitorImpl implements ExpressionVisitor{
-    private final InterpreterMemory interpreterMemory;
+    private final InterpreterHelper interpreterMemory;
 
-    public ExpressionVisitorImpl(InterpreterMemory interpreterMemory) {
+    public ExpressionVisitorImpl(InterpreterHelper interpreterMemory) {
         this.interpreterMemory = interpreterMemory;
     }
 

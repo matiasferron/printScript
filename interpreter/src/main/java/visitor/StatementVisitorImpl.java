@@ -1,27 +1,22 @@
 package visitor;
 
-import exception.InterpretException;
-
-import interpreter.InterpreterMemory;
+import interpreter.helper.InterpreterHelper;
 import statement.impl.ExpressionStatement;
 import statement.impl.IfStatement;
 import statement.impl.PrintStatement;
 import statement.impl.VariableStatement;
 import visitor.StatementVisitorHelpers.VisitVariableStatementHelper;
 
-import static token.TokenType.*;
-
 public class StatementVisitorImpl implements StatementVisitor {
     private final ExpressionVisitor expressionVisitor;
-    private final InterpreterMemory interpreterMemory;
+    private final InterpreterHelper interpreterMemory;
 
-    public StatementVisitorImpl(ExpressionVisitor expressionVisitor, InterpreterMemory interpreterMemory) {
+    public StatementVisitorImpl(ExpressionVisitor expressionVisitor, InterpreterHelper interpreterMemory) {
         this.expressionVisitor = expressionVisitor;
         this.interpreterMemory = interpreterMemory;
     }
 
 
-    // Statments
     @Override
     public void visitExpressionStatement(ExpressionStatement statement) {
         statement.getExpression().accept(expressionVisitor);
@@ -41,8 +36,6 @@ public class StatementVisitorImpl implements StatementVisitor {
 
     @Override
     public void visitIfStatement(IfStatement statement) {
-        // todo.
-        // - Falta: que la variable que se decalre dentro del if no exista mas fuera de este
         if (isBoolean(statement.getCondition().accept(expressionVisitor))) {
             interpreterMemory.turnOnTemporalSpace();
             //true branch
