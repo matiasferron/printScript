@@ -14,6 +14,6 @@ public class ParseException extends RuntimeException{
 
     @Override
     public String getMessage() {
-        return message + " at line: " + token.getPosition().getLine() + " column in line (total index number for the moment): " + token.getPosition().getColumn();
+        return message + " at line: " + token.getPosition().getLine() + " in column: " + token.getPosition().getColumn();
     }
 }
