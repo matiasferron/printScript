@@ -37,15 +37,15 @@ public class AcceptedTokens {
         tokenFormats.put(TokenType.IMPORT , "import");
         tokenFormats.put(TokenType.COLON , ":");
         tokenFormats.put(TokenType.SEMICOLON , ";");
-        tokenFormats.put(TokenType.GREATER, "[>]");
-        tokenFormats.put(TokenType.GREATEREQ, ">=");
-        tokenFormats.put(TokenType.LESS, "[<]");
         tokenFormats.put(TokenType.LESSEQ, "<=");
-        tokenFormats.put(TokenType.PRINT, "print");
+        tokenFormats.put(TokenType.GREATEREQ, ">=");
+        tokenFormats.put(TokenType.GREATER, "[>]");
+        tokenFormats.put(TokenType.LESS, "[<]");
+        tokenFormats.put(TokenType.PRINTLN, "println");
         tokenFormats.put(TokenType.STRING, "\"([_a-zA-Z0-9 !\\/.])*\"|'([_a-zA-Z0-9 !\\/.])*'");
         tokenFormats.put(TokenType.IDENTIFIER , "[_a-zA-Z][_a-zA-Z0-9]*");
         tokenFormats.put(TokenType.NEWLINE,"\n");
-        tokenFormats.put(TokenType.EOF, "$");
+//        tokenFormats.put(TokenType.EOF, "$");
         tokenFormats.put(TokenType.UNKNOWN , ",");
     }
 

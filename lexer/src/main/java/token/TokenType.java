@@ -32,7 +32,7 @@ public enum TokenType {
     GREATEREQ,
     LESS,
     LESSEQ,
-    PRINT,
+    PRINTLN,
     IDENTIFIER,
     STRING,
     NEWLINE,

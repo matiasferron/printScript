@@ -73,11 +73,10 @@ public class LexerTest {
     public void test05_should_return_lexical_error() throws UnrecognizedTokenException {
         Stream<Character> input = "#".chars().mapToObj(intValue -> (char) intValue);
 //        throw new UnrecognizedTokenException("Unrecognized token found at {{token.position}}",token);
-
     }
 
     @Test
-    public void test06_integration_test() {
+    public void test06_different_cases_test() {
         String toMatch = "let a: number; a = 2; a = a + 3; println(a); let b: string = \"asd\";";
         Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
 
@@ -87,6 +86,22 @@ public class LexerTest {
         for (Token t: output) {
             expected.append(t.getTokenValue());
         }
+        assertEquals(toMatch.replace(" ", ""), expected.toString());
+    }
+
+    @Test
+    public void test07_booleans_test() {
+        String toMatch = "if( 2 != 3) { } else {}";
+        Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
+
+        List<Token> output = lexer.lex(input);
+
+        StringBuilder expected = new StringBuilder();
+        for (Token t: output) {
+            expected.append(t.getTokenValue());
+
+        }
+
         assertEquals(toMatch.replace(" ", ""), expected.toString());
     }
 

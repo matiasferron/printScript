@@ -1,5 +1,4 @@
 import lexer.Lexer;
-import lexer.LexerImpl;
 import lexer.factory.LexerFactory;
 import lexer.factory.LexerFactoryImpl;
 import picocli.CommandLine;
@@ -13,7 +12,7 @@ import java.util.stream.Stream;
 
 
 @CommandLine.Command
-public class Cli  implements Runnable{
+public class Cli  implements Runnable {
 
     @CommandLine.Option(names = {"-f", "--file"}, description = "file path", required = true)
     private String filePath;
