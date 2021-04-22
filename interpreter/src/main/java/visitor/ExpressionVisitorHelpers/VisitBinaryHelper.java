@@ -7,9 +7,9 @@ import visitor.ExpressionVisitor;
 
 import static token.TokenType.*;
 
-public class VisitBinaryHelper {
+public class VisitBinaryHelper implements VisitorExpressionHelper {
 
-  public static Object visitBinary(
+  public  Object visit(
       BinaryExpression binaryExpression, ExpressionVisitor expressionVisitor) {
     Object left = binaryExpression.getLeft().accept(expressionVisitor);
     Object right = binaryExpression.getRight().accept(expressionVisitor);

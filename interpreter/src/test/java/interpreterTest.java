@@ -16,8 +16,12 @@ import statement.parsers.statment.impl.VariableDeclarationParser;
 import statement.parsers.statment.impl.printParser;
 import token.Token;
 import visitor.ExpressionVisitor;
+import visitor.ExpressionVisitorHelpers.VisitBinaryHelper;
+import visitor.ExpressionVisitorHelpers.VisitorExpressionHelper;
 import visitor.ExpressionVisitorImpl;
 import visitor.StatementVisitor;
+import visitor.StatementVisitorHelpers.VisitVariableStatementHelper;
+import visitor.StatementVisitorHelpers.VisitorStatementHelper;
 import visitor.StatementVisitorImpl;
 
 import java.util.List;
@@ -29,9 +33,14 @@ import static org.junit.Assert.assertTrue;
 public class interpreterTest {
 
   InterpreterMemory interpreterMemory = new InterpreterMemory();
-  ExpressionVisitor expressionVisitor = new ExpressionVisitorImpl(interpreterMemory);
+
+  VisitorExpressionHelper expressionHelper = new VisitBinaryHelper();
+  ExpressionVisitor expressionVisitor = new ExpressionVisitorImpl(interpreterMemory, expressionHelper);
+
+  VisitorStatementHelper visitorStatementHelper = new VisitVariableStatementHelper();
   StatementVisitor statementVisitor =
-      new StatementVisitorImpl(expressionVisitor, interpreterMemory);
+      new StatementVisitorImpl(expressionVisitor, interpreterMemory, visitorStatementHelper);
+
   Interpreter interpreter = new InterpreterImplementation(statementVisitor);
 
   static StatementParser generateEnvironment() {

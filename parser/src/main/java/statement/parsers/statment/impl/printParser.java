@@ -22,7 +22,7 @@ public class printParser extends StatementParser {
 
   @Override
   public Statement parse(TokenWrapper tokens) {
-    if (match(tokens, PRINT)) {
+    if (match(tokens, PRINTLN)) {
       tokens.advance();
       Expression value = expressionParser.parse(tokens);
       consume(tokens, SEMICOLON, "Expect ';' after value.");

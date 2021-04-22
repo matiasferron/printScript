@@ -5,16 +5,18 @@ import statement.impl.ExpressionStatement;
 import statement.impl.IfStatement;
 import statement.impl.PrintStatement;
 import statement.impl.VariableStatement;
-import visitor.StatementVisitorHelpers.VisitVariableStatementHelper;
+import visitor.StatementVisitorHelpers.VisitorStatementHelper;
 
 public class StatementVisitorImpl implements StatementVisitor {
   private final ExpressionVisitor expressionVisitor;
   private final InterpreterHelper interpreterMemory;
+  private final VisitorStatementHelper visitStatementHelper;
 
   public StatementVisitorImpl(
-      ExpressionVisitor expressionVisitor, InterpreterHelper interpreterMemory) {
+      ExpressionVisitor expressionVisitor, InterpreterHelper interpreterMemory, VisitorStatementHelper visitStatementHelper) {
     this.expressionVisitor = expressionVisitor;
     this.interpreterMemory = interpreterMemory;
+    this.visitStatementHelper = visitStatementHelper;
   }
 
   @Override
@@ -31,7 +33,7 @@ public class StatementVisitorImpl implements StatementVisitor {
 
   @Override
   public void visitVariableStatement(VariableStatement statement) {
-    VisitVariableStatementHelper.visitVariableStatementHelper(
+    visitStatementHelper.visitVariableStatementHelper(
         statement, expressionVisitor, interpreterMemory);
   }
 
