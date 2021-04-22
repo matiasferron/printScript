@@ -5,8 +5,7 @@ import interpreter.helper.InterpreterHelper;
 import statement.impl.VariableStatement;
 import visitor.ExpressionVisitor;
 
-import static token.TokenType.NUMBERTYPE;
-import static token.TokenType.STRINGTYPE;
+import static token.TokenType.*;
 
 public class VisitVariableStatementHelper {
 
@@ -27,6 +26,12 @@ public class VisitVariableStatementHelper {
         if (variableStatement.getType() == STRINGTYPE){
             if (!(value instanceof String)){
                 throw new InterpretException(variableStatement.getName(), "Expected a String");
+            }
+        }
+
+        if (variableStatement.getType() == BOOLEAN){
+            if (!(value instanceof Boolean)){
+                throw new InterpretException(variableStatement.getName(), "Expected a boolean");
             }
         }
 
