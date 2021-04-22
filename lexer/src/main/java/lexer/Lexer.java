@@ -7,5 +7,5 @@ import java.util.stream.Stream;
 
 public interface Lexer {
 
-    List<Token> lex(Stream<Character> stream);
+  List<Token> lex(Stream<Character> stream);
 }
