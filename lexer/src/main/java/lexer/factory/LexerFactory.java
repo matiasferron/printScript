@@ -3,5 +3,5 @@ package lexer.factory;
 import lexer.Lexer;
 
 public interface LexerFactory {
-  Lexer createLexer();
+    Lexer createLexer(String printScriptVersion);
 }

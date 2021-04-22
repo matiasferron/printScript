@@ -1,0 +1,10 @@
+let a: number = 2;
+let b: number = a + 2;
+let s: string = "hello world!";
+
+if(a < b) {
+    a = a + 2;
+}
+
+println(a);
+println(s);

@@ -10,59 +10,56 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 
+
 @CommandLine.Command
-public class Cli implements Runnable {
+public class Cli  implements Runnable {
 
-  @CommandLine.Option(
-      names = {"-f", "--file"},
-      description = "file path",
-      required = true)
-  private String filePath;
+    @CommandLine.Option(names = {"-f", "--file"}, description = "file path", required = true)
+    private String filePath;
 
-  @CommandLine.Option(
-      names = {"-m", "--mode"},
-      description = "execution mode",
-      required = true)
-  String runMode;
+    @CommandLine.Option(names = {"-m", "--mode"}, description = "execution mode", required = true)
+    String runMode;
 
-  @CommandLine.Option(
-      names = {"-v", "--version"},
-      description = "file version")
-  String fileVersion;
+    @CommandLine.Option(names = {"-v", "--version"}, description = "printscript version")
+    String version;
 
-  public static void main(String[] args) {
-    CommandLine.run(new Cli(), args);
-  }
-
-  private LexerFactory lexerFactory = LexerFactoryImpl.newLexerFactory();
-
-  @Override
-  public void run() {
-
-    if (!(runMode.equals("interpretation") || runMode.equals("validation"))) {
-      System.out.println("Invalid run mode");
-      System.exit(1);
+    public static void main(String[] args) {
+        CommandLine.run(new Cli(), args);
     }
 
-    try {
-      Stream<Character> input = readFile(filePath).chars().mapToObj(i -> (char) i);
+    private LexerFactory lexerFactory = LexerFactoryImpl.newLexerFactory();
 
-      Lexer lexer = lexerFactory.createLexer();
-      List<Token> tokenList = lexer.lex(input);
+    @Override
+    public void run() {
 
-      // Statements = parser.parse(tokenList)
+        if(!(runMode.equals("interpretation") || runMode.equals("validation"))) {
+            System.out.println("Invalid run mode");
+            System.exit(1);
+        }
 
-      if (runMode.equals("interpretation")) {
+        try {
+            Stream<Character> input = readFile(filePath).chars().mapToObj(i -> (char) i);
 
-        // interpreter.executeCode(code)
-      }
+            Lexer lexer = lexerFactory.createLexer(version);
+            List<Token> tokenList = lexer.lex(input);
 
-    } catch (IOException e) {
-      e.printStackTrace();
+            //Statements = parser.parse(tokenList)
+
+
+            if(runMode.equals("interpretation")) {
+
+                //interpreter.executeCode(code)
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
-  }
 
-  private static String readFile(String path) throws IOException {
-    return new String(Files.readAllBytes(Paths.get(path)));
-  }
+    private static String readFile( String path) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(path)));
+    }
 }
