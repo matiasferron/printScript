@@ -8,38 +8,38 @@ import expression.impl.VariableExpression;
 import token.TokenWrapper;
 
 import static token.TokenType.*;
-import static utils.parserUtils.consume;
-import static utils.parserUtils.match;
+import static utils.parserUtils.validateCurrentToken;
+import static utils.parserUtils.tokenMatchTokenType;
 
 public class TypeParser extends CommonExpressionParser {
   @Override
   public Expression parse(TokenWrapper tokens) {
-    if (match(tokens, STRING)) {
+    if (tokenMatchTokenType(tokens, STRING)) {
       return new LiteralExpression(tokens.getCurrentAndAdvance().getTokenValue());
     }
 
-    if (match(tokens, NUMBER)) {
+    if (tokenMatchTokenType(tokens, NUMBER)) {
       return new LiteralExpression(
           Double.parseDouble(tokens.getCurrentAndAdvance().getTokenValue()));
     }
 
-    if (match(tokens, FALSE)) {
+    if (tokenMatchTokenType(tokens, FALSE)) {
       tokens.advance();
       return new LiteralExpression(false);
     }
-    if (match(tokens, TRUE)) {
+    if (tokenMatchTokenType(tokens, TRUE)) {
       tokens.advance();
       return new LiteralExpression(true);
     }
 
-    if (match(tokens, IDENTIFIER)) {
+    if (tokenMatchTokenType(tokens, IDENTIFIER)) {
       return new VariableExpression(tokens.getCurrentAndAdvance());
     }
 
-    if (match(tokens, LPAREN)) {
+    if (tokenMatchTokenType(tokens, LPAREN)) {
       tokens.advance();
       Expression expr = nextParser.parse(tokens);
-      consume(tokens, RPAREN, "Expect ')' after expression.");
+      validateCurrentToken(tokens, RPAREN, "Expect ')' after expression.");
       return new GroupingExpression(expr);
     }
 

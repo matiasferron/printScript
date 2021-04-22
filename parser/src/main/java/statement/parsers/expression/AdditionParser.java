@@ -7,14 +7,14 @@ import token.TokenWrapper;
 
 import static token.TokenType.MINUS;
 import static token.TokenType.PLUS;
-import static utils.parserUtils.match;
+import static utils.parserUtils.tokenMatchTokenType;
 
 public class AdditionParser extends CommonExpressionParser {
   @Override
   public Expression parse(TokenWrapper tokens) {
     Expression expr = nextParser.parse(tokens);
 
-    if (match(tokens, MINUS, PLUS)) {
+    if (tokenMatchTokenType(tokens, MINUS, PLUS)) {
       Token operator = tokens.getCurrentAndAdvance();
       Expression right = nextParser.parse(tokens);
       expr = new BinaryExpression(expr, right, operator);

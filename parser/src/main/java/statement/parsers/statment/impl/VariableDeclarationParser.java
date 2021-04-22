@@ -12,8 +12,8 @@ import token.TokenWrapper;
 
 import static token.TokenType.*;
 import static token.TokenType.SEMICOLON;
-import static utils.parserUtils.consume;
-import static utils.parserUtils.match;
+import static utils.parserUtils.validateCurrentToken;
+import static utils.parserUtils.tokenMatchTokenType;
 
 public class VariableDeclarationParser extends StatementParser {
 
@@ -28,24 +28,24 @@ public class VariableDeclarationParser extends StatementParser {
   @Override
   public Statement parse(TokenWrapper tokens) {
     Token keyword = tokens.getCurrent();
-    if (match(tokens, LET, CONST)) {
+    if (tokenMatchTokenType(tokens, LET, CONST)) {
       tokens.advance();
-      Token name = consume(tokens, IDENTIFIER, "Expect variable name.");
+      Token name = validateCurrentToken(tokens, IDENTIFIER, "Expect variable name.");
 
       TokenType type = null;
       Expression initializer = null;
 
-      if (match(tokens, COLON)) {
+      if (tokenMatchTokenType(tokens, COLON)) {
         tokens.advance();
         type = checkTypeAssignation(tokens);
         tokens.advance();
       }
-      if (match(tokens, EQUALS)) {
+      if (tokenMatchTokenType(tokens, EQUALS)) {
         tokens.advance();
         initializer = expressionParser.parse(tokens);
       }
 
-      consume(tokens, SEMICOLON, "Expect ';' after variable declaration.");
+      validateCurrentToken(tokens, SEMICOLON, "Expect ';' after variable declaration.");
       return new VariableStatement(name, initializer, type, keyword);
     } else {
       // todo revisar. Ver que hacer en una situacion que no se le asigno un next parser y no

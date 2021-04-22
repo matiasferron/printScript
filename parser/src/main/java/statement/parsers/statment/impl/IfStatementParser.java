@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static token.TokenType.*;
-import static utils.parserUtils.consume;
-import static utils.parserUtils.match;
+import static utils.parserUtils.validateCurrentToken;
+import static utils.parserUtils.tokenMatchTokenType;
 
 public class IfStatementParser extends StatementParser {
   public IfStatementParser(CommonExpressionParser expressionParser) {
@@ -21,35 +21,35 @@ public class IfStatementParser extends StatementParser {
 
   @Override
   public Statement parse(TokenWrapper tokens) {
-    if (match(tokens, IF)) {
+    if (tokenMatchTokenType(tokens, IF)) {
       tokens.advance();
 
-      consume(tokens, LPAREN, "Expect '(' after 'if'");
+      validateCurrentToken(tokens, LPAREN, "Expect '(' after 'if'");
 
       Expression condition = expressionParser.parse(tokens);
 
-      consume(tokens, RPAREN, "Expect ')' after if condition");
+      validateCurrentToken(tokens, RPAREN, "Expect ')' after if condition");
 
-      consume(tokens, LBRACKET, "Expect '{' after if condition");
+      validateCurrentToken(tokens, LBRACKET, "Expect '{' after if condition");
 
       List<Statement> conditionBranch = new ArrayList<>();
       while (!tokens.check(RBRACKET)) {
         conditionBranch.add(nextParser.parse(tokens));
       }
 
-      consume(tokens, RBRACKET, "Expect '}' after if condition");
+      validateCurrentToken(tokens, RBRACKET, "Expect '}' after if condition");
 
       List<Statement> elseBranch = new ArrayList<>();
 
       if (tokens.getCurrent().getTokenType() == ELSE) {
         tokens.advance();
-        consume(tokens, LBRACKET, "Expect '{' after if condition");
+        validateCurrentToken(tokens, LBRACKET, "Expect '{' after if condition");
         while (!tokens.check(RBRACKET)) {
           elseBranch.add(nextParser.parse(tokens));
         }
-        consume(tokens, RBRACKET, "Expect '}' after if condition");
+        validateCurrentToken(tokens, RBRACKET, "Expect '}' after if condition");
       }
-      consume(tokens, SEMICOLON, "Expect ';' after expression.");
+      validateCurrentToken(tokens, SEMICOLON, "Expect ';' after expression.");
       return new IfStatement(condition, conditionBranch, elseBranch);
     }
     return nextParser.parse(tokens);

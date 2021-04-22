@@ -8,7 +8,7 @@ import statement.parsers.statment.StatementParser;
 import token.TokenWrapper;
 
 import static token.TokenType.SEMICOLON;
-import static utils.parserUtils.consume;
+import static utils.parserUtils.validateCurrentToken;
 
 public class ExpressionStatementParser extends StatementParser {
 
@@ -24,7 +24,7 @@ public class ExpressionStatementParser extends StatementParser {
   public Statement parse(TokenWrapper tokens) {
     // todo. Aca no hago nada con el next. es como el ultima etapa siempre (?
     Expression expr = expressionParser.parse(tokens);
-    consume(tokens, SEMICOLON, "Expect ';' after expression.");
+    validateCurrentToken(tokens, SEMICOLON, "Expect ';' after expression.");
     return new ExpressionStatement(expr);
   }
 }

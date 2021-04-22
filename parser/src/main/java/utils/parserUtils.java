@@ -7,15 +7,14 @@ import token.TokenWrapper;
 
 public class parserUtils {
 
-  public static Token consume(TokenWrapper tokens, TokenType type, String message) {
+  public static Token validateCurrentToken(TokenWrapper tokens, TokenType type, String message) {
     if (tokens.check(type)) return tokens.getCurrentAndAdvance();
     throw new ParseException(message, tokens.getCurrent());
   }
 
-  public static boolean match(TokenWrapper tokens, TokenType... types) {
+  public static boolean tokenMatchTokenType(TokenWrapper tokens, TokenType... types) {
     for (TokenType type : types) {
       if (tokens.check(type)) {
-        // tokens.advance();
         return true;
       }
     }
