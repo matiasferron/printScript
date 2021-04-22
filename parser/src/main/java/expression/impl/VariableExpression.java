@@ -6,29 +6,29 @@ import visitor.ExpressionVisitor;
 
 public class VariableExpression implements Expression {
 
-    private Token name;
+  private Token name;
 
-    public VariableExpression(Token name) {
-        this.name = name;
-    }
+  public VariableExpression(Token name) {
+    this.name = name;
+  }
 
-    @Override
-    public Object accept(ExpressionVisitor expressionVisitor) {
+  @Override
+  public Object accept(ExpressionVisitor expressionVisitor) {
 
-        return expressionVisitor.visitVariable(this);
-    }
+    return expressionVisitor.visitVariable(this);
+  }
 
-    @Override
-    public Token getToken() {
-        return name;
-    }
+  @Override
+  public Token getToken() {
+    return name;
+  }
 
-    @Override
-    public Expression getExpression() {
-        return null;
-    }
+  @Override
+  public Expression getExpression() {
+    return null;
+  }
 
-    public Token getName() {
-        return name;
-    }
+  public Token getName() {
+    return name;
+  }
 }

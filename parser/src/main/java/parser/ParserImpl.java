@@ -9,24 +9,22 @@ import token.TokenWrapperImp;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ParserImpl implements Parser {
-    private final TokenWrapperImp tokens;
-    private final StatementParser statementParser;
+  private final TokenWrapperImp tokens;
+  private final StatementParser statementParser;
 
+  public ParserImpl(List<Token> tokens, StatementParser statementParser) {
+    this.tokens = new TokenWrapperImp(tokens);
+    this.statementParser = statementParser;
+  }
 
-    public ParserImpl(List<Token> tokens, StatementParser statementParser) {
-        this.tokens = new TokenWrapperImp(tokens);
-        this.statementParser = statementParser;
+  @Override
+  public List<Statement> parse() {
+    List<Statement> statements = new ArrayList<>();
+    while (tokens.hasMoreTokens()) {
+      statements.add(statementParser.parse(tokens));
     }
 
-    @Override
-    public List<Statement> parse() {
-        List<Statement> statements = new ArrayList<>();
-        while (tokens.hasMoreTokens()) {
-            statements.add(statementParser.parse(tokens));
-        }
-
-        return statements;
-    }
+    return statements;
+  }
 }

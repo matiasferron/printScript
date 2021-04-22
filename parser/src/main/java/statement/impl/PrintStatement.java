@@ -6,18 +6,19 @@ import visitor.StatementVisitor;
 
 public class PrintStatement implements Statement {
 
-    private Expression expression;
+  private Expression expression;
 
-    public PrintStatement(Expression expression) {
-        this.expression = expression;
-    }
+  public PrintStatement(Expression expression) {
+    this.expression = expression;
+  }
 
-    @Override
-    public void accept(StatementVisitor statementVisitor) {
-        statementVisitor.visitPrintStatement(this);
-    }
-    @Override
-    public Expression getExpression() {
-        return expression;
-    }
+  @Override
+  public void accept(StatementVisitor statementVisitor) {
+    statementVisitor.visitPrintStatement(this);
+  }
+
+  @Override
+  public Expression getExpression() {
+    return expression;
+  }
 }

@@ -9,17 +9,17 @@ import static token.TokenType.DIVISION;
 import static token.TokenType.MULTIPLICATION;
 import static utils.parserUtils.match;
 
-public class MultiplicationParser extends CommonExpressionParser{
-    @Override
-    public Expression parse(TokenWrapper tokens) {
-        Expression expr = nextParser.parse(tokens);
+public class MultiplicationParser extends CommonExpressionParser {
+  @Override
+  public Expression parse(TokenWrapper tokens) {
+    Expression expr = nextParser.parse(tokens);
 
-        if (match(tokens, DIVISION, MULTIPLICATION)) {
-            Token operator = tokens.getCurrentAndAdvance();
-            Expression right = nextParser.parse(tokens);
-            expr = new BinaryExpression(expr, right, operator);
-        }
-
-        return expr;
+    if (match(tokens, DIVISION, MULTIPLICATION)) {
+      Token operator = tokens.getCurrentAndAdvance();
+      Expression right = nextParser.parse(tokens);
+      expr = new BinaryExpression(expr, right, operator);
     }
+
+    return expr;
+  }
 }

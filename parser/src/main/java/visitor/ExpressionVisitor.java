@@ -3,9 +3,13 @@ package visitor;
 import expression.impl.*;
 
 public interface ExpressionVisitor {
-    Object visitBinary(BinaryExpression expression);
-    Object visitGrouping(GroupingExpression expression);
-    Object visitLiteral(LiteralExpression expression);
-    Object visitVariable(VariableExpression expression);
-    Object visitAssignment(AssigmentExpression expression);
+  Object visitBinary(BinaryExpression expression);
+
+  Object visitGrouping(GroupingExpression expression);
+
+  Object visitLiteral(LiteralExpression expression);
+
+  Object visitVariable(VariableExpression expression);
+
+  Object visitAssignment(AssigmentExpression expression);
 }

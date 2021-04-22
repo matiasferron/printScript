@@ -2,13 +2,13 @@ package token;
 
 public interface TokenWrapper {
 
-    Token getCurrent();
+  Token getCurrent();
 
-    Token getCurrentAndAdvance();
+  Token getCurrentAndAdvance();
 
-    Token advance();
+  Token advance();
 
-    boolean hasMoreTokens();
+  boolean hasMoreTokens();
 
-    boolean check(TokenType type);
+  boolean check(TokenType type);
 }

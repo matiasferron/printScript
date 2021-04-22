@@ -5,22 +5,21 @@ import statement.parsers.expression.CommonExpressionParser;
 import token.TokenWrapper;
 
 public abstract class StatementParser {
-    public StatementParser nextParser;
+  public StatementParser nextParser;
 
-    public CommonExpressionParser expressionParser;
+  public CommonExpressionParser expressionParser;
 
-    public StatementParser(CommonExpressionParser expressionParser) {
-        this.expressionParser = expressionParser;
-    }
-    public StatementParser() {
-        this.expressionParser = null;
-    }
+  public StatementParser(CommonExpressionParser expressionParser) {
+    this.expressionParser = expressionParser;
+  }
 
+  public StatementParser() {
+    this.expressionParser = null;
+  }
 
-    public abstract Statement parse(TokenWrapper tokens);
+  public abstract Statement parse(TokenWrapper tokens);
 
-    public void setNextParser(StatementParser statementParser) {
-        nextParser = statementParser;
-    }
-
+  public void setNextParser(StatementParser statementParser) {
+    nextParser = statementParser;
+  }
 }

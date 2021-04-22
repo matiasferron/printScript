@@ -9,17 +9,17 @@ import static token.TokenType.MINUS;
 import static token.TokenType.PLUS;
 import static utils.parserUtils.match;
 
-public class AdditionParser extends CommonExpressionParser{
-    @Override
-    public Expression parse(TokenWrapper tokens) {
-        Expression expr = nextParser.parse(tokens);
+public class AdditionParser extends CommonExpressionParser {
+  @Override
+  public Expression parse(TokenWrapper tokens) {
+    Expression expr = nextParser.parse(tokens);
 
-        if (match(tokens, MINUS, PLUS)) {
-            Token operator = tokens.getCurrentAndAdvance();
-            Expression right = nextParser.parse(tokens);
-            expr = new BinaryExpression(expr, right, operator);
-        }
-
-        return expr;
+    if (match(tokens, MINUS, PLUS)) {
+      Token operator = tokens.getCurrentAndAdvance();
+      Expression right = nextParser.parse(tokens);
+      expr = new BinaryExpression(expr, right, operator);
     }
+
+    return expr;
+  }
 }

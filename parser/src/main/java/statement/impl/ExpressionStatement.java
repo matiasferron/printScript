@@ -6,19 +6,19 @@ import visitor.StatementVisitor;
 
 public class ExpressionStatement implements Statement {
 
-    private Expression expression;
+  private Expression expression;
 
-    public ExpressionStatement(Expression expression) {
-        this.expression = expression;
-    }
+  public ExpressionStatement(Expression expression) {
+    this.expression = expression;
+  }
 
-    @Override
-    public void accept(StatementVisitor statementVisitor) {
-        statementVisitor.visitExpressionStatement(this);
-    }
+  @Override
+  public void accept(StatementVisitor statementVisitor) {
+    statementVisitor.visitExpressionStatement(this);
+  }
 
-    @Override
-    public Expression getExpression() {
-        return expression;
-    }
+  @Override
+  public Expression getExpression() {
+    return expression;
+  }
 }

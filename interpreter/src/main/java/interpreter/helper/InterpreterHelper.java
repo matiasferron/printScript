@@ -7,18 +7,19 @@ import java.util.List;
 
 public interface InterpreterHelper {
 
-    Object get(Token name);
+  Object get(Token name);
 
-    void turnOnTemporalSpace();
+  void turnOnTemporalSpace();
 
-    void turnOffTemporalSpace();
+  void turnOffTemporalSpace();
 
-    // Only to save printed values in console.
-    List<String> getPrintedValues();
-    void addPrintedValues(String value);
+  // Only to save printed values in console.
+  List<String> getPrintedValues();
 
-    void addVariableDefinition(String varName, TokenType keyword, TokenType type, Object value, Token name);
+  void addPrintedValues(String value);
 
-    void setVariableValue(Token varName, Object value);
+  void addVariableDefinition(
+      String varName, TokenType keyword, TokenType type, Object value, Token name);
 
+  void setVariableValue(Token varName, Object value);
 }

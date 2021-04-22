@@ -7,5 +7,5 @@ import token.Token;
 import java.util.List;
 
 public interface ParserFactory {
-    Parser createParser(List<Token> tokens, StatementParser statementParser);
+  Parser createParser(List<Token> tokens, StatementParser statementParser);
 }

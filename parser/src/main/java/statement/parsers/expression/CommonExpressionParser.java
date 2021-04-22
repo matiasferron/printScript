@@ -4,11 +4,11 @@ import expression.Expression;
 import token.TokenWrapper;
 
 public abstract class CommonExpressionParser {
-    CommonExpressionParser nextParser;
+  CommonExpressionParser nextParser;
 
-    public abstract Expression parse(TokenWrapper tokens);
+  public abstract Expression parse(TokenWrapper tokens);
 
-    public void setNextParser(CommonExpressionParser nextParser){
-        this.nextParser = nextParser;
-    }
+  public void setNextParser(CommonExpressionParser nextParser) {
+    this.nextParser = nextParser;
+  }
 }
