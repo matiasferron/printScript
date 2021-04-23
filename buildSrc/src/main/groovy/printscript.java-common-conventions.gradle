@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'maven-publish'
+    id 'checkstyle'
 }
 
 repositories {
@@ -52,5 +53,17 @@ publishing {
         gpr(MavenPublication) {
             from(components.java)
         }
+    }
+}
+
+checkstyle {
+    toolVersion = '8.12'
+    ignoreFailures = false
+    configFile = file("${rootDir}/static-code-analysis/checkstyle/checkstyle.xml")
+}
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
     }
 }
