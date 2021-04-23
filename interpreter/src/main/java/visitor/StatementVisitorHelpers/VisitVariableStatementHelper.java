@@ -7,9 +7,9 @@ import visitor.ExpressionVisitor;
 
 import static token.TokenType.*;
 
-public class VisitVariableStatementHelper {
+public class VisitVariableStatementHelper implements VisitorStatementHelper {
 
-  public static void visitVariableStatementHelper(
+  public void visitVariableStatementHelper(
       VariableStatement variableStatement,
       ExpressionVisitor expressionVisitor,
       InterpreterHelper interpreterMemory) {

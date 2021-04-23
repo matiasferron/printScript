@@ -8,14 +8,14 @@ import token.Token;
 import token.TokenWrapper;
 
 import static token.TokenType.EQUALS;
-import static utils.parserUtils.match;
+import static utils.parserUtils.tokenMatchTokenType;
 
 public class AssigmentExpressionParser extends CommonExpressionParser {
   @Override
   public Expression parse(TokenWrapper tokens) {
     Expression expression = this.nextParser.parse(tokens);
 
-    if (match(tokens, EQUALS)) {
+    if (tokenMatchTokenType(tokens, EQUALS)) {
       Token equals = tokens.getCurrentAndAdvance();
       Expression value = parse(tokens);
 

@@ -8,8 +8,8 @@ import statement.parsers.statment.StatementParser;
 import token.TokenWrapper;
 
 import static token.TokenType.*;
-import static utils.parserUtils.consume;
-import static utils.parserUtils.match;
+import static utils.parserUtils.validateCurrentToken;
+import static utils.parserUtils.tokenMatchTokenType;
 
 public class printParser extends StatementParser {
   public printParser() {
@@ -22,10 +22,10 @@ public class printParser extends StatementParser {
 
   @Override
   public Statement parse(TokenWrapper tokens) {
-    if (match(tokens, PRINTLN)) {
+    if (tokenMatchTokenType(tokens, PRINTLN)) {
       tokens.advance();
       Expression value = expressionParser.parse(tokens);
-      consume(tokens, SEMICOLON, "Expect ';' after value.");
+      validateCurrentToken(tokens, SEMICOLON, "Expect ';' after value.");
       return new PrintStatement(value);
     }
     return nextParser.parse(tokens);
