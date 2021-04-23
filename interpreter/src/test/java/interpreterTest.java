@@ -92,7 +92,7 @@ public class interpreterTest {
   static List<Token> generateStringToTokens(String message) {
 
     final LexerFactory lexerFactory = LexerFactoryImpl.newLexerFactory();
-    final Lexer lexer = lexerFactory.createLexer();
+    final Lexer lexer = lexerFactory.createLexer("1.1");
 
     Stream<Character> input = message.chars().mapToObj(intValue -> (char) intValue);
 
