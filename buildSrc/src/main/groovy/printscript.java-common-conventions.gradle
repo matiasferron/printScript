@@ -1,7 +1,8 @@
 plugins {
     id 'java'
     id 'jacoco'
-    id 'maven-publish'
+    id ("maven-publish")
+
 }
 
 repositories {
