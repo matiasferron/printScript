@@ -1,9 +1,8 @@
 package interpreter.helper;
 
+import java.util.List;
 import token.Token;
 import token.TokenType;
-
-import java.util.List;
 
 public interface InterpreterHelper {
 

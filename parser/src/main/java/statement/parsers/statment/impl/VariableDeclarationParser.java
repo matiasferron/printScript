@@ -1,5 +1,10 @@
 package statement.parsers.statment.impl;
 
+import static token.TokenType.*;
+import static token.TokenType.SEMICOLON;
+import static utils.parserUtils.tokenMatchTokenType;
+import static utils.parserUtils.validateCurrentToken;
+
 import exception.ParseException;
 import expression.Expression;
 import statement.Statement;
@@ -9,11 +14,6 @@ import statement.parsers.statment.StatementParser;
 import token.Token;
 import token.TokenType;
 import token.TokenWrapper;
-
-import static token.TokenType.*;
-import static token.TokenType.SEMICOLON;
-import static utils.parserUtils.validateCurrentToken;
-import static utils.parserUtils.tokenMatchTokenType;
 
 public class VariableDeclarationParser extends StatementParser {
 

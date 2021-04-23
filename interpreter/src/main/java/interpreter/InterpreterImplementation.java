@@ -1,11 +1,10 @@
 package interpreter;
 
-import statement.Statement;
-import visitor.StatementVisitor;
+import static token.TokenType.*;
 
 import java.util.List;
-
-import static token.TokenType.*;
+import statement.Statement;
+import visitor.StatementVisitor;
 
 public class InterpreterImplementation implements Interpreter {
 

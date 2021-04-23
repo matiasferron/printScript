@@ -1,6 +1,10 @@
+import static org.junit.Assert.*;
+
 import expression.impl.BinaryExpression;
 import expression.impl.GroupingExpression;
 import expression.impl.LiteralExpression;
+import java.util.List;
+import java.util.stream.Stream;
 import lexer.Lexer;
 import lexer.factory.LexerFactory;
 import lexer.factory.LexerFactoryImpl;
@@ -16,11 +20,6 @@ import statement.parsers.statment.impl.IfStatementParser;
 import statement.parsers.statment.impl.VariableDeclarationParser;
 import statement.parsers.statment.impl.printParser;
 import token.*;
-
-import java.util.List;
-import java.util.stream.Stream;
-
-import static org.junit.Assert.*;
 
 public class ParserTest {
 

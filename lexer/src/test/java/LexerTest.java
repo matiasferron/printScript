@@ -1,15 +1,14 @@
+import static org.junit.Assert.assertEquals;
+
 import exception.UnrecognizedTokenException;
+import java.util.List;
+import java.util.stream.Stream;
 import lexer.Lexer;
 import lexer.factory.LexerFactory;
 import lexer.factory.LexerFactoryImpl;
 import org.junit.Test;
 import token.Token;
 import token.TokenType;
-
-import java.util.List;
-import java.util.stream.Stream;
-
-import static org.junit.Assert.assertEquals;
 
 public class LexerTest {
   private final String PRINT_SCRIPT_VERSION = "1.1";

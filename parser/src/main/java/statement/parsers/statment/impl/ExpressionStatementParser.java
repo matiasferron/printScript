@@ -1,14 +1,14 @@
 package statement.parsers.statment.impl;
 
+import static token.TokenType.SEMICOLON;
+import static utils.parserUtils.validateCurrentToken;
+
 import expression.Expression;
 import statement.Statement;
 import statement.impl.ExpressionStatement;
 import statement.parsers.expression.CommonExpressionParser;
 import statement.parsers.statment.StatementParser;
 import token.TokenWrapper;
-
-import static token.TokenType.SEMICOLON;
-import static utils.parserUtils.validateCurrentToken;
 
 public class ExpressionStatementParser extends StatementParser {
 

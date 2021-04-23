@@ -1,7 +1,5 @@
 package lexer;
 
-import token.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import token.*;
 
 public class LexerImpl implements Lexer {
 

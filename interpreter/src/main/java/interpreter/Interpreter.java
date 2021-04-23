@@ -1,8 +1,7 @@
 package interpreter;
 
-import statement.Statement;
-
 import java.util.List;
+import statement.Statement;
 
 public interface Interpreter {
   void interpret(List<Statement> statements);

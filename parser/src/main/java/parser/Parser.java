@@ -1,8 +1,7 @@
 package parser;
 
-import statement.Statement;
-
 import java.util.List;
+import statement.Statement;
 
 public interface Parser {
   public List<Statement> parse();

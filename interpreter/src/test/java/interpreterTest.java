@@ -1,6 +1,11 @@
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import interpreter.Interpreter;
 import interpreter.InterpreterImplementation;
 import interpreter.helper.InterpreterMemory;
+import java.util.List;
+import java.util.stream.Stream;
 import lexer.Lexer;
 import lexer.factory.LexerFactory;
 import lexer.factory.LexerFactoryImpl;
@@ -23,12 +28,6 @@ import visitor.StatementVisitor;
 import visitor.StatementVisitorHelpers.VisitVariableStatementHelper;
 import visitor.StatementVisitorHelpers.VisitorStatementHelper;
 import visitor.StatementVisitorImpl;
-
-import java.util.List;
-import java.util.stream.Stream;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class interpreterTest {
 

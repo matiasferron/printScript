@@ -1,11 +1,10 @@
 package parser.factory;
 
+import java.util.List;
 import parser.Parser;
 import parser.ParserImpl;
 import statement.parsers.statment.StatementParser;
 import token.Token;
-
-import java.util.List;
 
 public class ParserFactoryImpl implements ParserFactory {
 

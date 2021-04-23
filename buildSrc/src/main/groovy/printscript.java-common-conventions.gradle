@@ -57,6 +57,8 @@ jacocoTestCoverageVerification {
     }
 }
 
+build.dependsOn(jacocoTestReport)
+
 
 checkstyle {
     toolVersion = '8.12'

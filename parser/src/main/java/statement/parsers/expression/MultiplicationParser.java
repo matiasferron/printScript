@@ -1,13 +1,13 @@
 package statement.parsers.expression;
 
+import static token.TokenType.DIVISION;
+import static token.TokenType.MULTIPLICATION;
+import static utils.parserUtils.tokenMatchTokenType;
+
 import expression.Expression;
 import expression.impl.BinaryExpression;
 import token.Token;
 import token.TokenWrapper;
-
-import static token.TokenType.DIVISION;
-import static token.TokenType.MULTIPLICATION;
-import static utils.parserUtils.tokenMatchTokenType;
 
 public class MultiplicationParser extends CommonExpressionParser {
   @Override

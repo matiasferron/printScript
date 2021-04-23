@@ -1,11 +1,11 @@
 package visitor.StatementVisitorHelpers;
 
+import static token.TokenType.*;
+
 import exception.InterpretException;
 import interpreter.helper.InterpreterHelper;
 import statement.impl.VariableStatement;
 import visitor.ExpressionVisitor;
-
-import static token.TokenType.*;
 
 public class VisitVariableStatementHelper implements VisitorStatementHelper {
 

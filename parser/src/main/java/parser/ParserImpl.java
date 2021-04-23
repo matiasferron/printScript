@@ -1,13 +1,11 @@
 package parser;
 
+import java.util.ArrayList;
+import java.util.List;
 import statement.Statement;
-
 import statement.parsers.statment.StatementParser;
 import token.Token;
 import token.TokenWrapperImp;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ParserImpl implements Parser {
   private final TokenWrapperImp tokens;

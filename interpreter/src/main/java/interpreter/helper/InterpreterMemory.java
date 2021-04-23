@@ -1,16 +1,15 @@
 package interpreter.helper;
 
+import static token.TokenType.LET;
+
 import exception.InterpretException;
 import interpreter.VariableDefinitionDataImplementation;
-import token.Token;
-import token.TokenType;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static token.TokenType.LET;
+import token.Token;
+import token.TokenType;
 
 public class InterpreterMemory implements InterpreterHelper {
 

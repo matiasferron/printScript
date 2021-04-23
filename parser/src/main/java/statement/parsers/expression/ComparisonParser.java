@@ -1,13 +1,13 @@
 package statement.parsers.expression;
 
+import static token.TokenType.*;
+import static token.TokenType.LESSEQ;
+import static utils.parserUtils.tokenMatchTokenType;
+
 import expression.Expression;
 import expression.impl.BinaryExpression;
 import token.Token;
 import token.TokenWrapper;
-
-import static token.TokenType.*;
-import static token.TokenType.LESSEQ;
-import static utils.parserUtils.tokenMatchTokenType;
 
 public class ComparisonParser extends CommonExpressionParser {
   @Override

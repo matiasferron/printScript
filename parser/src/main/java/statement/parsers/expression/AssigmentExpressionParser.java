@@ -1,14 +1,14 @@
 package statement.parsers.expression;
 
+import static token.TokenType.EQUALS;
+import static utils.parserUtils.tokenMatchTokenType;
+
 import exception.ParseException;
 import expression.Expression;
 import expression.impl.AssigmentExpression;
 import expression.impl.VariableExpression;
 import token.Token;
 import token.TokenWrapper;
-
-import static token.TokenType.EQUALS;
-import static utils.parserUtils.tokenMatchTokenType;
 
 public class AssigmentExpressionParser extends CommonExpressionParser {
   @Override

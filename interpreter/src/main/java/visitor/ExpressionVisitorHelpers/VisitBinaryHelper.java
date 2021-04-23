@@ -1,11 +1,11 @@
 package visitor.ExpressionVisitorHelpers;
 
+import static token.TokenType.*;
+
 import exception.InterpretException;
 import expression.impl.BinaryExpression;
 import token.Token;
 import visitor.ExpressionVisitor;
-
-import static token.TokenType.*;
 
 public class VisitBinaryHelper implements VisitorExpressionHelper {
 

@@ -1,13 +1,13 @@
 package statement.parsers.expression;
 
+import static token.TokenType.MINUS;
+import static token.TokenType.PLUS;
+import static utils.parserUtils.tokenMatchTokenType;
+
 import expression.Expression;
 import expression.impl.BinaryExpression;
 import token.Token;
 import token.TokenWrapper;
-
-import static token.TokenType.MINUS;
-import static token.TokenType.PLUS;
-import static utils.parserUtils.tokenMatchTokenType;
 
 public class AdditionParser extends CommonExpressionParser {
   @Override

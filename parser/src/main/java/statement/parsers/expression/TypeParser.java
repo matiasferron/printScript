@@ -1,15 +1,15 @@
 package statement.parsers.expression;
 
+import static token.TokenType.*;
+import static utils.parserUtils.tokenMatchTokenType;
+import static utils.parserUtils.validateCurrentToken;
+
 import exception.ParseException;
 import expression.Expression;
 import expression.impl.GroupingExpression;
 import expression.impl.LiteralExpression;
 import expression.impl.VariableExpression;
 import token.TokenWrapper;
-
-import static token.TokenType.*;
-import static utils.parserUtils.validateCurrentToken;
-import static utils.parserUtils.tokenMatchTokenType;
 
 public class TypeParser extends CommonExpressionParser {
   @Override

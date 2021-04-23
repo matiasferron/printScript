@@ -1,18 +1,17 @@
 package statement.parsers.statment.impl;
 
+import static token.TokenType.*;
+import static utils.parserUtils.tokenMatchTokenType;
+import static utils.parserUtils.validateCurrentToken;
+
 import expression.Expression;
+import java.util.ArrayList;
+import java.util.List;
 import statement.Statement;
 import statement.impl.IfStatement;
 import statement.parsers.expression.CommonExpressionParser;
 import statement.parsers.statment.StatementParser;
 import token.TokenWrapper;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static token.TokenType.*;
-import static utils.parserUtils.validateCurrentToken;
-import static utils.parserUtils.tokenMatchTokenType;
 
 public class IfStatementParser extends StatementParser {
   public IfStatementParser(CommonExpressionParser expressionParser) {

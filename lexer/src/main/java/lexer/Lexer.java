@@ -1,9 +1,8 @@
 package lexer;
 
-import token.Token;
-
 import java.util.List;
 import java.util.stream.Stream;
+import token.Token;
 
 public interface Lexer {
 

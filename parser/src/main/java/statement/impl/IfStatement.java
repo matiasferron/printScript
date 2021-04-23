@@ -1,10 +1,9 @@
 package statement.impl;
 
 import expression.Expression;
+import java.util.List;
 import statement.Statement;
 import visitor.StatementVisitor;
-
-import java.util.List;
 
 public class IfStatement implements Statement {
 
