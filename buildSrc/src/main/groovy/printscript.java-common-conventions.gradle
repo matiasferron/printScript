@@ -23,6 +23,11 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
+jacoco {
+    toolVersion = "0.8.6"
+}
+
+
 jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
     reports {
@@ -31,6 +36,7 @@ jacocoTestReport {
         html.destination file("${buildDir}/jacocoHtml")
     }
 }
+
 
 jacocoTestCoverageVerification {
     violationRules {
