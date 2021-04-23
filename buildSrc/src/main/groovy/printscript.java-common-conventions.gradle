@@ -17,7 +17,9 @@ test {
     useJUnit()
     finalizedBy jacocoTestReport // report is always generated after tests run
 }
-
+check {
+    checkstyle
+}
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
