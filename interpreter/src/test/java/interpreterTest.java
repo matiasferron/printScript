@@ -35,7 +35,8 @@ public class interpreterTest {
   InterpreterMemory interpreterMemory = new InterpreterMemory();
 
   VisitorExpressionHelper expressionHelper = new VisitBinaryHelper();
-  ExpressionVisitor expressionVisitor = new ExpressionVisitorImpl(interpreterMemory, expressionHelper);
+  ExpressionVisitor expressionVisitor =
+      new ExpressionVisitorImpl(interpreterMemory, expressionHelper);
 
   VisitorStatementHelper visitorStatementHelper = new VisitVariableStatementHelper();
   StatementVisitor statementVisitor =

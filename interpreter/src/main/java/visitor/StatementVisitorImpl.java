@@ -13,7 +13,9 @@ public class StatementVisitorImpl implements StatementVisitor {
   private final VisitorStatementHelper visitStatementHelper;
 
   public StatementVisitorImpl(
-      ExpressionVisitor expressionVisitor, InterpreterHelper interpreterMemory, VisitorStatementHelper visitStatementHelper) {
+      ExpressionVisitor expressionVisitor,
+      InterpreterHelper interpreterMemory,
+      VisitorStatementHelper visitStatementHelper) {
     this.expressionVisitor = expressionVisitor;
     this.interpreterMemory = interpreterMemory;
     this.visitStatementHelper = visitStatementHelper;

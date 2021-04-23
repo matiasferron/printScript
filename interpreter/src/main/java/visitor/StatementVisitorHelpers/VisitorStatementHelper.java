@@ -5,7 +5,8 @@ import statement.impl.VariableStatement;
 import visitor.ExpressionVisitor;
 
 public interface VisitorStatementHelper {
-    public void visitVariableStatementHelper(VariableStatement variableStatement,
-                                             ExpressionVisitor expressionVisitor,
-                                             InterpreterHelper interpreterMemory);
+  public void visitVariableStatementHelper(
+      VariableStatement variableStatement,
+      ExpressionVisitor expressionVisitor,
+      InterpreterHelper interpreterMemory);
 }

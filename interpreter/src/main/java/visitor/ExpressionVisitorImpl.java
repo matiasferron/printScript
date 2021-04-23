@@ -2,14 +2,14 @@ package visitor;
 
 import expression.impl.*;
 import interpreter.helper.InterpreterHelper;
-import visitor.ExpressionVisitorHelpers.VisitBinaryHelper;
 import visitor.ExpressionVisitorHelpers.VisitorExpressionHelper;
 
 public class ExpressionVisitorImpl implements ExpressionVisitor {
   private final InterpreterHelper interpreterMemory;
   private final VisitorExpressionHelper visitorExpressionHelper;
 
-  public ExpressionVisitorImpl(InterpreterHelper interpreterMemory, VisitorExpressionHelper expressionHelper) {
+  public ExpressionVisitorImpl(
+      InterpreterHelper interpreterMemory, VisitorExpressionHelper expressionHelper) {
     this.interpreterMemory = interpreterMemory;
     this.visitorExpressionHelper = expressionHelper;
   }
