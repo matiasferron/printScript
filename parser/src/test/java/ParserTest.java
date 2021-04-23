@@ -116,7 +116,7 @@ public class ParserTest {
   @Test
   public void test03_should_parse_string_declaration() {
 
-    String toMatch = "const b:string = '6'; print(6 + 6);";
+    String toMatch = "const b:string = '6'; println(6 + 6);";
 
     Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateEnvironment());
 
@@ -215,7 +215,7 @@ public class ParserTest {
   @Test
   public void test06_parse_multiple_statement() {
 
-    String toMatch = "const a:number = 6;" + "b = 7;" + "print(b);";
+    String toMatch = "const a:number = 6;" + "b = 7;" + "println(b);";
     Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateEnvironment());
 
     List<Statement> parsedStatment = parser.parse();

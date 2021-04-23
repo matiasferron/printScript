@@ -14,5 +14,18 @@ dependencies {
     compile 'info.picocli:picocli:4.3.2'
     compile project(":lexer")
     compile project(":parser")
+    compile project(":interpreter")
 
+}
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'Cli'
+        )
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }

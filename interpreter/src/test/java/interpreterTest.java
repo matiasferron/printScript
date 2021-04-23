@@ -93,7 +93,7 @@ public class interpreterTest {
   static List<Token> generateStringToTokens(String message) {
 
     final LexerFactory lexerFactory = LexerFactoryImpl.newLexerFactory();
-    final Lexer lexer = lexerFactory.createLexer();
+    final Lexer lexer = lexerFactory.createLexer("1.1");
 
     Stream<Character> input = message.chars().mapToObj(intValue -> (char) intValue);
 
@@ -105,7 +105,7 @@ public class interpreterTest {
 
     Parser parser =
         new ParserImpl(
-            generateStringToTokens("let a: number = 2; print(a);"), generateEnvironment());
+            generateStringToTokens("let a: number = 2; println(a);"), generateEnvironment());
 
     List<Statement> parsedStatment = parser.parse();
 
@@ -120,7 +120,7 @@ public class interpreterTest {
 
     Parser parser =
         new ParserImpl(
-            generateStringToTokens("let a: number = 2 + 6; print(a);"), generateEnvironment());
+            generateStringToTokens("let a: number = 2 + 6; println(a);"), generateEnvironment());
 
     List<Statement> parsedStatment = parser.parse();
 
@@ -134,7 +134,7 @@ public class interpreterTest {
 
     Parser parser =
         new ParserImpl(
-            generateStringToTokens("let a: string = '5'; print(a);"), generateEnvironment());
+            generateStringToTokens("let a: string = '5'; println(a);"), generateEnvironment());
 
     List<Statement> parsedStatment = parser.parse();
 
@@ -148,7 +148,7 @@ public class interpreterTest {
 
     Parser parser =
         new ParserImpl(
-            generateStringToTokens("let a: number = 5; a = 7; print(a);"), generateEnvironment());
+            generateStringToTokens("let a: number = 5; a = 7; println(a);"), generateEnvironment());
 
     List<Statement> parsedStatment = parser.parse();
 
@@ -162,7 +162,7 @@ public class interpreterTest {
 
     Parser parser =
         new ParserImpl(
-            generateStringToTokens("let a: boolean = 5 > 3; print(a); a = false; print(a);"),
+            generateStringToTokens("let a: boolean = 5 > 3; println(a); a = false; println(a);"),
             generateIFEnvironment());
 
     List<Statement> parsedStatment = parser.parse();
@@ -177,7 +177,7 @@ public class interpreterTest {
 
     Parser parser =
         new ParserImpl(
-            generateStringToTokens("let a: boolean = 5 < 3; print(a);"), generateIFEnvironment());
+            generateStringToTokens("let a: boolean = 5 < 3; println(a);"), generateIFEnvironment());
 
     List<Statement> parsedStatment = parser.parse();
 
@@ -189,7 +189,7 @@ public class interpreterTest {
   @Test
   public void test07_parse_If_statement() {
 
-    String toMatch = "let a = 5; if(5>3){ print(a);}else{let b = 5;};";
+    String toMatch = "let a = 5; if(5>3){ println(a);}else{let b = 5;};";
     Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
 
     List<Statement> parsedStatment = parser.parse();
@@ -206,10 +206,10 @@ public class interpreterTest {
         "let a: number = 5; "
             + "let b = 4; "
             + "if(false){ "
-            + "print(a);"
+            + "println(a);"
             + "a = 6;"
             + "}else{ "
-            + "print(b);"
+            + "println(b);"
             + "};";
     Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
 
@@ -228,10 +228,10 @@ public class interpreterTest {
             + "if(5<3){ "
             + "const a = 5;"
             + "let b: number = 4;"
-            + "print(a);"
-            + "print(b);"
+            + "println(a);"
+            + "println(b);"
             + "}else{"
-            + "print(z);"
+            + "println(z);"
             + "};";
     Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
 

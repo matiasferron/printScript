@@ -33,7 +33,7 @@ public class TokenWrapperImp implements TokenWrapper {
 
   @Override
   public boolean hasMoreTokens() {
-    return position < (tokens.size() - 1);
+    return position < (tokens.size());
   }
 
   public boolean check(TokenType type) {
