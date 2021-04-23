@@ -9,7 +9,8 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'com.google.googlejavaformat:google-java-format:1.10.0'
+//    compile 'com.google.googlejavaformat:google-java-format:1.10.0' needed to run format from gh actions
+    implementation 'gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.9'
 }
 
 
