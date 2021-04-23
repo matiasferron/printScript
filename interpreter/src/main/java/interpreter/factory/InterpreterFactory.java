@@ -3,7 +3,6 @@ package interpreter.factory;
 import interpreter.Interpreter;
 import visitor.StatementVisitor;
 
-
 public interface InterpreterFactory {
 
   static InterpreterFactory newParserFactory() {
