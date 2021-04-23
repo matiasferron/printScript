@@ -71,9 +71,10 @@ public class ParserTest {
   }
 
   static List<Token> generateStringToTokens(String message) {
+    final String PRINT_SCRIPT_VERSION = "1.1";
 
     final LexerFactory lexerFactory = LexerFactoryImpl.newLexerFactory();
-    final Lexer lexer = lexerFactory.createLexer();
+    final Lexer lexer = lexerFactory.createLexer(PRINT_SCRIPT_VERSION);
 
     Stream<Character> input = message.chars().mapToObj(intValue -> (char) intValue);
 

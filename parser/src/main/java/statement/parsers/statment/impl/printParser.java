@@ -12,22 +12,23 @@ import static utils.parserUtils.consume;
 import static utils.parserUtils.match;
 
 public class printParser extends StatementParser {
-  public printParser() {
-    super();
-  }
-
-  public printParser(CommonExpressionParser expressionParser) {
-    super(expressionParser);
-  }
-
-  @Override
-  public Statement parse(TokenWrapper tokens) {
-    if (match(tokens, PRINT)) {
-      tokens.advance();
-      Expression value = expressionParser.parse(tokens);
-      consume(tokens, SEMICOLON, "Expect ';' after value.");
-      return new PrintStatement(value);
+    public printParser( ) {
+        super();
     }
-    return nextParser.parse(tokens);
-  }
+
+    public printParser( CommonExpressionParser expressionParser) {
+        super(expressionParser);
+    }
+
+    @Override
+    public Statement parse(TokenWrapper tokens) {
+        if (match(tokens, PRINTLN)) {
+            tokens.advance();
+            Expression value = expressionParser.parse(tokens);
+            consume(tokens, SEMICOLON, "Expect ';' after value.");
+            return new PrintStatement(value);
+        }
+        return nextParser.parse(tokens);
+    }
+
 }

@@ -12,9 +12,9 @@ import java.util.stream.Stream;
 import static org.junit.Assert.assertEquals;
 
 public class LexerTest {
-
+  private final String PRINT_SCRIPT_VERSION = "1.1";
   private final LexerFactory lexerFactory = LexerFactoryImpl.newLexerFactory();
-  private final Lexer lexer = lexerFactory.createLexer();
+  private final Lexer lexer = lexerFactory.createLexer(PRINT_SCRIPT_VERSION);
 
   @Test
   public void test01_should_match_symbols() {
