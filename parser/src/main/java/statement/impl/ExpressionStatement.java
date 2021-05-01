@@ -21,4 +21,8 @@ public class ExpressionStatement implements Statement {
   public Expression getExpression() {
     return expression;
   }
+
+  public String toString(){
+    return  this.expression.toString();
+  }
 }

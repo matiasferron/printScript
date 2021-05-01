@@ -103,12 +103,11 @@ public class interpreterTest {
   public void test01_should_parse_declaration() {
 
     Parser parser =
-        new ParserImpl(
-            generateStringToTokens("let a: number = 2; println(a);"), generateEnvironment());
+        new ParserImpl(generateEnvironment());
 
-    List<Statement> parsedStatment = parser.parse();
+    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: number = 2; println(a);"));
 
-    interpreter.interpret(parsedStatment);
+    interpreter.interpret(parsedStatements);
     String expected = interpreterMemory.getPrintedValues().get(0);
 
     assertEquals("2", expected);
@@ -118,12 +117,11 @@ public class interpreterTest {
   public void test02_should_parse_declaration_with_Arithmetic() {
 
     Parser parser =
-        new ParserImpl(
-            generateStringToTokens("let a: number = 4 / 2; println(a);"), generateEnvironment());
+        new ParserImpl(generateEnvironment());
 
-    List<Statement> parsedStatment = parser.parse();
+    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: number = 4 / 2; println(a);"));
 
-    interpreter.interpret(parsedStatment);
+    interpreter.interpret(parsedStatements);
 
     assertEquals("2", interpreterMemory.getPrintedValues().get(0));
   }
@@ -132,12 +130,11 @@ public class interpreterTest {
   public void test03_should_parse_declaration_with_Arithmetic() {
 
     Parser parser =
-        new ParserImpl(
-            generateStringToTokens("let a: string = '5'; println(a);"), generateEnvironment());
+        new ParserImpl(generateEnvironment());
 
-    List<Statement> parsedStatment = parser.parse();
+    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: string = '5'; println(a);"));
 
-    interpreter.interpret(parsedStatment);
+    interpreter.interpret(parsedStatements);
 
     assertEquals("'5'", interpreterMemory.getPrintedValues().get(0));
   }
@@ -146,12 +143,11 @@ public class interpreterTest {
   public void test04_should_parse_declaration_with_Arithmetic() {
 
     Parser parser =
-        new ParserImpl(
-            generateStringToTokens("let a: number = 5; a = 7.0; let b = 3 +a; println(a);"), generateEnvironment());
+        new ParserImpl(generateEnvironment());
 
-    List<Statement> parsedStatment = parser.parse();
+    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: number = 5; a = 7.0; let b = 3 +a; println(a);"));
 
-    interpreter.interpret(parsedStatment);
+    interpreter.interpret(parsedStatements);
 
     assertEquals("7.0", interpreterMemory.getPrintedValues().get(0));
   }
@@ -160,12 +156,11 @@ public class interpreterTest {
   public void test04B_should_parse_declaration_with_Arithmetic() {
 
     Parser parser =
-            new ParserImpl(
-                    generateStringToTokens("let a: number = 5; a = 7.0; let b = 3 +a; println(b);"), generateEnvironment());
+            new ParserImpl(generateEnvironment());
 
-    List<Statement> parsedStatment = parser.parse();
+    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: number = 5; a = 7.0; let b = 3 +a; println(b);"));
 
-    interpreter.interpret(parsedStatment);
+    interpreter.interpret(parsedStatements);
 
     assertEquals("10.0", interpreterMemory.getPrintedValues().get(0));
   }
@@ -174,13 +169,11 @@ public class interpreterTest {
   public void test05_should_parse_declaration_with_Boolean() {
 
     Parser parser =
-        new ParserImpl(
-            generateStringToTokens("let a: boolean = 5 > 3; println(a); a = false; println(a);"),
-            generateIFEnvironment());
+        new ParserImpl(generateIFEnvironment());
 
-    List<Statement> parsedStatment = parser.parse();
+    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: boolean = 5 > 3; println(a); a = false; println(a);"));
 
-    interpreter.interpret(parsedStatment);
+    interpreter.interpret(parsedStatements);
 
     assertEquals("true", interpreterMemory.getPrintedValues().get(0));
   }
@@ -189,12 +182,11 @@ public class interpreterTest {
   public void test06_should_parse_declaration_with_Boolean() {
 
     Parser parser =
-        new ParserImpl(
-            generateStringToTokens("let a: boolean = 5 < 3; println(a);"), generateIFEnvironment());
+        new ParserImpl(generateIFEnvironment());
 
-    List<Statement> parsedStatment = parser.parse();
+    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: boolean = 5 < 3; println(a);"));
 
-    interpreter.interpret(parsedStatment);
+    interpreter.interpret(parsedStatements);
 
     assertEquals("false", interpreterMemory.getPrintedValues().get(0));
   }
@@ -203,11 +195,11 @@ public class interpreterTest {
   public void test07_parse_If_statement() {
 
     String toMatch = "let a = 5; if(5>3){ println(a);}else{let b = 5;};";
-    Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
+    Parser parser = new ParserImpl(generateIFEnvironment());
 
-    List<Statement> parsedStatment = parser.parse();
+    List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
-    interpreter.interpret(parsedStatment);
+    interpreter.interpret(parsedStatements);
 
     assertEquals("5", interpreterMemory.getPrintedValues().get(0));
   }
@@ -224,11 +216,11 @@ public class interpreterTest {
             + "}else{ "
             + "println(b);"
             + "};";
-    Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
+    Parser parser = new ParserImpl(generateIFEnvironment());
 
-    List<Statement> parsedStatment = parser.parse();
+    List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
-    interpreter.interpret(parsedStatment);
+    interpreter.interpret(parsedStatements);
 
     assertEquals("4", interpreterMemory.getPrintedValues().get(0));
   }
@@ -246,11 +238,11 @@ public class interpreterTest {
             + "}else{"
             + "println(z);"
             + "};";
-    Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
+    Parser parser = new ParserImpl(generateIFEnvironment());
 
-    List<Statement> parsedStatment = parser.parse();
+    List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
-    interpreter.interpret(parsedStatment);
+    interpreter.interpret(parsedStatements);
 
     assertTrue(true);
   }
@@ -259,11 +251,11 @@ public class interpreterTest {
   public void test10_resign() {
 
     String toMatch = "let z = 4';" + " z = 5;";
-    Parser parser = new ParserImpl(generateStringToTokens(toMatch), generateIFEnvironment());
+    Parser parser = new ParserImpl(generateIFEnvironment());
 
-    List<Statement> parsedStatment = parser.parse();
+    List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
-    interpreter.interpret(parsedStatment);
+    interpreter.interpret(parsedStatements);
 
     assertTrue(true);
   }

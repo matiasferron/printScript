@@ -1,0 +1,1 @@
+[VariableStatement(name=(IDENTIFIER a), expression=LiteralExpression(value=2), type=NUMBERTYPE, keyWord=(LET let)), VariableStatement(name=(IDENTIFIER b), expression=VariableExpression(name=(IDENTIFIER c)), type=STRINGTYPE, keyWord=(CONST const))]

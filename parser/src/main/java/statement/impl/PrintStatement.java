@@ -1,9 +1,11 @@
 package statement.impl;
 
 import expression.Expression;
+import lombok.ToString;
 import statement.Statement;
 import visitor.StatementVisitor;
 
+@ToString()
 public class PrintStatement implements Statement {
 
   private Expression expression;
@@ -21,4 +23,8 @@ public class PrintStatement implements Statement {
   public Expression getExpression() {
     return expression;
   }
+//
+//  public String toString(){
+//    return "println(" + expression.toString() + ")";
+//  }
 }

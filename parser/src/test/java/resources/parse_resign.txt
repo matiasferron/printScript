@@ -1,0 +1,1 @@
+[VariableStatement(name=(IDENTIFIER a), expression=LiteralExpression(value=2), type=NUMBERTYPE, keyWord=(LET let)), AssigmentExpression(expression=LiteralExpression(value=6), name=(IDENTIFIER a))]

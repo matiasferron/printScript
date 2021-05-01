@@ -1,11 +1,13 @@
 package statement.impl;
 
 import expression.Expression;
+import lombok.ToString;
 import statement.Statement;
 import token.Token;
 import token.TokenType;
 import visitor.StatementVisitor;
 
+@ToString()
 public class VariableStatement implements Statement {
 
   private final Token name;
@@ -41,4 +43,8 @@ public class VariableStatement implements Statement {
   public Token getKeyWord() {
     return keyWord;
   }
+
+//  public String toString(){
+//    return  name.getTokenValue() + "=" + expression.toString();
+//  }
 }

@@ -1,9 +1,11 @@
 package expression.impl;
 
 import expression.Expression;
+import lombok.ToString;
 import token.Token;
 import visitor.ExpressionVisitor;
 
+@ToString()
 public class LiteralExpression implements Expression {
 
   private final Object value;

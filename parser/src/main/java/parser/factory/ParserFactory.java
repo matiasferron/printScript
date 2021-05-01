@@ -6,5 +6,5 @@ import statement.parsers.statment.StatementParser;
 import token.Token;
 
 public interface ParserFactory {
-  Parser createParser(List<Token> tokens, StatementParser statementParser);
+  Parser createParser(StatementParser statementParser);
 }

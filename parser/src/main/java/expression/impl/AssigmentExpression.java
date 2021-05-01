@@ -1,9 +1,11 @@
 package expression.impl;
 
 import expression.Expression;
+import lombok.ToString;
 import token.Token;
 import visitor.ExpressionVisitor;
 
+@ToString()
 public class AssigmentExpression implements Expression {
 
   private final Expression expression;

@@ -13,7 +13,7 @@ public class ParserFactoryImpl implements ParserFactory {
   }
 
   @Override
-  public Parser createParser(List<Token> tokens, StatementParser statementParser) {
-    return new ParserImpl(tokens, statementParser);
+  public Parser createParser(StatementParser statementParser) {
+    return new ParserImpl(statementParser);
   }
 }

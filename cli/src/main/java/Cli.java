@@ -138,8 +138,8 @@ public class Cli implements Callable<Integer> {
       Lexer lexer = this.lexerFactory.createLexer(this.version);
       List<Token> tokens = lexer.lex(input);
 
-      Parser parser = new ParserImpl(tokens, generateIFEnvironment());
-      List<Statement> statements = parser.parse();
+      Parser parser = new ParserImpl(generateIFEnvironment());
+      List<Statement> statements = parser.parse(tokens);
 
       if (this.executionMode.toLowerCase().equals("interpretation")) {
         this.initHelpers();

@@ -8,19 +8,18 @@ import token.Token;
 import token.TokenWrapperImp;
 
 public class ParserImpl implements Parser {
-  private final TokenWrapperImp tokens;
   private final StatementParser statementParser;
 
-  public ParserImpl(List<Token> tokens, StatementParser statementParser) {
-    this.tokens = new TokenWrapperImp(tokens);
+  public ParserImpl(StatementParser statementParser) {
     this.statementParser = statementParser;
   }
 
   @Override
-  public List<Statement> parse() {
+  public List<Statement> parse(List<Token> tokens) {
+    TokenWrapperImp wrappedTokens = new TokenWrapperImp(tokens);
     List<Statement> statements = new ArrayList<>();
-    while (tokens.hasMoreTokens()) {
-      statements.add(statementParser.parse(tokens));
+    while (wrappedTokens.hasMoreTokens()) {
+      statements.add(statementParser.parse(wrappedTokens));
     }
 
     return statements;
