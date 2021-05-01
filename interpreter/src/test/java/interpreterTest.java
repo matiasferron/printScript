@@ -111,7 +111,7 @@ public class interpreterTest {
     interpreter.interpret(parsedStatment);
     String expected = interpreterMemory.getPrintedValues().get(0);
 
-    assertEquals("2.0", expected);
+    assertEquals("2", expected);
   }
 
   @Test
@@ -119,13 +119,13 @@ public class interpreterTest {
 
     Parser parser =
         new ParserImpl(
-            generateStringToTokens("let a: number = 2 + 6; println(a);"), generateEnvironment());
+            generateStringToTokens("let a: number = 4 / 2; println(a);"), generateEnvironment());
 
     List<Statement> parsedStatment = parser.parse();
 
     interpreter.interpret(parsedStatment);
 
-    assertEquals("8.0", interpreterMemory.getPrintedValues().get(0));
+    assertEquals("2", interpreterMemory.getPrintedValues().get(0));
   }
 
   @Test
@@ -147,13 +147,27 @@ public class interpreterTest {
 
     Parser parser =
         new ParserImpl(
-            generateStringToTokens("let a: number = 5; a = 7; println(a);"), generateEnvironment());
+            generateStringToTokens("let a: number = 5; a = 7.0; let b = 3 +a; println(a);"), generateEnvironment());
 
     List<Statement> parsedStatment = parser.parse();
 
     interpreter.interpret(parsedStatment);
 
     assertEquals("7.0", interpreterMemory.getPrintedValues().get(0));
+  }
+
+  @Test
+  public void test04B_should_parse_declaration_with_Arithmetic() {
+
+    Parser parser =
+            new ParserImpl(
+                    generateStringToTokens("let a: number = 5; a = 7.0; let b = 3 +a; println(b);"), generateEnvironment());
+
+    List<Statement> parsedStatment = parser.parse();
+
+    interpreter.interpret(parsedStatment);
+
+    assertEquals("10.0", interpreterMemory.getPrintedValues().get(0));
   }
 
   @Test
@@ -195,7 +209,7 @@ public class interpreterTest {
 
     interpreter.interpret(parsedStatment);
 
-    assertEquals("5.0", interpreterMemory.getPrintedValues().get(0));
+    assertEquals("5", interpreterMemory.getPrintedValues().get(0));
   }
 
   @Test
@@ -216,7 +230,7 @@ public class interpreterTest {
 
     interpreter.interpret(parsedStatment);
 
-    assertEquals("4.0", interpreterMemory.getPrintedValues().get(0));
+    assertEquals("4", interpreterMemory.getPrintedValues().get(0));
   }
 
   @Test

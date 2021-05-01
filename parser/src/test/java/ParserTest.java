@@ -84,13 +84,11 @@ public class ParserTest {
   public void test01_should_parse_declaration() {
 
     Parser parser =
-        new ParserImpl(generateStringToTokens("let a: number = 2;"), generateEnvironment());
+        new ParserImpl(generateStringToTokens("let a: number = 2; const b: string = c;"), generateEnvironment());
 
-    List<Statement> parsedStatment = parser.parse();
+    List<Statement> parsedStatement = parser.parse();
 
-    for (Statement s : parsedStatment) {
-      System.out.println(s);
-    }
+    parsedStatement.forEach(x -> System.out.println(x.toString()));
 
     // todo. matcher de las estructuras de los objetos
     assertEquals(true, true);
@@ -106,7 +104,7 @@ public class ParserTest {
     List<Statement> parsedStatment = parser.parse();
 
     for (Statement s : parsedStatment) {
-      System.out.println(s);
+      System.out.println(s.toString());
     }
 
     assertEquals(true, true);
@@ -130,7 +128,7 @@ public class ParserTest {
                     new TokenFactory().create(TokenType.PLUS, "+", new Position(0, 25)))));
 
     for (Statement s : parsedStatment) {
-      System.out.println(s);
+      System.out.println(s.toString());
     }
 
     assertEquals(true, true);
