@@ -19,8 +19,9 @@ public class TypeParser extends CommonExpressionParser {
     }
 
     if (tokenMatchTokenType(tokens, NUMBER)) {
-      return new LiteralExpression(
-          Double.parseDouble(tokens.getCurrentAndAdvance().getTokenValue()));
+      String value = tokens.getCurrentAndAdvance().getTokenValue();
+      Number valueConverted = checkNumberTypeConversion(value);
+      return new LiteralExpression(valueConverted);
     }
 
     if (tokenMatchTokenType(tokens, FALSE)) {
@@ -44,5 +45,12 @@ public class TypeParser extends CommonExpressionParser {
     }
 
     throw new ParseException("Expect expression.", tokens.getCurrent());
+  }
+
+  private Number checkNumberTypeConversion(String value) {
+    if (value.contains("."))
+      return Double.parseDouble(value);
+
+    return Integer.parseInt(value);
   }
 }

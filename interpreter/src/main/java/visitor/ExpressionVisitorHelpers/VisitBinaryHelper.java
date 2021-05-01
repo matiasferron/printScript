@@ -13,37 +13,82 @@ public class VisitBinaryHelper implements VisitorExpressionHelper {
     Object left = binaryExpression.getLeft().accept(expressionVisitor);
     Object right = binaryExpression.getRight().accept(expressionVisitor);
 
-    if (binaryExpression.getOperator().getTokenType() != PLUS)
-      checkNumbersType(binaryExpression.getOperator(), left, right);
+    Number convertedLeft = 0;
+    Number convertedRight = 0;
 
-    // si quiero qu tambien sea un int. puedo parsear el string del value del token y fijarme si
-    // tiene un '.'
+    if (binaryExpression.getOperator().getTokenType() != PLUS) {
+      checkNumbersType(binaryExpression.getOperator(), left, right);
+      convertedLeft = convertTypeNumberOperation(left);
+      convertedRight = convertTypeNumberOperation(right);
+    }
+
     switch (binaryExpression.getOperator().getTokenType()) {
       case MINUS:
-        return (double) left - (double) right;
+        return minusOperation(convertedLeft, convertedRight);
       case PLUS:
         if (left instanceof Number && right instanceof Number) {
-          return (double) left + (double) right;
+          return this.convertNumberOperation(left, right);
         }
         return left.toString() + right.toString();
       case DIVISION:
-        return (double) left / (double) right;
+        return divisionOperation(convertedLeft, convertedRight);
       case MULTIPLICATION:
-        return (double) left * (double) right;
+        return multiplyOperation(convertedLeft, convertedRight);
       case GREATER:
-        return (double) left > (double) right;
+        return convertedLeft.doubleValue() > convertedRight.doubleValue();
       case GREATEREQ:
-        return (double) left >= (double) right;
+        return convertedLeft.doubleValue() >= convertedRight.doubleValue();
       case LESS:
-        return (double) left < (double) right;
+        return convertedLeft.doubleValue() < convertedRight.doubleValue();
       case LESSEQ:
-        return (double) left <= (double) right;
+        return convertedLeft.doubleValue() <= convertedRight.doubleValue();
     }
     return -1;
   }
 
+  private Object minusOperation(Number left, Number right) {
+    if (left instanceof Integer && right instanceof Integer)
+      return left.intValue() - right.intValue();
+
+    return left.doubleValue() - right.doubleValue();
+  }
+
+  private Object divisionOperation(Number left, Number right) {
+    if (left instanceof Integer && right instanceof Integer)
+      return left.intValue() / right.intValue();
+
+    return left.doubleValue() / right.doubleValue();
+  }
+
+  private Object multiplyOperation(Number left, Number right) {
+    if (left instanceof Integer && right instanceof Integer)
+      return left.intValue() * right.intValue();
+
+    return left.doubleValue() * right.doubleValue();
+  }
+
+  private Object convertNumberOperation(Object left, Object right) {
+    if (left instanceof Integer && right instanceof Integer)
+      return (int)left + (int) right;
+
+    if (left instanceof Integer)
+      return (int)left + (double) right;
+
+    if (right instanceof Integer)
+      return (double)left + (int) right;
+
+    return (double)left + (double)right;
+  }
+
+  private Number convertTypeNumberOperation(Object value) {
+    if (value instanceof Integer)
+      return (int) value;
+
+    return (double) value;
+  }
+
   private static void isNumberType(Token operator, Object leaf) {
-    if (leaf instanceof Double) return;
+    if (leaf instanceof Number) return;
     throw new InterpretException(operator, "Operand must be a number.");
   }
 
