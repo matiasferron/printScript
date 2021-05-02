@@ -1,0 +1,1 @@
+[VariableStatement(name=(IDENTIFIER b), expression=BinaryExpression(left=LiteralExpression(value=6), right=GroupingExpression(expression=BinaryExpression(left=LiteralExpression(value=9), right=LiteralExpression(value=7), operator=(PLUS +))), operator=(MULTIPLICATION *)), type=NUMBERTYPE, keyWord=(CONST const))]

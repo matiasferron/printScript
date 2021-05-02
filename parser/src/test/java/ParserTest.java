@@ -129,7 +129,7 @@ public class ParserTest {
     }
 
     @Test
-    public void test03_should_parse_string_declaration() {
+    public void test03_should_parse_string_declaration_and_println() throws Exception {
 
         String toMatch = "const b:string = '6'; println(6 + 6);";
 
@@ -137,42 +137,36 @@ public class ParserTest {
 
         List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
+        final String expected = getExpectedResult("./src/test/java/resources/string_declaration_and_println.txt");
 
-        for (Statement s : parsedStatements) {
-            System.out.println(s.toString());
-        }
 
-        assertEquals(true, true);
+        assertEquals(expected, parsedStatements.toString());
     }
 
-    @Test // todo fix iguala a un number y no rompe.
-    public void test04_should_parse_string_declaration() {
+    @Test
+    public void test04_should_parse_string_declaration() throws Exception {
 
-        String toMatch = "const b:string = 6;";
+        String toMatch = "const b:string = 6; const c:string = c; const d=b+c;";
         Parser parser = new ParserImpl(generateEnvironment());
 
         List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
-        for (Statement s : parsedStatements) {
-            System.out.println(s);
-        }
+        System.out.println(parsedStatements.toString());
 
-        assertEquals(true, true);
+        final String expected = getExpectedResult("./src/test/java/resources/string_declaration.txt");
+        assertEquals(expected, parsedStatements.toString());
     }
 
     @Test
-    public void test05_should_parse_multiplication() {
+    public void test05_should_parse_multiplication() throws Exception {
 
         String toMatch = "const b:number = 6*(9+7);";
         Parser parser = new ParserImpl(generateEnvironment());
 
         List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
-        for (Statement s : parsedStatements) {
-            System.out.println(s);
-        }
-
-        assertEquals(true, true);
+        final String expected = getExpectedResult("./src/test/java/resources/parse_multiplication.txt");
+        assertEquals(expected, parsedStatements.toString());
     }
 
     @Test
@@ -183,9 +177,6 @@ public class ParserTest {
 
         List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
-        for (Statement s : parsedStatements) {
-            System.out.println(s);
-        }
 
         assertEquals(true, true);
     }
