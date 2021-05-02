@@ -2,15 +2,10 @@ import static org.junit.Assert.*;
 import static token.TokenType.DIVISION;
 
 import exception.ParseException;
-import expression.impl.BinaryExpression;
-import expression.impl.GroupingExpression;
-import expression.impl.LiteralExpression;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,7 +19,6 @@ import org.junit.Test;
 import parser.Parser;
 import parser.ParserImpl;
 import statement.Statement;
-import statement.impl.PrintStatement;
 import statement.parsers.expression.*;
 import statement.parsers.statment.StatementParser;
 import statement.parsers.statment.impl.ExpressionStatementParser;
@@ -82,12 +76,13 @@ public class ParserTest {
     }
 
     @SneakyThrows
-    public static String readFileAsString(File fileName) throws Exception {
+    public static String readFileAsString(File fileName) {
         val br = new BufferedReader(new FileReader(fileName));
         return br.lines().collect(Collectors.joining("\n"));
     }
 
-    public static String getExpectedResult(String filePath) throws Exception {
+    @SneakyThrows
+    public static String getExpectedResult(String filePath) {
         File file = new File(filePath);
         return readFileAsString(file);
     }
@@ -105,7 +100,7 @@ public class ParserTest {
     }
 
     @Test
-    public void test01_should_parse_declaration() throws Exception {
+    public void test01_should_parse_declaration() {
 
         Parser parser = new ParserImpl(generateEnvironment());
 
@@ -117,7 +112,7 @@ public class ParserTest {
     }
 
     @Test
-    public void test02_should_parse_resign() throws Exception {
+    public void test02_should_parse_resign() {
 
         String toMatch = "let a: number = 2; a = 6;";
 
@@ -131,7 +126,7 @@ public class ParserTest {
     }
 
     @Test
-    public void test03_should_parse_string_declaration_and_println() throws Exception {
+    public void test03_should_parse_string_declaration_and_println() {
 
         String toMatch = "const b:string = '6'; println(6 + 6);";
 
@@ -146,7 +141,7 @@ public class ParserTest {
     }
 
     @Test
-    public void test04_should_parse_string_declaration() throws Exception {
+    public void test04_should_parse_string_declaration() {
 
         String toMatch = "const b:string = 6; const c:string = c; const d=b+c;";
         Parser parser = new ParserImpl(generateEnvironment());
@@ -160,7 +155,7 @@ public class ParserTest {
     }
 
     @Test
-    public void test05_should_parse_multiplication() throws Exception {
+    public void test05_should_parse_multiplication() {
 
         String toMatch = "const b:number = 6*(9+7);";
         Parser parser = new ParserImpl(generateEnvironment());
@@ -172,7 +167,7 @@ public class ParserTest {
     }
 
     @Test
-    public void test06_should_parse_Division() throws Exception {
+    public void test06_should_parse_Division() {
 
         String toMatch = "const b:number = 6/(9/7);";
         Parser parser = new ParserImpl(generateEnvironment());
@@ -190,11 +185,11 @@ public class ParserTest {
         String toMatch = "const b:number = 6/(9/7)";
         Parser parser = new ParserImpl(generateEnvironment());
 
-        Token token = new TokenFactory().create(DIVISION, "", new Position(0,20));
+        Token token = new TokenFactory().create(DIVISION, "", new Position(0, 20));
         try {
-            List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+            parser.parse(generateStringToTokens(toMatch));
         } catch (Exception e) {
-            assertEquals(new ParseException("Expect ';' after variable declaration.", token ).getMessage(), e.getMessage());
+            assertEquals(new ParseException("Expect ';' after variable declaration.", token).getMessage(), e.getMessage());
         }
 
 
@@ -206,18 +201,17 @@ public class ParserTest {
         String toMatch = "const b: = 6";
         Parser parser = new ParserImpl(generateEnvironment());
 
-        Token token = new TokenFactory().create(DIVISION, "", new Position(0,7));
+        Token token = new TokenFactory().create(DIVISION, "", new Position(0, 7));
         try {
-            List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+            parser.parse(generateStringToTokens(toMatch));
         } catch (Exception e) {
-            assertEquals(new ParseException("Need to specify variable type", token ).getMessage(), e.getMessage());
+            assertEquals(new ParseException("Need to specify variable type", token).getMessage(), e.getMessage());
         }
 
-        assertEquals(true, true);
     }
 
     @Test
-    public void test06_parse_multiple_statement() throws Exception {
+    public void test06_parse_multiple_statement() {
 
         String toMatch = "const a:number = 6;" + "b = 7;" + "println(b);";
         Parser parser = new ParserImpl(generateEnvironment());
@@ -235,19 +229,17 @@ public class ParserTest {
         String toMatch = "if(true){ let a = 5; const b: number = 5};";
         Parser parser = new ParserImpl(generateIFEnvironment());
 
-        Token token = new TokenFactory().create(DIVISION, "", new Position(0,31));
+        Token token = new TokenFactory().create(DIVISION, "", new Position(0, 31));
 
         try {
             parser.parse(generateStringToTokens(toMatch));
         } catch (Exception e) {
-            assertEquals(new ParseException("Expect ';' after variable declaration.", token ).getMessage(), e.getMessage());
+            assertEquals(new ParseException("Expect ';' after variable declaration.", token).getMessage(), e.getMessage());
         }
-
-        assertEquals(true, true);
     }
 
     @Test
-    public void test07_parse_boolean_statement() throws Exception {
+    public void test07_parse_boolean_statement() {
 
         String toMatch = "let a:boolean = true;";
         Parser parser = new ParserImpl(generateIFEnvironment());
@@ -259,7 +251,7 @@ public class ParserTest {
     }
 
     @Test
-    public void test08_parse_boolean_condition_statement() throws Exception {
+    public void test08_parse_boolean_condition_statement() {
 
         String toMatch = "let a:boolean = 5>3;";
         Parser parser = new ParserImpl(generateIFEnvironment());
@@ -271,7 +263,7 @@ public class ParserTest {
     }
 
     @Test
-    public void test09_parse_boolean_condition_statement() throws Exception {
+    public void test09_parse_boolean_condition_statement() {
 
         String toMatch = "let a = 5<3;";
         Parser parser = new ParserImpl(generateIFEnvironment());
@@ -297,7 +289,7 @@ public class ParserTest {
 //        }
 
     @Test
-    public void test09_parse_Combine_boolean_condition_statement() throws Exception {
+    public void test09_parse_Combine_boolean_condition_statement() {
 
         String toMatch = "let a = 5>(3+3);";
         Parser parser = new ParserImpl(generateIFEnvironment());
