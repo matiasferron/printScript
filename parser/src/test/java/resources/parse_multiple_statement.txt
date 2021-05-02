@@ -1,0 +1,1 @@
+[VariableStatement(name=(IDENTIFIER a), expression=LiteralExpression(value=6), type=NUMBERTYPE, keyWord=(CONST const)), AssigmentExpression(expression=LiteralExpression(value=7), name=(IDENTIFIER b)), PrintStatement(expression=GroupingExpression(expression=VariableExpression(name=(IDENTIFIER b))))]

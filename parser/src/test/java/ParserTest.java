@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
+import static token.TokenType.DIVISION;
 
+import exception.ParseException;
 import expression.impl.BinaryExpression;
 import expression.impl.GroupingExpression;
 import expression.impl.LiteralExpression;
@@ -170,7 +172,7 @@ public class ParserTest {
     }
 
     @Test
-    public void test06_should_parse_Division() {
+    public void test06_should_parse_Division() throws Exception {
 
         String toMatch = "const b:number = 6/(9/7);";
         Parser parser = new ParserImpl(generateEnvironment());
@@ -178,7 +180,8 @@ public class ParserTest {
         List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
 
-        assertEquals(true, true);
+        final String expected = getExpectedResult("./src/test/java/resources/division.txt");
+        assertEquals(expected, parsedStatements.toString());
     }
 
     @Test
@@ -187,13 +190,14 @@ public class ParserTest {
         String toMatch = "const b:number = 6/(9/7)";
         Parser parser = new ParserImpl(generateEnvironment());
 
+        Token token = new TokenFactory().create(DIVISION, "", new Position(0,20));
         try {
             List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
         } catch (Exception e) {
-            System.out.println(e);
+            assertEquals(new ParseException("Expect ';' after variable declaration.", token ).getMessage(), e.getMessage());
         }
 
-        assertEquals(true, true);
+
     }
 
     @Test
@@ -202,24 +206,27 @@ public class ParserTest {
         String toMatch = "const b: = 6";
         Parser parser = new ParserImpl(generateEnvironment());
 
+        Token token = new TokenFactory().create(DIVISION, "", new Position(0,7));
         try {
             List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
         } catch (Exception e) {
-            System.out.println(e);
+            assertEquals(new ParseException("Need to specify variable type", token ).getMessage(), e.getMessage());
         }
 
         assertEquals(true, true);
     }
 
     @Test
-    public void test06_parse_multiple_statement() {
+    public void test06_parse_multiple_statement() throws Exception {
 
         String toMatch = "const a:number = 6;" + "b = 7;" + "println(b);";
         Parser parser = new ParserImpl(generateEnvironment());
 
         List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
-        assertEquals(true, true);
+        final String expected = getExpectedResult("./src/test/java/resources/parse_multiple_statement.txt");
+        assertEquals(expected, parsedStatements.toString());
+
     }
 
     @Test
@@ -228,90 +235,77 @@ public class ParserTest {
         String toMatch = "if(true){ let a = 5; const b: number = 5};";
         Parser parser = new ParserImpl(generateIFEnvironment());
 
+        Token token = new TokenFactory().create(DIVISION, "", new Position(0,31));
+
         try {
-            List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+            parser.parse(generateStringToTokens(toMatch));
         } catch (Exception e) {
-            System.out.println(e);
+            assertEquals(new ParseException("Expect ';' after variable declaration.", token ).getMessage(), e.getMessage());
         }
 
         assertEquals(true, true);
     }
 
     @Test
-    public void test07_parse_boolean_statement() {
+    public void test07_parse_boolean_statement() throws Exception {
 
         String toMatch = "let a:boolean = true;";
         Parser parser = new ParserImpl(generateIFEnvironment());
 
         List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
-        for (Statement s : parsedStatements) {
-            System.out.println(s);
-        }
-
-        assertEquals(true, true);
+        final String expected = getExpectedResult("./src/test/java/resources/boolean_statement.txt");
+        assertEquals(expected, parsedStatements.toString());
     }
 
     @Test
-    public void test08_parse_boolean_condition_statement() {
+    public void test08_parse_boolean_condition_statement() throws Exception {
 
         String toMatch = "let a:boolean = 5>3;";
         Parser parser = new ParserImpl(generateIFEnvironment());
 
         List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
-        for (Statement s : parsedStatements) {
-            System.out.println(s);
-        }
-
-        assertEquals(true, true);
+        final String expected = getExpectedResult("./src/test/java/resources/boolean_condition_statement.txt");
+        assertEquals(expected, parsedStatements.toString());
     }
 
     @Test
-    public void test09_parse_boolean_condition_statement() {
+    public void test09_parse_boolean_condition_statement() throws Exception {
 
-        String toMatch = "let a:boolean = 5<3;";
+        String toMatch = "let a = 5<3;";
         Parser parser = new ParserImpl(generateIFEnvironment());
 
         List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
-        for (Statement s : parsedStatements) {
-            System.out.println(s);
-        }
-
-        assertEquals(true, true);
+        final String expected = getExpectedResult("./src/test/java/resources/boolean_condition.txt");
+        assertEquals(expected, parsedStatements.toString());
     }
 
-    //    @Test //TODO FIX LEXER
-    //    public void test09_parse_boolean_GreaterEquals_condition_statement(){
-    //
-    //        String toMatch = "let a:boolean = 5>=3;";
-    //        Parser parser = new ParserImpl(
-    // generateIFEnvironment());
-    //
-    //        List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
-    //
-    //        for (Statement s: parsedStatements) {
-    //            System.out.println(s);
-    //        }
-    //
-    //        assertEquals(true, true);
-    //    }
+//        @Test //TODO FIX LEXER
+//        public void test09_parse_boolean_GreaterEquals_condition_statement(){
+//
+//            String toMatch = "let a:boolean = (5>=3);";
+//            Parser parser = new ParserImpl(
+//                 generateIFEnvironment());
+//
+//            List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+//
+//            System.out.println(parsedStatements.toString());
+//
+//            assertEquals(true, true);
+//        }
 
     @Test
-    public void test09_parse_Combine_boolean_condition_statement() {
+    public void test09_parse_Combine_boolean_condition_statement() throws Exception {
 
         String toMatch = "let a = 5>(3+3);";
         Parser parser = new ParserImpl(generateIFEnvironment());
 
         List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
 
-        for (Statement s : parsedStatements) {
-            System.out.println(s);
-        }
+        final String expected = getExpectedResult("./src/test/java/resources/combine_boolean_condition.txt");
+        assertEquals(expected, parsedStatements.toString());
 
-        assertEquals(true, true);
-        //        Assertions.assertThat(parsedStatements.get(0)).hasSameClassAs(new
-        // ExpressionStatement());
     }
 }

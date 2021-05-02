@@ -1,0 +1,1 @@
+[VariableStatement(name=(IDENTIFIER a), expression=LiteralExpression(value=true), type=BOOLEAN, keyWord=(LET let))]

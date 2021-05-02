@@ -1,0 +1,1 @@
+[VariableStatement(name=(IDENTIFIER a), expression=BinaryExpression(left=LiteralExpression(value=5), right=GroupingExpression(expression=BinaryExpression(left=LiteralExpression(value=3), right=LiteralExpression(value=3), operator=(PLUS +))), operator=(GREATER >)), type=null, keyWord=(LET let))]
