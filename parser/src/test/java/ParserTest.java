@@ -17,63 +17,16 @@ import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.Test;
 import parser.Parser;
-import parser.ParserImpl;
+import parser.factory.ParserFactory;
+import parser.factory.ParserFactoryImpl;
 import statement.Statement;
-import statement.parsers.expression.*;
-import statement.parsers.statment.StatementParser;
-import statement.parsers.statment.impl.ExpressionStatementParser;
-import statement.parsers.statment.impl.IfStatementParser;
-import statement.parsers.statment.impl.VariableDeclarationParser;
-import statement.parsers.statment.impl.printParser;
 import token.*;
 
 public class ParserTest {
 
-    static StatementParser generateEnvironment() {
-        CommonExpressionParser expressionParser = new AssigmentExpressionParser();
-        CommonExpressionParser expressionParser2 = new AdditionParser();
-        CommonExpressionParser expressionParser3 = new MultiplicationParser();
-        CommonExpressionParser expressionParser4 = new TypeParser();
-
-        expressionParser.setNextParser(expressionParser2);
-        expressionParser2.setNextParser(expressionParser3);
-        expressionParser3.setNextParser(expressionParser4);
-        expressionParser4.setNextParser(expressionParser);
-
-        StatementParser variableDeclarationParser = new VariableDeclarationParser(expressionParser);
-        StatementParser printParser = new printParser(expressionParser);
-        StatementParser expressionStatementParser = new ExpressionStatementParser(expressionParser);
-
-        variableDeclarationParser.setNextParser(printParser);
-        printParser.setNextParser(expressionStatementParser);
-
-        return variableDeclarationParser;
-    }
-
-    static StatementParser generateIFEnvironment() {
-        CommonExpressionParser expressionParser = new AssigmentExpressionParser();
-        CommonExpressionParser expressionParser1 = new ComparisonParser();
-        CommonExpressionParser expressionParser2 = new AdditionParser();
-        CommonExpressionParser expressionParser3 = new MultiplicationParser();
-        CommonExpressionParser expressionParser4 = new TypeParser();
-
-        expressionParser.setNextParser(expressionParser1);
-        expressionParser1.setNextParser(expressionParser2);
-        expressionParser2.setNextParser(expressionParser3);
-        expressionParser3.setNextParser(expressionParser4);
-        expressionParser4.setNextParser(expressionParser);
-
-        StatementParser variableDeclarationParser = new VariableDeclarationParser(expressionParser);
-        StatementParser printParser = new printParser(expressionParser);
-        StatementParser expressionStatementParser = new ExpressionStatementParser(expressionParser);
-        StatementParser ifStatementParser = new IfStatementParser(expressionParser);
-
-        ifStatementParser.setNextParser(variableDeclarationParser);
-        variableDeclarationParser.setNextParser(printParser);
-        printParser.setNextParser(expressionStatementParser);
-
-        return ifStatementParser;
-    }
+   ParserFactory parserFactory = ParserFactoryImpl.newParserFactory();
+   private final Parser basicParser = parserFactory.createParser("1.0");
+   private final Parser advanceParser = parserFactory.createParser("1.1");
 
     @SneakyThrows
     public static String readFileAsString(File fileName) {
@@ -102,9 +55,7 @@ public class ParserTest {
     @Test
     public void test01_should_parse_declaration() {
 
-        Parser parser = new ParserImpl(generateEnvironment());
-
-        List<Statement> parsedStatement = parser.parse(generateStringToTokens("let a: number = 2; const b: string = c;"));
+        List<Statement> parsedStatement = basicParser.parse(generateStringToTokens("let a: number = 2; const b: string = c;"));
 
         final String expected = getExpectedResult("./src/test/java/resources/parse_declaration.txt");
 
@@ -116,9 +67,7 @@ public class ParserTest {
 
         String toMatch = "let a: number = 2; a = 6;";
 
-        Parser parser = new ParserImpl(generateEnvironment());
-
-        List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+        List<Statement> parsedStatements = basicParser.parse(generateStringToTokens(toMatch));
 
         final String expected = getExpectedResult("./src/test/java/resources/parse_resign.txt");
 
@@ -130,9 +79,7 @@ public class ParserTest {
 
         String toMatch = "const b:string = '6'; println(6 + 6);";
 
-        Parser parser = new ParserImpl(generateEnvironment());
-
-        List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+        List<Statement> parsedStatements = basicParser.parse(generateStringToTokens(toMatch));
 
         final String expected = getExpectedResult("./src/test/java/resources/string_declaration_and_println.txt");
 
@@ -144,9 +91,8 @@ public class ParserTest {
     public void test04_should_parse_string_declaration() {
 
         String toMatch = "const b:string = 6; const c:string = c; const d=b+c;";
-        Parser parser = new ParserImpl(generateEnvironment());
 
-        List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+        List<Statement> parsedStatements = basicParser.parse(generateStringToTokens(toMatch));
 
         System.out.println(parsedStatements.toString());
 
@@ -158,9 +104,8 @@ public class ParserTest {
     public void test05_should_parse_multiplication() {
 
         String toMatch = "const b:number = 6*(9+7);";
-        Parser parser = new ParserImpl(generateEnvironment());
 
-        List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+        List<Statement> parsedStatements = basicParser.parse(generateStringToTokens(toMatch));
 
         final String expected = getExpectedResult("./src/test/java/resources/parse_multiplication.txt");
         assertEquals(expected, parsedStatements.toString());
@@ -170,9 +115,8 @@ public class ParserTest {
     public void test06_should_parse_Division() {
 
         String toMatch = "const b:number = 6/(9/7);";
-        Parser parser = new ParserImpl(generateEnvironment());
 
-        List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+        List<Statement> parsedStatements = basicParser.parse(generateStringToTokens(toMatch));
 
 
         final String expected = getExpectedResult("./src/test/java/resources/division.txt");
@@ -183,11 +127,10 @@ public class ParserTest {
     public void test06_fail_parse_statement_without_SEMICOLON() {
 
         String toMatch = "const b:number = 6/(9/7)";
-        Parser parser = new ParserImpl(generateEnvironment());
 
         Token token = new TokenFactory().create(DIVISION, "", new Position(0, 20));
         try {
-            parser.parse(generateStringToTokens(toMatch));
+            basicParser.parse(generateStringToTokens(toMatch));
         } catch (Exception e) {
             assertEquals(new ParseException("Expect ';' after variable declaration.", token).getMessage(), e.getMessage());
         }
@@ -199,11 +142,10 @@ public class ParserTest {
     public void test06_fail_parse_statement_without_type_Declaration() {
 
         String toMatch = "const b: = 6";
-        Parser parser = new ParserImpl(generateEnvironment());
 
         Token token = new TokenFactory().create(DIVISION, "", new Position(0, 7));
         try {
-            parser.parse(generateStringToTokens(toMatch));
+            basicParser.parse(generateStringToTokens(toMatch));
         } catch (Exception e) {
             assertEquals(new ParseException("Need to specify variable type", token).getMessage(), e.getMessage());
         }
@@ -214,9 +156,8 @@ public class ParserTest {
     public void test06_parse_multiple_statement() {
 
         String toMatch = "const a:number = 6;" + "b = 7;" + "println(b);";
-        Parser parser = new ParserImpl(generateEnvironment());
 
-        List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+        List<Statement> parsedStatements = basicParser.parse(generateStringToTokens(toMatch));
 
         final String expected = getExpectedResult("./src/test/java/resources/parse_multiple_statement.txt");
         assertEquals(expected, parsedStatements.toString());
@@ -227,12 +168,11 @@ public class ParserTest {
     public void test06_parse_If_statement() {
 
         String toMatch = "if(true){ let a = 5; const b: number = 5};";
-        Parser parser = new ParserImpl(generateIFEnvironment());
 
         Token token = new TokenFactory().create(DIVISION, "", new Position(0, 31));
 
         try {
-            parser.parse(generateStringToTokens(toMatch));
+            advanceParser.parse(generateStringToTokens(toMatch));
         } catch (Exception e) {
             assertEquals(new ParseException("Expect ';' after variable declaration.", token).getMessage(), e.getMessage());
         }
@@ -242,9 +182,8 @@ public class ParserTest {
     public void test07_parse_boolean_statement() {
 
         String toMatch = "let a:boolean = true;";
-        Parser parser = new ParserImpl(generateIFEnvironment());
 
-        List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+        List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
         final String expected = getExpectedResult("./src/test/java/resources/boolean_statement.txt");
         assertEquals(expected, parsedStatements.toString());
@@ -254,9 +193,8 @@ public class ParserTest {
     public void test08_parse_boolean_condition_statement() {
 
         String toMatch = "let a:boolean = 5>3;";
-        Parser parser = new ParserImpl(generateIFEnvironment());
 
-        List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+        List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
         final String expected = getExpectedResult("./src/test/java/resources/boolean_condition_statement.txt");
         assertEquals(expected, parsedStatements.toString());
@@ -266,9 +204,8 @@ public class ParserTest {
     public void test09_parse_boolean_condition_statement() {
 
         String toMatch = "let a = 5<3;";
-        Parser parser = new ParserImpl(generateIFEnvironment());
 
-        List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+        List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
         final String expected = getExpectedResult("./src/test/java/resources/boolean_condition.txt");
         assertEquals(expected, parsedStatements.toString());
@@ -292,9 +229,8 @@ public class ParserTest {
     public void test09_parse_Combine_boolean_condition_statement() {
 
         String toMatch = "let a = 5>(3+3);";
-        Parser parser = new ParserImpl(generateIFEnvironment());
 
-        List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+        List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
         final String expected = getExpectedResult("./src/test/java/resources/combine_boolean_condition.txt");
         assertEquals(expected, parsedStatements.toString());

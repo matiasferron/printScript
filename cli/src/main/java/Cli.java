@@ -13,6 +13,7 @@ import lexer.factory.LexerFactory;
 import lexer.factory.LexerFactoryImpl;
 import parser.Parser;
 import parser.ParserImpl;
+import parser.factory.ParserFactoryImpl;
 import picocli.CommandLine;
 import statement.Statement;
 import statement.parsers.expression.*;
@@ -138,7 +139,7 @@ public class Cli implements Callable<Integer> {
       Lexer lexer = this.lexerFactory.createLexer(this.version);
       List<Token> tokens = lexer.lex(input);
 
-      Parser parser = new ParserImpl(generateIFEnvironment());
+      Parser parser = ParserFactoryImpl.newParserFactory().createParser("1.1");
       List<Statement> statements = parser.parse(tokens);
 
       if (this.executionMode.toLowerCase().equals("interpretation")) {
@@ -163,30 +164,6 @@ public class Cli implements Callable<Integer> {
     return new String(Files.readAllBytes(Paths.get(path)));
   }
 
-  private static StatementParser generateIFEnvironment() {
-    CommonExpressionParser expressionParser = new AssigmentExpressionParser();
-    CommonExpressionParser expressionParser1 = new ComparisonParser();
-    CommonExpressionParser expressionParser2 = new AdditionParser();
-    CommonExpressionParser expressionParser3 = new MultiplicationParser();
-    CommonExpressionParser expressionParser4 = new TypeParser();
-
-    expressionParser.setNextParser(expressionParser1);
-    expressionParser1.setNextParser(expressionParser2);
-    expressionParser2.setNextParser(expressionParser3);
-    expressionParser3.setNextParser(expressionParser4);
-    expressionParser4.setNextParser(expressionParser);
-
-    StatementParser variableDeclarationParser = new VariableDeclarationParser(expressionParser);
-    StatementParser printParser = new printParser(expressionParser);
-    StatementParser expressionStatementParser = new ExpressionStatementParser(expressionParser);
-    StatementParser ifStatementParser = new IfStatementParser(expressionParser);
-
-    ifStatementParser.setNextParser(variableDeclarationParser);
-    variableDeclarationParser.setNextParser(printParser);
-    printParser.setNextParser(expressionStatementParser);
-
-    return ifStatementParser;
-  }
 
   private void initHelpers() {
     InterpreterMemory interpreterMemory = new InterpreterMemory();

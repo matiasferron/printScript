@@ -11,14 +11,9 @@ import lexer.factory.LexerFactory;
 import lexer.factory.LexerFactoryImpl;
 import org.junit.Test;
 import parser.Parser;
-import parser.ParserImpl;
+import parser.factory.ParserFactory;
+import parser.factory.ParserFactoryImpl;
 import statement.Statement;
-import statement.parsers.expression.*;
-import statement.parsers.statment.StatementParser;
-import statement.parsers.statment.impl.ExpressionStatementParser;
-import statement.parsers.statment.impl.IfStatementParser;
-import statement.parsers.statment.impl.VariableDeclarationParser;
-import statement.parsers.statment.impl.printParser;
 import token.Token;
 import visitor.ExpressionVisitor;
 import visitor.ExpressionVisitorHelpers.VisitBinaryHelper;
@@ -30,6 +25,11 @@ import visitor.StatementVisitorHelpers.VisitorStatementHelper;
 import visitor.StatementVisitorImpl;
 
 public class interpreterTest {
+
+  ParserFactory parserFactory = ParserFactoryImpl.newParserFactory();
+  private final Parser basicParser = parserFactory.createParser("1.0");
+  private final Parser advanceParser = parserFactory.createParser("1.1");
+
 
   InterpreterMemory interpreterMemory = new InterpreterMemory();
 
@@ -43,51 +43,6 @@ public class interpreterTest {
 
   Interpreter interpreter = new InterpreterImplementation(statementVisitor);
 
-  static StatementParser generateEnvironment() {
-    CommonExpressionParser expressionParser = new AssigmentExpressionParser();
-    CommonExpressionParser expressionParser2 = new AdditionParser();
-    CommonExpressionParser expressionParser3 = new MultiplicationParser();
-    CommonExpressionParser expressionParser4 = new TypeParser();
-
-    expressionParser.setNextParser(expressionParser2);
-    expressionParser2.setNextParser(expressionParser3);
-    expressionParser3.setNextParser(expressionParser4);
-    expressionParser4.setNextParser(expressionParser);
-
-    StatementParser variableDeclarationParser = new VariableDeclarationParser(expressionParser);
-    StatementParser printParser = new printParser(expressionParser);
-    StatementParser expressionStatementParser = new ExpressionStatementParser(expressionParser);
-
-    variableDeclarationParser.setNextParser(printParser);
-    printParser.setNextParser(expressionStatementParser);
-
-    return variableDeclarationParser;
-  }
-
-  static StatementParser generateIFEnvironment() {
-    CommonExpressionParser expressionParser = new AssigmentExpressionParser();
-    CommonExpressionParser expressionParser1 = new ComparisonParser();
-    CommonExpressionParser expressionParser2 = new AdditionParser();
-    CommonExpressionParser expressionParser3 = new MultiplicationParser();
-    CommonExpressionParser expressionParser4 = new TypeParser();
-
-    expressionParser.setNextParser(expressionParser1);
-    expressionParser1.setNextParser(expressionParser2);
-    expressionParser2.setNextParser(expressionParser3);
-    expressionParser3.setNextParser(expressionParser4);
-    expressionParser4.setNextParser(expressionParser);
-
-    StatementParser variableDeclarationParser = new VariableDeclarationParser(expressionParser);
-    StatementParser printParser = new printParser(expressionParser);
-    StatementParser expressionStatementParser = new ExpressionStatementParser(expressionParser);
-    StatementParser ifStatementParser = new IfStatementParser(expressionParser);
-
-    ifStatementParser.setNextParser(variableDeclarationParser);
-    variableDeclarationParser.setNextParser(printParser);
-    printParser.setNextParser(expressionStatementParser);
-
-    return ifStatementParser;
-  }
 
   static List<Token> generateStringToTokens(String message) {
 
@@ -102,10 +57,8 @@ public class interpreterTest {
   @Test
   public void test01_should_parse_declaration() {
 
-    Parser parser =
-        new ParserImpl(generateEnvironment());
 
-    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: number = 2; println(a);"));
+    List<Statement> parsedStatements = basicParser.parse(generateStringToTokens("let a: number = 2; println(a);"));
 
     interpreter.interpret(parsedStatements);
     String expected = interpreterMemory.getPrintedValues().get(0);
@@ -116,10 +69,7 @@ public class interpreterTest {
   @Test
   public void test02_should_parse_declaration_with_Arithmetic() {
 
-    Parser parser =
-        new ParserImpl(generateEnvironment());
-
-    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: number = 4 / 2; println(a);"));
+    List<Statement> parsedStatements = basicParser.parse(generateStringToTokens("let a: number = 4 / 2; println(a);"));
 
     interpreter.interpret(parsedStatements);
 
@@ -129,10 +79,7 @@ public class interpreterTest {
   @Test
   public void test03_should_parse_declaration_with_Arithmetic() {
 
-    Parser parser =
-        new ParserImpl(generateEnvironment());
-
-    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: string = '5'; println(a);"));
+    List<Statement> parsedStatements = basicParser.parse(generateStringToTokens("let a: string = '5'; println(a);"));
 
     interpreter.interpret(parsedStatements);
 
@@ -142,10 +89,7 @@ public class interpreterTest {
   @Test
   public void test04_should_parse_declaration_with_Arithmetic() {
 
-    Parser parser =
-        new ParserImpl(generateEnvironment());
-
-    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: number = 5; a = 7.0; let b = 3 +a; println(a);"));
+    List<Statement> parsedStatements = basicParser.parse(generateStringToTokens("let a: number = 5; a = 7.0; let b = 3 +a; println(a);"));
 
     interpreter.interpret(parsedStatements);
 
@@ -155,10 +99,7 @@ public class interpreterTest {
   @Test
   public void test04B_should_parse_declaration_with_Arithmetic() {
 
-    Parser parser =
-            new ParserImpl(generateEnvironment());
-
-    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: number = 5; a = 7.0; let b = 3 +a; println(b);"));
+    List<Statement> parsedStatements = basicParser.parse(generateStringToTokens("let a: number = 5; a = 7.0; let b = 3 +a; println(b);"));
 
     interpreter.interpret(parsedStatements);
 
@@ -168,10 +109,7 @@ public class interpreterTest {
   @Test
   public void test05_should_parse_declaration_with_Boolean() {
 
-    Parser parser =
-        new ParserImpl(generateIFEnvironment());
-
-    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: boolean = 5 > 3; println(a); a = false; println(a);"));
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens("let a: boolean = 5 > 3; println(a); a = false; println(a);"));
 
     interpreter.interpret(parsedStatements);
 
@@ -181,10 +119,7 @@ public class interpreterTest {
   @Test
   public void test06_should_parse_declaration_with_Boolean() {
 
-    Parser parser =
-        new ParserImpl(generateIFEnvironment());
-
-    List<Statement> parsedStatements = parser.parse(generateStringToTokens("let a: boolean = 5 < 3; println(a);"));
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens("let a: boolean = 5 < 3; println(a);"));
 
     interpreter.interpret(parsedStatements);
 
@@ -195,9 +130,8 @@ public class interpreterTest {
   public void test07_parse_If_statement() {
 
     String toMatch = "let a = 5; if(5>3){ println(a);}else{let b = 5;};";
-    Parser parser = new ParserImpl(generateIFEnvironment());
 
-    List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
     interpreter.interpret(parsedStatements);
 
@@ -216,9 +150,8 @@ public class interpreterTest {
             + "}else{ "
             + "println(b);"
             + "};";
-    Parser parser = new ParserImpl(generateIFEnvironment());
 
-    List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
     interpreter.interpret(parsedStatements);
 
@@ -238,9 +171,8 @@ public class interpreterTest {
             + "}else{"
             + "println(z);"
             + "};";
-    Parser parser = new ParserImpl(generateIFEnvironment());
 
-    List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
     interpreter.interpret(parsedStatements);
 
@@ -251,9 +183,8 @@ public class interpreterTest {
   public void test10_resign() {
 
     String toMatch = "let z = 4';" + " z = 5;";
-    Parser parser = new ParserImpl(generateIFEnvironment());
 
-    List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
     interpreter.interpret(parsedStatements);
 
