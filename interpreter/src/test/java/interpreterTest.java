@@ -34,7 +34,8 @@ public class interpreterTest {
   InterpreterMemory interpreterMemory = new InterpreterMemory();
 
   private final InterpreterFactory interpreterFactory = InterpreterFactory.newParserFactory();
-  private final Interpreter interpreter = interpreterFactory.createInterpreter("!.!", interpreterMemory);
+  private final Interpreter interpreter = interpreterFactory.createInterpreter("1.1", interpreterMemory);
+  private final Interpreter basicInterpreter = interpreterFactory.createInterpreter("1.0", interpreterMemory);
 
 
   static List<Token> generateStringToTokens(String message) {
@@ -150,6 +151,45 @@ public class interpreterTest {
 
     assertEquals("4", interpreterMemory.getPrintedValues().get(0));
   }
+  @Test
+  public void test08B_parse_If_statement_basic_interpreter() {
+
+    String toMatch =
+            "let a: number = 5; "
+                    + "let b = 4; "
+                    + "if(false){ "
+                    + "println(a);"
+                    + "a = 6;"
+                    + "}else{ "
+                    + "println(b);"
+                    + "};";
+
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
+
+    try {
+      basicInterpreter.interpret(parsedStatements);
+    }catch (Exception e) {
+      System.out.println(e);
+    }
+  }
+
+  @Test
+  public void test08C_parse_If_statement_basic_interpreter() {
+
+    String toMatch =
+            "let a: number = 5; "
+                    + "println(a);"
+                    + "let b = 5;"
+                    + "let c = b + a;"
+                    + "println(c);";
+
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
+
+    basicInterpreter.interpret(parsedStatements);
+
+    assertEquals("10", interpreterMemory.getPrintedValues().get(1));
+
+  }
 
   @Test
   public void test09_parse_If_statement() {
@@ -176,6 +216,18 @@ public class interpreterTest {
   public void test10_resign() {
 
     String toMatch = "let z = 4';" + " z = 5;";
+
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
+
+    interpreter.interpret(parsedStatements);
+
+    assertTrue(true);
+  }
+
+  @Test
+  public void test10B_notAssign() {
+
+    String toMatch = "let z';" + " z = 5;";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
@@ -230,5 +282,57 @@ public class interpreterTest {
     }
 
     assertTrue(true);
+  }
+
+  @Test
+  public void test12_parse_string_plus_statement() {
+
+    String toMatch =
+            "let z:string = \"hello\";" + "let x:string = \"world\";" + "println(z+x);";
+
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
+
+    interpreter.interpret(parsedStatements);
+
+    assertEquals("\"hello\"" + "\"world\"", interpreterMemory.getPrintedValues().get(0));
+  }
+
+  @Test
+  public void test13_parse_minus_statement() {
+
+    String toMatch =
+            "let z = 5; let y = 4; println(z-y);";
+
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
+
+    interpreter.interpret(parsedStatements);
+
+    assertEquals("1", interpreterMemory.getPrintedValues().get(0));
+  }
+
+  @Test
+  public void test14_parse_minus_double_statement() {
+
+    String toMatch =
+            "let z = 5.0; let y = 4; println(z-y);";
+
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
+
+    interpreter.interpret(parsedStatements);
+
+    assertEquals("1.0", interpreterMemory.getPrintedValues().get(0));
+  }
+
+  @Test
+  public void test14_parse_multiply_statement() {
+
+    String toMatch =
+            "let z = 5.0; let y = 4; println(z*y); let w = 5; let p = 4; println(w*p); ";
+
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
+
+    interpreter.interpret(parsedStatements);
+
+    assertEquals("20.0", interpreterMemory.getPrintedValues().get(0));
   }
 }

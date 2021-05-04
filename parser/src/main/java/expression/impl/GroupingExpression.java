@@ -2,13 +2,12 @@ package expression.impl;
 
 import expression.Expression;
 import lombok.ToString;
-import token.Token;
 import visitor.ExpressionVisitor;
 
 @ToString()
 public class GroupingExpression implements Expression {
 
-  private Expression expression;
+  private final Expression expression;
 
   public GroupingExpression(Expression expression) {
     this.expression = expression;
@@ -19,13 +18,7 @@ public class GroupingExpression implements Expression {
     return expressionVisitor.visitGrouping(this);
   }
 
-  @Override
   public Expression getExpression() {
     return expression;
-  }
-
-  @Override
-  public Token getToken() {
-    return null;
   }
 }

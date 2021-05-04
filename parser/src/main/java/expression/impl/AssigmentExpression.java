@@ -21,12 +21,10 @@ public class AssigmentExpression implements Expression {
     return expressionVisitor.visitAssignment(this);
   }
 
-  @Override
   public Expression getExpression() {
     return expression;
   }
 
-  @Override
   public Token getToken() {
     return name;
   }

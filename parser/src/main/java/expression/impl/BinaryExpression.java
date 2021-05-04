@@ -34,14 +34,4 @@ public class BinaryExpression implements Expression {
   public Token getOperator() {
     return operator;
   }
-
-  @Override
-  public Expression getExpression() {
-    return left;
-  }
-
-  @Override
-  public Token getToken() {
-    return operator;
-  }
 }

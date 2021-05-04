@@ -9,7 +9,7 @@ import visitor.ExpressionVisitor;
 @ToString()
 public class VariableExpression implements Expression {
 
-  private Token name;
+  private final Token name;
 
   public VariableExpression(Token name) {
     this.name = name;
@@ -21,14 +21,8 @@ public class VariableExpression implements Expression {
     return expressionVisitor.visitVariable(this);
   }
 
-  @Override
   public Token getToken() {
     return name;
-  }
-
-  @Override
-  public Expression getExpression() {
-    return null;
   }
 
   public Token getName() {

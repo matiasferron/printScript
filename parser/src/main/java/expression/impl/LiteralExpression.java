@@ -19,16 +19,6 @@ public class LiteralExpression implements Expression {
     return expressionVisitor.visitLiteral(this);
   }
 
-  @Override
-  public Token getToken() {
-    return null;
-  }
-
-  @Override
-  public Expression getExpression() {
-    return null;
-  }
-
   public Object getValue() {
     return value;
   }
