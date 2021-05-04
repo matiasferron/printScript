@@ -17,13 +17,13 @@ import picocli.CommandLine;
 import statement.Statement;
 import token.Token;
 import visitor.ExpressionVisitor;
-import visitor.ExpressionVisitorResolvers.BinaryResolverComparisonImpl;
-import visitor.ExpressionVisitorResolvers.BinaryExpressionResolver;
 import visitor.ExpressionVisitorImpl;
+import visitor.ExpressionVisitorResolvers.BinaryExpressionResolver;
+import visitor.ExpressionVisitorResolvers.BinaryResolverComparisonImpl;
 import visitor.StatementVisitor;
-import visitor.StatementVisitorResolvers.VariableStatementResolverBooleanImpl;
-import visitor.StatementVisitorResolvers.VariableStatementResolver;
 import visitor.StatementVisitorImpl;
+import visitor.StatementVisitorResolvers.VariableStatementResolver;
+import visitor.StatementVisitorResolvers.VariableStatementResolverBooleanImpl;
 
 // import lexer.Lexer;
 // import lexer.factory.LexerFactory;
@@ -157,13 +157,13 @@ public class Cli implements Callable<Integer> {
     return new String(Files.readAllBytes(Paths.get(path)));
   }
 
-
   private void initHelpers() {
     InterpreterMemory interpreterMemory = new InterpreterMemory();
     BinaryExpressionResolver expressionHelper = new BinaryResolverComparisonImpl();
     ExpressionVisitor expressionVisitor =
         new ExpressionVisitorImpl(interpreterMemory, expressionHelper);
-    VariableStatementResolver variableStatementResolver = new VariableStatementResolverBooleanImpl();
+    VariableStatementResolver variableStatementResolver =
+        new VariableStatementResolverBooleanImpl();
 
     this.statementVisitor =
         new StatementVisitorImpl(expressionVisitor, interpreterMemory, variableStatementResolver);

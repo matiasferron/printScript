@@ -22,11 +22,13 @@ public class InterpreterFactoryImpl implements InterpreterFactory {
   private Interpreter createSimpleInterpreter(InterpreterMemory interpreterMemory) {
     BinaryExpressionResolver binaryResolverComparisonImpl = new BinaryResolverComparisonImpl();
     ExpressionVisitor expressionVisitor =
-            new ExpressionVisitorImpl(interpreterMemory, binaryResolverComparisonImpl);
+        new ExpressionVisitorImpl(interpreterMemory, binaryResolverComparisonImpl);
 
-    VariableStatementResolver VariableStatementResolverBooleanImpl = new VariableStatementResolverBooleanImpl();
+    VariableStatementResolver VariableStatementResolverBooleanImpl =
+        new VariableStatementResolverBooleanImpl();
     StatementVisitor statementVisitor =
-            new SimpleStatementVisitorImpl(expressionVisitor, interpreterMemory, VariableStatementResolverBooleanImpl);
+        new SimpleStatementVisitorImpl(
+            expressionVisitor, interpreterMemory, VariableStatementResolverBooleanImpl);
     return new InterpreterImplementation(statementVisitor);
   }
 
@@ -34,11 +36,13 @@ public class InterpreterFactoryImpl implements InterpreterFactory {
 
     BinaryExpressionResolver binaryResolverComparisonImpl = new BinaryResolverComparisonImpl();
     ExpressionVisitor expressionVisitor =
-            new ExpressionVisitorImpl(interpreterMemory, binaryResolverComparisonImpl);
+        new ExpressionVisitorImpl(interpreterMemory, binaryResolverComparisonImpl);
 
-    VariableStatementResolver VariableStatementResolverBooleanImpl = new VariableStatementResolverBooleanImpl();
+    VariableStatementResolver VariableStatementResolverBooleanImpl =
+        new VariableStatementResolverBooleanImpl();
     StatementVisitor statementVisitor =
-            new StatementVisitorImpl(expressionVisitor, interpreterMemory, VariableStatementResolverBooleanImpl);
+        new StatementVisitorImpl(
+            expressionVisitor, interpreterMemory, VariableStatementResolverBooleanImpl);
 
     return new InterpreterImplementation(statementVisitor);
   }

@@ -2,7 +2,6 @@ package statement.impl;
 
 import expression.Expression;
 import java.util.List;
-
 import lombok.ToString;
 import statement.Statement;
 import visitor.StatementVisitor;
@@ -43,15 +42,16 @@ public class IfStatement implements Statement {
     return elseStatement;
   }
 
-//  void addConditionBranchStatement(Statement statement) {
-//    conditionStatement.add(statement);
-//  }
-//
-//  void addElseBranchStatement(Statement statement) {
-//    elseStatement.add(statement);
-//  }
+  //  void addConditionBranchStatement(Statement statement) {
+  //    conditionStatement.add(statement);
+  //  }
+  //
+  //  void addElseBranchStatement(Statement statement) {
+  //    elseStatement.add(statement);
+  //  }
 
-//  public String toString(){
-//    return  getExpression().toString() + "If{" + conditionStatement.toString() + "} else{"+ elseStatement.toString() +"}";
-//  }
+  //  public String toString(){
+  //    return  getExpression().toString() + "If{" + conditionStatement.toString() + "} else{"+
+  // elseStatement.toString() +"}";
+  //  }
 }

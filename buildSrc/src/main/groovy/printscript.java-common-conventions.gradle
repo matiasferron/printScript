@@ -21,6 +21,8 @@ test {
 check {
     checkstyle
 }
+check.dependsOn jacocoTestCoverageVerification
+
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11

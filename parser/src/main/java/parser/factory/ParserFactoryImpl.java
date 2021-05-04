@@ -19,8 +19,7 @@ public class ParserFactoryImpl implements ParserFactory {
   public Parser createParser(String version) {
     String PRINT_SCRIPT_VERSION = "1.1";
 
-    if (version.equals(PRINT_SCRIPT_VERSION))
-      return createIfAndBoolParser();
+    if (version.equals(PRINT_SCRIPT_VERSION)) return createIfAndBoolParser();
 
     return createBasicParser();
   }
@@ -38,9 +37,11 @@ public class ParserFactoryImpl implements ParserFactory {
     multiplicationParser.setNextParser(typeParser);
     typeParser.setNextParser(assigmentExpressionParser);
 
-    StatementParser variableDeclarationParser = new VariableDeclarationParser(assigmentExpressionParser);
+    StatementParser variableDeclarationParser =
+        new VariableDeclarationParser(assigmentExpressionParser);
     StatementParser printParser = new printParser(assigmentExpressionParser);
-    StatementParser expressionStatementParser = new ExpressionStatementParser(assigmentExpressionParser);
+    StatementParser expressionStatementParser =
+        new ExpressionStatementParser(assigmentExpressionParser);
     StatementParser ifStatementParser = new IfStatementParser(assigmentExpressionParser);
 
     ifStatementParser.setNextParser(variableDeclarationParser);
@@ -61,9 +62,11 @@ public class ParserFactoryImpl implements ParserFactory {
     multiplicationParser.setNextParser(typeParser);
     typeParser.setNextParser(assigmentExpressionParser);
 
-    StatementParser variableDeclarationParser = new VariableDeclarationParser(assigmentExpressionParser);
+    StatementParser variableDeclarationParser =
+        new VariableDeclarationParser(assigmentExpressionParser);
     StatementParser printParser = new printParser(assigmentExpressionParser);
-    StatementParser expressionStatementParser = new ExpressionStatementParser(assigmentExpressionParser);
+    StatementParser expressionStatementParser =
+        new ExpressionStatementParser(assigmentExpressionParser);
 
     variableDeclarationParser.setNextParser(printParser);
     printParser.setNextParser(expressionStatementParser);

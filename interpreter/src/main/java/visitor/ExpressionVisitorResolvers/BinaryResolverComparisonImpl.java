@@ -68,21 +68,17 @@ public class BinaryResolverComparisonImpl implements BinaryExpressionResolver {
   }
 
   private Object convertNumberOperation(Object left, Object right) {
-    if (left instanceof Integer && right instanceof Integer)
-      return (int)left + (int) right;
+    if (left instanceof Integer && right instanceof Integer) return (int) left + (int) right;
 
-    if (left instanceof Integer)
-      return (int)left + (double) right;
+    if (left instanceof Integer) return (int) left + (double) right;
 
-    if (right instanceof Integer)
-      return (double)left + (int) right;
+    if (right instanceof Integer) return (double) left + (int) right;
 
-    return (double)left + (double)right;
+    return (double) left + (double) right;
   }
 
   private Number convertTypeNumberOperation(Object value) {
-    if (value instanceof Integer)
-      return (int) value;
+    if (value instanceof Integer) return (int) value;
 
     return (double) value;
   }

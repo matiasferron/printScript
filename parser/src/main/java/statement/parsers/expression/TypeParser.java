@@ -48,8 +48,7 @@ public class TypeParser extends CommonExpressionParser {
   }
 
   private Number checkNumberTypeConversion(String value) {
-    if (value.contains("."))
-      return Double.parseDouble(value);
+    if (value.contains(".")) return Double.parseDouble(value);
 
     return Integer.parseInt(value);
   }

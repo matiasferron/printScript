@@ -22,7 +22,7 @@ public class ExpressionStatement implements Statement {
     return expression;
   }
 
-  public String toString(){
-    return  this.expression.toString();
+  public String toString() {
+    return this.expression.toString();
   }
 }
