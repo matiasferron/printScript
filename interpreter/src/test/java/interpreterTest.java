@@ -3,6 +3,7 @@ import static org.junit.Assert.assertTrue;
 
 import interpreter.Interpreter;
 import interpreter.InterpreterImplementation;
+import interpreter.factory.InterpreterFactory;
 import interpreter.helper.InterpreterMemory;
 import java.util.List;
 import java.util.stream.Stream;
@@ -30,18 +31,10 @@ public class interpreterTest {
   private final Parser basicParser = parserFactory.createParser("1.0");
   private final Parser advanceParser = parserFactory.createParser("1.1");
 
-
   InterpreterMemory interpreterMemory = new InterpreterMemory();
 
-  BinaryExpressionResolver binaryResolverComparisonImpl = new BinaryResolverComparisonImpl();
-  ExpressionVisitor expressionVisitor =
-      new ExpressionVisitorImpl(interpreterMemory, binaryResolverComparisonImpl);
-
-  VariableStatementResolver VariableStatementResolverBooleanImpl = new VariableStatementResolverBooleanImpl();
-  StatementVisitor statementVisitor =
-      new StatementVisitorImpl(expressionVisitor, interpreterMemory, VariableStatementResolverBooleanImpl);
-
-  Interpreter interpreter = new InterpreterImplementation(statementVisitor);
+  private final InterpreterFactory interpreterFactory = InterpreterFactory.newParserFactory();
+  private final Interpreter interpreter = interpreterFactory.createInterpreter("!.!", interpreterMemory);
 
 
   static List<Token> generateStringToTokens(String message) {
@@ -187,6 +180,54 @@ public class interpreterTest {
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
     interpreter.interpret(parsedStatements);
+
+    assertTrue(true);
+  }
+
+  @Test
+  public void test011_parse_If_statement() {
+
+    String toMatch =
+            "let z = 'hola';"
+                    + "if(5>3){ "
+                    + "const a = 5;"
+                    + "let b: number = 4;"
+                    + "b = 5;"
+                    + "println(a);"
+                    + "println(b);"
+                    + "}else{"
+                    + "println(z);"
+                    + "};";
+
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
+
+    interpreter.interpret(parsedStatements);
+
+    assertTrue(true);
+  }
+
+  @Test
+  public void test012_parse_If_statement() {
+
+    String toMatch =
+            "let z = 'hola';"
+                    + "if(5>3){ "
+                    + "const a = 5;"
+                    + "let b: number = 4;"
+                    + "c = 5;"
+                    + "println(a);"
+                    + "println(b);"
+                    + "}else{"
+                    + "println(z);"
+                    + "};";
+
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
+
+    try {
+      interpreter.interpret(parsedStatements);
+    }catch (Exception e){
+      System.out.println(e);
+    }
 
     assertTrue(true);
   }

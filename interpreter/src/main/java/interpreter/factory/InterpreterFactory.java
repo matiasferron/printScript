@@ -1,7 +1,7 @@
 package interpreter.factory;
 
 import interpreter.Interpreter;
-import visitor.StatementVisitor;
+import interpreter.helper.InterpreterMemory;
 
 public interface InterpreterFactory {
 
@@ -9,5 +9,5 @@ public interface InterpreterFactory {
     return new InterpreterFactoryImpl();
   }
 
-  Interpreter createInterpreter(StatementVisitor statementVisitor);
+  Interpreter createInterpreter(String version, InterpreterMemory interpreterMemory);
 }
