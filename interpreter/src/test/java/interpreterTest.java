@@ -16,12 +16,12 @@ import parser.factory.ParserFactoryImpl;
 import statement.Statement;
 import token.Token;
 import visitor.ExpressionVisitor;
-import visitor.ExpressionVisitorHelpers.VisitBinaryHelper;
-import visitor.ExpressionVisitorHelpers.VisitorExpressionHelper;
+import visitor.ExpressionVisitorResolvers.BinaryResolverComparisonImpl;
+import visitor.ExpressionVisitorResolvers.BinaryExpressionResolver;
 import visitor.ExpressionVisitorImpl;
 import visitor.StatementVisitor;
-import visitor.StatementVisitorHelpers.VisitVariableStatementHelper;
-import visitor.StatementVisitorHelpers.VisitorStatementHelper;
+import visitor.StatementVisitorResolvers.VariableStatementResolverBooleanImpl;
+import visitor.StatementVisitorResolvers.VariableStatementResolver;
 import visitor.StatementVisitorImpl;
 
 public class interpreterTest {
@@ -33,13 +33,13 @@ public class interpreterTest {
 
   InterpreterMemory interpreterMemory = new InterpreterMemory();
 
-  VisitorExpressionHelper expressionHelper = new VisitBinaryHelper();
+  BinaryExpressionResolver binaryResolverComparisonImpl = new BinaryResolverComparisonImpl();
   ExpressionVisitor expressionVisitor =
-      new ExpressionVisitorImpl(interpreterMemory, expressionHelper);
+      new ExpressionVisitorImpl(interpreterMemory, binaryResolverComparisonImpl);
 
-  VisitorStatementHelper visitorStatementHelper = new VisitVariableStatementHelper();
+  VariableStatementResolver VariableStatementResolverBooleanImpl = new VariableStatementResolverBooleanImpl();
   StatementVisitor statementVisitor =
-      new StatementVisitorImpl(expressionVisitor, interpreterMemory, visitorStatementHelper);
+      new StatementVisitorImpl(expressionVisitor, interpreterMemory, VariableStatementResolverBooleanImpl);
 
   Interpreter interpreter = new InterpreterImplementation(statementVisitor);
 

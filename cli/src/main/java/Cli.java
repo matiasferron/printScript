@@ -12,24 +12,17 @@ import lexer.Lexer;
 import lexer.factory.LexerFactory;
 import lexer.factory.LexerFactoryImpl;
 import parser.Parser;
-import parser.ParserImpl;
 import parser.factory.ParserFactoryImpl;
 import picocli.CommandLine;
 import statement.Statement;
-import statement.parsers.expression.*;
-import statement.parsers.statment.StatementParser;
-import statement.parsers.statment.impl.ExpressionStatementParser;
-import statement.parsers.statment.impl.IfStatementParser;
-import statement.parsers.statment.impl.VariableDeclarationParser;
-import statement.parsers.statment.impl.printParser;
 import token.Token;
 import visitor.ExpressionVisitor;
-import visitor.ExpressionVisitorHelpers.VisitBinaryHelper;
-import visitor.ExpressionVisitorHelpers.VisitorExpressionHelper;
+import visitor.ExpressionVisitorResolvers.BinaryResolverComparisonImpl;
+import visitor.ExpressionVisitorResolvers.BinaryExpressionResolver;
 import visitor.ExpressionVisitorImpl;
 import visitor.StatementVisitor;
-import visitor.StatementVisitorHelpers.VisitVariableStatementHelper;
-import visitor.StatementVisitorHelpers.VisitorStatementHelper;
+import visitor.StatementVisitorResolvers.VariableStatementResolverBooleanImpl;
+import visitor.StatementVisitorResolvers.VariableStatementResolver;
 import visitor.StatementVisitorImpl;
 
 // import lexer.Lexer;
@@ -167,12 +160,12 @@ public class Cli implements Callable<Integer> {
 
   private void initHelpers() {
     InterpreterMemory interpreterMemory = new InterpreterMemory();
-    VisitorExpressionHelper expressionHelper = new VisitBinaryHelper();
+    BinaryExpressionResolver expressionHelper = new BinaryResolverComparisonImpl();
     ExpressionVisitor expressionVisitor =
         new ExpressionVisitorImpl(interpreterMemory, expressionHelper);
-    VisitorStatementHelper visitorStatementHelper = new VisitVariableStatementHelper();
+    VariableStatementResolver variableStatementResolver = new VariableStatementResolverBooleanImpl();
 
     this.statementVisitor =
-        new StatementVisitorImpl(expressionVisitor, interpreterMemory, visitorStatementHelper);
+        new StatementVisitorImpl(expressionVisitor, interpreterMemory, variableStatementResolver);
   }
 }

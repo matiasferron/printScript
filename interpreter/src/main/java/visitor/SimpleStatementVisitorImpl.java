@@ -5,17 +5,17 @@ import statement.impl.ExpressionStatement;
 import statement.impl.IfStatement;
 import statement.impl.PrintStatement;
 import statement.impl.VariableStatement;
-import visitor.StatementVisitorHelpers.VisitorStatementHelper;
+import visitor.StatementVisitorResolvers.VariableStatementResolver;
 
 public class SimpleStatementVisitorImpl implements StatementVisitor {
   private final ExpressionVisitor expressionVisitor;
   private final InterpreterHelper interpreterMemory;
-  private final VisitorStatementHelper visitStatementHelper;
+  private final VariableStatementResolver visitStatementHelper;
 
   public SimpleStatementVisitorImpl(
       ExpressionVisitor expressionVisitor,
       InterpreterHelper interpreterMemory,
-      VisitorStatementHelper visitStatementHelper) {
+      VariableStatementResolver visitStatementHelper) {
     this.expressionVisitor = expressionVisitor;
     this.interpreterMemory = interpreterMemory;
     this.visitStatementHelper = visitStatementHelper;

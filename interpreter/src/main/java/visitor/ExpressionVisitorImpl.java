@@ -2,21 +2,21 @@ package visitor;
 
 import expression.impl.*;
 import interpreter.helper.InterpreterHelper;
-import visitor.ExpressionVisitorHelpers.VisitorExpressionHelper;
+import visitor.ExpressionVisitorResolvers.BinaryExpressionResolver;
 
 public class ExpressionVisitorImpl implements ExpressionVisitor {
   private final InterpreterHelper interpreterMemory;
-  private final VisitorExpressionHelper visitorExpressionHelper;
+  private final BinaryExpressionResolver binaryExpressionResolver;
 
   public ExpressionVisitorImpl(
-      InterpreterHelper interpreterMemory, VisitorExpressionHelper expressionHelper) {
+      InterpreterHelper interpreterMemory, BinaryExpressionResolver expressionHelper) {
     this.interpreterMemory = interpreterMemory;
-    this.visitorExpressionHelper = expressionHelper;
+    this.binaryExpressionResolver = expressionHelper;
   }
 
   @Override
   public Object visitBinary(BinaryExpression expression) {
-    return visitorExpressionHelper.visit(expression, this);
+    return binaryExpressionResolver.visit(expression, this);
   }
 
   @Override

@@ -1,4 +1,4 @@
-package visitor.ExpressionVisitorHelpers;
+package visitor.ExpressionVisitorResolvers;
 
 import static token.TokenType.*;
 
@@ -7,7 +7,7 @@ import expression.impl.BinaryExpression;
 import token.Token;
 import visitor.ExpressionVisitor;
 
-public class VisitBinaryHelper implements VisitorExpressionHelper {
+public class BinaryResolverComparisonImpl implements BinaryExpressionResolver {
 
   public Object visit(BinaryExpression binaryExpression, ExpressionVisitor expressionVisitor) {
     Object left = binaryExpression.getLeft().accept(expressionVisitor);

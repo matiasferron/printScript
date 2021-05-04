@@ -1,4 +1,4 @@
-package visitor.StatementVisitorHelpers;
+package visitor.StatementVisitorResolvers;
 
 import static token.TokenType.*;
 
@@ -7,7 +7,7 @@ import interpreter.helper.InterpreterHelper;
 import statement.impl.VariableStatement;
 import visitor.ExpressionVisitor;
 
-public class VisitVariableStatementHelper implements VisitorStatementHelper {
+public class VariableStatementResolverBooleanImpl implements VariableStatementResolver {
 
   public void visitVariableStatementHelper(
       VariableStatement variableStatement,
