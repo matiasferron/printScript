@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lexer.Lexer;
 import lexer.factory.LexerFactory;
@@ -16,6 +17,7 @@ import parser.factory.ParserFactoryImpl;
 import picocli.CommandLine;
 import statement.Statement;
 import token.Token;
+import token.TokenType;
 import visitor.ExpressionVisitor;
 import visitor.ExpressionVisitorImpl;
 import visitor.ExpressionVisitorResolvers.BinaryExpressionResolver;
@@ -132,7 +134,7 @@ public class Cli implements Callable<Integer> {
       Lexer lexer = this.lexerFactory.createLexer(this.version);
       List<Token> tokens = lexer.lex(input);
 
-      Parser parser = ParserFactoryImpl.newParserFactory().createParser("1.1");
+      Parser parser = ParserFactoryImpl.newParserFactory().createParser(version);
       List<Statement> statements = parser.parse(tokens);
 
       if (this.executionMode.toLowerCase().equals("interpretation")) {

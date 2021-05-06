@@ -48,7 +48,7 @@ public class LexerImpl implements Lexer {
 
     //        resultTokens.add(tokenFactory.create(TokenType.EOF, "",new Position(this.line,
     // this.column)));
-    return resultTokens;
+    return this.filterNewLine(resultTokens);
   }
 
   private Matcher getMatcher(Stream<Character> input) {
@@ -65,5 +65,9 @@ public class LexerImpl implements Lexer {
 
   private boolean isNewLine(Token token) {
     return token.getTokenType() == TokenType.NEWLINE;
+  }
+
+  private ArrayList<Token> filterNewLine(List<Token> tokens) {
+    return new ArrayList<>(tokens.stream().filter(t -> !t.getTokenType().equals(TokenType.NEWLINE)).collect(Collectors.toList()));
   }
 }
