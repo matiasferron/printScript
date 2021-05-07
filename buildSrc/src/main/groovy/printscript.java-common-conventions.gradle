@@ -1,4 +1,4 @@
-plugins {
+    plugins {
     id 'java'
     id 'jacoco'
     id 'checkstyle'
@@ -32,6 +32,11 @@ task format {
     dependsOn tasks.googleJavaFormat
 }
 
+task installGitHooks(type: Copy) {
+  from file("$rootDir/config/hooks")
+    into file("$rootDir/.git/hooks")
+    fileMode 8777
+}
 build.dependsOn(tasks.googleJavaFormat)
 
 jacoco {

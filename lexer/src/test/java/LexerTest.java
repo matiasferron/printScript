@@ -103,8 +103,7 @@ public class LexerTest {
 
   @Test
   public void asd() {
-    String toMatch =
-        "let booleanResult: 2 < 3 <= <= number = 5 * 5 - 8;\n" + "println(booleanResult);";
+    String toMatch = "let cuenta: number = 5*5-8/4+2;";
 
     Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
 

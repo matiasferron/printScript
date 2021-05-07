@@ -28,12 +28,14 @@ public class ParserFactoryImpl implements ParserFactory {
     CommonExpressionParser assigmentExpressionParser = new AssigmentExpressionParser();
     CommonExpressionParser commonExpressionParser = new ComparisonParser();
     CommonExpressionParser additionParser = new AdditionParser();
+    CommonExpressionParser additionParser2 = new AdditionParser();
     CommonExpressionParser multiplicationParser = new MultiplicationParser();
     CommonExpressionParser typeParser = new TypeParser();
 
     assigmentExpressionParser.setNextParser(commonExpressionParser);
     commonExpressionParser.setNextParser(additionParser);
-    additionParser.setNextParser(multiplicationParser);
+    additionParser.setNextParser(additionParser2);
+    additionParser2.setNextParser(multiplicationParser);
     multiplicationParser.setNextParser(typeParser);
     typeParser.setNextParser(assigmentExpressionParser);
 
