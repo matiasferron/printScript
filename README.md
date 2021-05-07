@@ -1,9 +1,9 @@
 # printScript
-TP1 - Ing.sistemas
+TP1 - Ingenieria de Sistemas
 
 ##Description
 
-Interpreter of the Printscript language.
+Interpreter of the Printscript language
 
 #Branching strategy: versioned release
 
