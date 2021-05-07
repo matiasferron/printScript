@@ -26,7 +26,8 @@ public class ExpressionVisitorImpl implements ExpressionVisitor {
 
   @Override
   public Object visitLiteral(LiteralExpression expression) {
-    if (expression.getValue() instanceof String && ((String) expression.getValue()).charAt(0) == ('\"' | '\'')){
+    if (expression.getValue() instanceof String
+            && (((String) expression.getValue()).charAt(0) == ('\"') || ((String) expression.getValue()).charAt(0) == ('\'') )){
       return ((String) expression.getValue()).substring(1, ((String) expression.getValue()).length() - 1);
     }
     return expression.getValue();
