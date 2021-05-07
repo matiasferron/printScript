@@ -1,1 +1,1 @@
-[VariableStatement(name=(IDENTIFIER a), expression=BinaryExpression(left=LiteralExpression(value=5), right=LiteralExpression(value=3), operator=(GREATER >)), type=BOOLEAN, keyWord=(LET let))]
+[VariableStatement(name=TokenImpl(tokenType=IDENTIFIER, value=a, position=Position(line=0, column=3)), expression=BinaryExpression(left=LiteralExpression(value=5), right=LiteralExpression(value=3), operator=TokenImpl(tokenType=GREATER, value=>, position=Position(line=0, column=14))), type=BOOLEAN, keyWord=TokenImpl(tokenType=LET, value=let, position=Position(line=0, column=0)))]

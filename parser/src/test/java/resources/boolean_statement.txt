@@ -1,1 +1,1 @@
-[VariableStatement(name=(IDENTIFIER a), expression=LiteralExpression(value=true), type=BOOLEAN, keyWord=(LET let))]
+[VariableStatement(name=TokenImpl(tokenType=IDENTIFIER, value=a, position=Position(line=0, column=3)), expression=LiteralExpression(value=true), type=BOOLEAN, keyWord=TokenImpl(tokenType=LET, value=let, position=Position(line=0, column=0)))]

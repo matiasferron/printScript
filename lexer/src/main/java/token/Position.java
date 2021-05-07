@@ -1,5 +1,8 @@
 package token;
 
+import lombok.ToString;
+
+@ToString()
 public class Position {
 
   private final int line;

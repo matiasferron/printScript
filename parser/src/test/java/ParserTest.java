@@ -211,19 +211,16 @@ public class ParserTest {
     assertEquals(expected, parsedStatements.toString());
   }
 
-  //        @Test //TODO FIX LEXER
-  //        public void test09_parse_boolean_GreaterEquals_condition_statement(){
-  //
-  //            String toMatch = "let a:boolean = (5>=3);";
-  //            Parser parser = new ParserImpl(
-  //                 generateIFEnvironment());
-  //
-  //            List<Statement> parsedStatements = parser.parse(generateStringToTokens(toMatch));
-  //
-  //            System.out.println(parsedStatements.toString());
-  //
-  //            assertEquals(true, true);
-  //        }
+  @Test
+  public void test09_parse_boolean_GreaterEquals_condition_statement() {
+
+    String toMatch = "let a:boolean = (5>=3);";
+
+    List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
+
+    final String expected = getExpectedResult("./src/test/java/resources/greater_equals_condition.txt");
+    assertEquals(expected, parsedStatements.toString());
+  }
 
   @Test
   public void test09_parse_Combine_boolean_condition_statement() {
