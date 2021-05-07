@@ -58,7 +58,7 @@ jacocoTestCoverageVerification {
         rule {
             limit {
                 counter = 'LINE'
-                minimum = 0.7
+                minimum = 0.8
             }
         }
     }
@@ -67,10 +67,13 @@ jacocoTestCoverageVerification {
 build.dependsOn(jacocoTestReport)
 
 
+//checkstyle {
+//    toolVersion = '8.42'
+//    configFile = file("${rootDir}/static-code-analysis/checkstyle/checkstyle.xml")
+//}
 checkstyle {
-    toolVersion = '8.12'
-    ignoreFailures = false
-    configFile = file("${rootDir}/static-code-analysis/checkstyle/checkstyle.xml")
+    toolVersion "8.41.1"
+    configFile file("${rootDir}/static-code-analysis/checkstyle/checkstyle.xml")
 }
 
 tasks.withType(Checkstyle) {

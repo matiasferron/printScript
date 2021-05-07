@@ -102,6 +102,20 @@ public class LexerTest {
   }
 
   @Test
+  public void test08_different_cases_test() {
+    String toMatch = "if( 2 >= 3) { let numberObject= 4 } else {}";
+    Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
+
+    List<Token> output = lexer.lex(input);
+
+    StringBuilder expected = new StringBuilder();
+    for (Token t : output) {
+      expected.append(t.getTokenValue());
+    }
+    assertEquals(toMatch.replace(" ", ""), expected.toString());
+  }
+
+  @Test
   public void asd() {
     String toMatch = "let cuenta: number = 5*5-8/4+2;";
 
