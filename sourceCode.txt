@@ -4,7 +4,7 @@ let s: string = "hello world!";
 
 if(a < b) {
     a = a + 2;
-};
+}
 
 println(a);
 println(s);

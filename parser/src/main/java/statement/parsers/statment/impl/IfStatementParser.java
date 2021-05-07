@@ -48,7 +48,7 @@ public class IfStatementParser extends StatementParser {
         }
         validateCurrentToken(tokens, RBRACKET, "Expect '}' after if condition");
       }
-      validateCurrentToken(tokens, SEMICOLON, "Expect ';' after expression.");
+//      validateCurrentToken(tokens, SEMICOLON, "Expect ';' after expression.");
       return new IfStatement(condition, conditionBranch, elseBranch);
     }
     return nextParser.parse(tokens);

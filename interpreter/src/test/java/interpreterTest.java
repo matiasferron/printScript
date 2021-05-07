@@ -124,7 +124,7 @@ public class interpreterTest {
   @Test
   public void test07_parse_If_statement() {
 
-    String toMatch = "let a = 5; if(5>3){ println(a);}else{let b = 5;};";
+    String toMatch = "let a = 5; if(5>3){ println(a);}else{let b = 5;}";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
@@ -144,7 +144,7 @@ public class interpreterTest {
             + "a = 6;"
             + "}else{ "
             + "println(b);"
-            + "};";
+            + "}";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
@@ -164,7 +164,7 @@ public class interpreterTest {
             + "a = 6;"
             + "}else{ "
             + "println(b);"
-            + "};";
+            + "}";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
@@ -200,7 +200,7 @@ public class interpreterTest {
             + "println(b);"
             + "}else{"
             + "println(z);"
-            + "};";
+            + "}";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
@@ -246,7 +246,7 @@ public class interpreterTest {
             + "println(b);"
             + "}else{"
             + "println(z);"
-            + "};";
+            + "}";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
@@ -268,7 +268,7 @@ public class interpreterTest {
             + "println(b);"
             + "}else{"
             + "println(z);"
-            + "};";
+            + "}";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 

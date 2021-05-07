@@ -164,7 +164,7 @@ public class ParserTest {
   @Test
   public void test06_parse_If_statement() {
 
-    String toMatch = "if(true){ let a = 5; const b: number = 5};";
+    String toMatch = "if(true){ let a = 5; const b: number = 5}";
 
     Token token = new TokenFactory().create(DIVISION, "", new Position(0, 31));
 
