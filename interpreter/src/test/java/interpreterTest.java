@@ -67,11 +67,11 @@ public class interpreterTest {
   public void test03_should_parse_declaration_with_Arithmetic() {
 
     List<Statement> parsedStatements =
-        basicParser.parse(generateStringToTokens("let a: string = '5'; println(a);"));
+        basicParser.parse(generateStringToTokens("let a: string = \"hola mundo\"; let b = 1; println(a);"));
 
     interpreter.interpret(parsedStatements);
 
-    assertEquals("'5'", interpreterMemory.getPrintedValues().get(0));
+    assertEquals("hola mundo", interpreterMemory.getPrintedValues().get(0));
   }
 
   @Test
@@ -171,7 +171,7 @@ public class interpreterTest {
     try {
       basicInterpreter.interpret(parsedStatements);
     } catch (Exception e) {
-      System.out.println(e);
+      assertEquals("Esta version no es compatible con if statements", e.getMessage());
     }
   }
 
@@ -206,31 +206,31 @@ public class interpreterTest {
 
     interpreter.interpret(parsedStatements);
 
-    assertTrue(true);
+    assertEquals(interpreterMemory.getPrintedValues().get(0), "hola");
   }
 
   @Test
   public void test10_resign() {
 
-    String toMatch = "let z = 4';" + " z = 5;";
+    String toMatch = "let z = 4;" + " z = 5; println(z);";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
     interpreter.interpret(parsedStatements);
 
-    assertTrue(true);
+    assertEquals(interpreterMemory.getPrintedValues().get(0), "5");
   }
 
   @Test
   public void test10B_notAssign() {
 
-    String toMatch = "let z';" + " z = 5;";
+    String toMatch = "let z';" + " z = 5;  println(z);";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
     interpreter.interpret(parsedStatements);
 
-    assertTrue(true);
+    assertEquals(interpreterMemory.getPrintedValues().get(0), "5");
   }
 
   @Test
@@ -252,7 +252,7 @@ public class interpreterTest {
 
     interpreter.interpret(parsedStatements);
 
-    assertTrue(true);
+    assertEquals(interpreterMemory.getPrintedValues().get(1), "5");
   }
 
   @Test
@@ -275,22 +275,21 @@ public class interpreterTest {
     try {
       interpreter.interpret(parsedStatements);
     } catch (Exception e) {
-      System.out.println(e);
+      assertEquals("Undefined variable 'c'. at line: 0 in column: 43", e.getMessage());
     }
 
-    assertTrue(true);
   }
 
   @Test
   public void test12_parse_string_plus_statement() {
 
-    String toMatch = "let z:string = \"hello\";" + "let x:string = \"world\";" + "println(z+x);";
+    String toMatch = "let z:string = \"hello \";" + "let x:string = \"world\";" + "println(z+x);";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
     interpreter.interpret(parsedStatements);
 
-    assertEquals("\"hello\"" + "\"world\"", interpreterMemory.getPrintedValues().get(0));
+    assertEquals("hello world", interpreterMemory.getPrintedValues().get(0));
   }
 
   @Test
