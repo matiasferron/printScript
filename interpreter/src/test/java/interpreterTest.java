@@ -318,12 +318,12 @@ public class interpreterTest {
   @Test
   public void test14_parse_multiply_statement() {
 
-    String toMatch = "let cuenta: number = 5*5-8/4+2; ";
+    String toMatch = "let cuenta: number = 5*5-8/4+2; println(cuenta); ";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
     interpreter.interpret(parsedStatements);
 
-    assertEquals("else statement working correctly", interpreterMemory.getPrintedValues().get(0));
+    assertEquals("25", interpreterMemory.getPrintedValues().get(0));
   }
 }
