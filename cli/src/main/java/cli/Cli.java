@@ -1,3 +1,5 @@
+package cli;
+
 import interpreter.Interpreter;
 import interpreter.InterpreterImplementation;
 import interpreter.helper.InterpreterMemory;
