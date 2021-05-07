@@ -1,6 +1,7 @@
 package visitor;
 
 import interpreter.helper.InterpreterHelper;
+import java.util.function.Consumer;
 import statement.impl.ExpressionStatement;
 import statement.impl.IfStatement;
 import statement.impl.PrintStatement;
@@ -11,6 +12,7 @@ public class StatementVisitorImpl implements StatementVisitor {
   private final ExpressionVisitor expressionVisitor;
   private final InterpreterHelper interpreterMemory;
   private final VariableStatementResolver visitStatementHelper;
+  private final Consumer<String> stdOut;
 
   public StatementVisitorImpl(
       ExpressionVisitor expressionVisitor,
@@ -19,6 +21,18 @@ public class StatementVisitorImpl implements StatementVisitor {
     this.expressionVisitor = expressionVisitor;
     this.interpreterMemory = interpreterMemory;
     this.visitStatementHelper = visitStatementHelper;
+    this.stdOut = null;
+  }
+
+  public StatementVisitorImpl(
+      ExpressionVisitor expressionVisitor,
+      InterpreterHelper interpreterMemory,
+      VariableStatementResolver visitStatementHelper,
+      Consumer<String> stdOut) {
+    this.expressionVisitor = expressionVisitor;
+    this.interpreterMemory = interpreterMemory;
+    this.visitStatementHelper = visitStatementHelper;
+    this.stdOut = stdOut;
   }
 
   @Override
@@ -30,7 +44,11 @@ public class StatementVisitorImpl implements StatementVisitor {
   public void visitPrintStatement(PrintStatement statement) {
     Object value = statement.getExpression().accept(expressionVisitor);
     interpreterMemory.addPrintedValues(value.toString());
-    System.out.println(value);
+    if (stdOut != null) {
+      stdOut.accept(value.toString());
+    } else {
+      System.out.println(value);
+    }
   }
 
   @Override
