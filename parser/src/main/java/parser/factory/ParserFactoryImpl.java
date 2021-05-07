@@ -56,11 +56,13 @@ public class ParserFactoryImpl implements ParserFactory {
   private Parser createBasicParser() {
     CommonExpressionParser assigmentExpressionParser = new AssigmentExpressionParser();
     CommonExpressionParser additionParser = new AdditionParser();
+    CommonExpressionParser additionParser2 = new AdditionParser();
     CommonExpressionParser multiplicationParser = new MultiplicationParser();
     CommonExpressionParser typeParser = new TypeParser();
 
     assigmentExpressionParser.setNextParser(additionParser);
-    additionParser.setNextParser(multiplicationParser);
+    additionParser.setNextParser(additionParser2);
+    additionParser2.setNextParser(multiplicationParser);
     multiplicationParser.setNextParser(typeParser);
     typeParser.setNextParser(assigmentExpressionParser);
 
