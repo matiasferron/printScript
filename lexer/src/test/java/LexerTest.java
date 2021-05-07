@@ -100,4 +100,24 @@ public class LexerTest {
 
     assertEquals(toMatch.replace(" ", ""), expected.toString());
   }
+
+  @Test
+  public void asd() {
+    String toMatch = "let booleanResult: 2 < 3 <= <= number = 5 * 5 - 8;\n" + "println(booleanResult);";
+
+    Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
+
+    List<Token> output = lexer.lex(input);
+
+    StringBuilder expected = new StringBuilder();
+    for (Token t : output) {
+      System.out.println(t.getTokenType().toString() +"-" +t.getTokenValue());
+    }
+
+
+
+  }
+
+
+
 }

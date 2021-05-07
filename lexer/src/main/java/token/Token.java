@@ -9,4 +9,6 @@ public interface Token {
   Position getPosition();
 
   void updatePosition(int line, int col);
+
+  void updateValue(String update);
 }

@@ -1,9 +1,12 @@
 package token;
 
+import lombok.ToString;
+
+@ToString()
 class TokenImpl implements Token {
 
   private final TokenType tokenType;
-  private final String value;
+  private String value;
   private Position position;
 
   TokenImpl(TokenType tokenType, String value, Position position) {
@@ -33,7 +36,8 @@ class TokenImpl implements Token {
   }
 
   @Override
-  public String toString() {
-    return String.format("(%s %s)", tokenType.name(), value);
+  public void updateValue(String update) {
+    this.value = update;
   }
+
 }

@@ -14,6 +14,7 @@ public class AcceptedTokens {
   }
 
   private void init() {
+//    tokenFormats.put(TokenType.SPACE, " ");
     tokenFormats.put(TokenType.PLUS, "[+]");
     tokenFormats.put(TokenType.MINUS, "[-]");
     tokenFormats.put(TokenType.MULTIPLICATION, "[*]");
@@ -27,7 +28,6 @@ public class AcceptedTokens {
     tokenFormats.put(TokenType.NUMBER, "-?[0-9.]+");
     tokenFormats.put(TokenType.STRINGTYPE, "string");
     tokenFormats.put(TokenType.LET, "let");
-    tokenFormats.put(TokenType.CONST, "const");
     tokenFormats.put(TokenType.COLON, ":");
     tokenFormats.put(TokenType.SEMICOLON, ";");
     tokenFormats.put(TokenType.PRINTLN, "println");
@@ -38,6 +38,7 @@ public class AcceptedTokens {
     tokenFormats.put(TokenType.UNKNOWN, ",");
 
     if (this.printScriptVersion.equals("1.1")) {
+      tokenFormats.put(TokenType.CONST, "const");
       tokenFormats.put(TokenType.BOOLEAN, "boolean");
       tokenFormats.put(TokenType.TRUE, "true");
       tokenFormats.put(TokenType.FALSE, "false");

@@ -1,6 +1,7 @@
 package token;
 
 public enum TokenType {
+//  SPACE,
   PLUS,
   MINUS,
   MULTIPLICATION,

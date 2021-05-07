@@ -319,12 +319,20 @@ public class interpreterTest {
   @Test
   public void test14_parse_multiply_statement() {
 
-    String toMatch = "let z = 5.0; let y = 4; println(z*y); let w = 5; let p = 4; println(w*p); ";
+    String toMatch = "const booleanResult: boolean = 5 <= 3;\n" +
+            "if(booleanResult) {\n" +
+            "}\n" +
+            "else {\n" +
+            "    println(\"else statement working correctly\");\n" +
+            "}\n" +
+            "println(\"outside of conditional\"); ";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
     interpreter.interpret(parsedStatements);
 
-    assertEquals("20.0", interpreterMemory.getPrintedValues().get(0));
+    assertEquals("else statement working correctly", interpreterMemory.getPrintedValues().get(0));
+    assertEquals("outside of conditional", interpreterMemory.getPrintedValues().get(1));
+
   }
 }

@@ -29,10 +29,10 @@ public class BinaryResolverComparisonImpl implements BinaryExpressionResolver {
         if (left instanceof Number && right instanceof Number) {
           return this.convertNumberOperation(left, right);
         }
-        if (left instanceof String && (((String) left).charAt(0) == '\"' |  ((String) left).charAt(0) == '\'')){
+        if (left instanceof String && (((String) left).charAt(0) == '\"' || ((String) left).charAt(0) == '\'')){
           left = ((String) left).substring(1, ((String) left).length() - 1);
         }
-        if (right instanceof String && (((String) right).charAt(0) == '\"' |  ((String) right).charAt(0) == '\'')){
+        if (right instanceof String && (((String) right).charAt(0) == '\"' ||  ((String) right).charAt(0) == '\'')){
           right = ((String) right).substring(1, ((String) right).length() - 1);
         }
         return left.toString() + right.toString();
