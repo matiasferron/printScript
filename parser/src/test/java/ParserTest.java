@@ -218,7 +218,8 @@ public class ParserTest {
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
-    final String expected = getExpectedResult("./src/test/java/resources/greater_equals_condition.txt");
+    final String expected =
+        getExpectedResult("./src/test/java/resources/greater_equals_condition.txt");
     assertEquals(expected, parsedStatements.toString());
   }
 

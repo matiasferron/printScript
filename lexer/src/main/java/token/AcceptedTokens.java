@@ -14,7 +14,7 @@ public class AcceptedTokens {
   }
 
   private void init() {
-//    tokenFormats.put(TokenType.SPACE, " ");
+    //    tokenFormats.put(TokenType.SPACE, " ");
     tokenFormats.put(TokenType.PLUS, "[+]");
     tokenFormats.put(TokenType.MINUS, "[-]");
     tokenFormats.put(TokenType.MULTIPLICATION, "[*]");

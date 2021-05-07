@@ -1,5 +1,4 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import interpreter.Interpreter;
 import interpreter.factory.InterpreterFactory;
@@ -67,7 +66,8 @@ public class interpreterTest {
   public void test03_should_parse_declaration_with_Arithmetic() {
 
     List<Statement> parsedStatements =
-        basicParser.parse(generateStringToTokens("let a: string = \"hola mundo\"; let b = 1; println(a);"));
+        basicParser.parse(
+            generateStringToTokens("let a: string = \"hola mundo\"; let b = 1; println(a);"));
 
     interpreter.interpret(parsedStatements);
 
@@ -277,7 +277,6 @@ public class interpreterTest {
     } catch (Exception e) {
       assertEquals("Undefined variable 'c'. at line: 0 in column: 43", e.getMessage());
     }
-
   }
 
   @Test
@@ -319,13 +318,14 @@ public class interpreterTest {
   @Test
   public void test14_parse_multiply_statement() {
 
-    String toMatch = "const booleanResult: boolean = 5 <= 3;\n" +
-            "if(booleanResult) {\n" +
-            "}\n" +
-            "else {\n" +
-            "    println(\"else statement working correctly\");\n" +
-            "}\n" +
-            "println(\"outside of conditional\"); ";
+    String toMatch =
+        "const booleanResult: boolean = 5 <= 3;\n"
+            + "if(booleanResult) {\n"
+            + "}\n"
+            + "else {\n"
+            + "    println(\"else statement working correctly\");\n"
+            + "}\n"
+            + "println(\"outside of conditional\"); ";
 
     List<Statement> parsedStatements = advanceParser.parse(generateStringToTokens(toMatch));
 
@@ -333,6 +333,5 @@ public class interpreterTest {
 
     assertEquals("else statement working correctly", interpreterMemory.getPrintedValues().get(0));
     assertEquals("outside of conditional", interpreterMemory.getPrintedValues().get(1));
-
   }
 }

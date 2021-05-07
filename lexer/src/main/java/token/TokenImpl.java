@@ -39,5 +39,4 @@ class TokenImpl implements Token {
   public void updateValue(String update) {
     this.value = update;
   }
-
 }

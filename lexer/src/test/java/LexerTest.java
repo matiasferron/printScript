@@ -103,7 +103,8 @@ public class LexerTest {
 
   @Test
   public void asd() {
-    String toMatch = "let booleanResult: 2 < 3 <= <= number = 5 * 5 - 8;\n" + "println(booleanResult);";
+    String toMatch =
+        "let booleanResult: 2 < 3 <= <= number = 5 * 5 - 8;\n" + "println(booleanResult);";
 
     Stream<Character> input = toMatch.chars().mapToObj(intValue -> (char) intValue);
 
@@ -111,13 +112,7 @@ public class LexerTest {
 
     StringBuilder expected = new StringBuilder();
     for (Token t : output) {
-      System.out.println(t.getTokenType().toString() +"-" +t.getTokenValue());
+      System.out.println(t.getTokenType().toString() + "-" + t.getTokenValue());
     }
-
-
-
   }
-
-
-
 }
