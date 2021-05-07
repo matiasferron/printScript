@@ -68,6 +68,9 @@ public class LexerImpl implements Lexer {
   }
 
   private ArrayList<Token> filterNewLine(List<Token> tokens) {
-    return new ArrayList<>(tokens.stream().filter(t -> !t.getTokenType().equals(TokenType.NEWLINE)).collect(Collectors.toList()));
+    return new ArrayList<>(
+        tokens.stream()
+            .filter(t -> !t.getTokenType().equals(TokenType.NEWLINE))
+            .collect(Collectors.toList()));
   }
 }
