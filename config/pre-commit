@@ -1,13 +1,16 @@
 #!/bin/bash
 
 REPO_ROOT_DIR=$(git rev-parse --show-toplevel)
-
 files=$( (git diff --cached --name-only --diff-filter=ACMR | grep -Ei "\.java$") || true)
+  echo "files is $files"
+
 
 if [ -n "$files" ]; then
 
+  echo "Today is $REPO_ROOT_DIR"
+
   # run precommit task
-  "$REPO_ROOT_DIR/gradlew" compileAndFormat
+  "$REPO_ROOT_DIR/gradlew" format
 
   # store the last exit code in a variable
   RESULT=$?

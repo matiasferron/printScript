@@ -16,7 +16,8 @@ public class ParserImpl implements Parser {
 
   @Override
   public List<Statement> parse(List<Token> tokens) {
-    TokenWrapperImp wrappedTokens = new TokenWrapperImp(tokens);
+    TokenWrapperImp wrappedTokens =
+            new TokenWrapperImp(tokens);
     List<Statement> statements = new ArrayList<>();
     while (wrappedTokens.hasMoreTokens()) {
       statements.add(statementParser.parse(wrappedTokens));
