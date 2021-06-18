@@ -6,8 +6,8 @@ import statement.parsers.expression.*;
 import statement.parsers.statment.StatementParser;
 import statement.parsers.statment.impl.ExpressionStatementParser;
 import statement.parsers.statment.impl.IfStatementParser;
+import statement.parsers.statment.impl.PrintParser;
 import statement.parsers.statment.impl.VariableDeclarationParser;
-import statement.parsers.statment.impl.printParser;
 
 public class ParserFactoryImpl implements ParserFactory {
 
@@ -41,7 +41,7 @@ public class ParserFactoryImpl implements ParserFactory {
 
     StatementParser variableDeclarationParser =
         new VariableDeclarationParser(assigmentExpressionParser);
-    StatementParser printParser = new printParser(assigmentExpressionParser);
+    StatementParser printParser = new PrintParser(assigmentExpressionParser);
     StatementParser expressionStatementParser =
         new ExpressionStatementParser(assigmentExpressionParser);
     StatementParser ifStatementParser = new IfStatementParser(assigmentExpressionParser);
@@ -68,7 +68,7 @@ public class ParserFactoryImpl implements ParserFactory {
 
     StatementParser variableDeclarationParser =
         new VariableDeclarationParser(assigmentExpressionParser);
-    StatementParser printParser = new printParser(assigmentExpressionParser);
+    StatementParser printParser = new PrintParser(assigmentExpressionParser);
     StatementParser expressionStatementParser =
         new ExpressionStatementParser(assigmentExpressionParser);
 

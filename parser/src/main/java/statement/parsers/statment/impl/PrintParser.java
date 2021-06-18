@@ -1,8 +1,8 @@
 package statement.parsers.statment.impl;
 
 import static token.TokenType.*;
-import static utils.parserUtils.tokenMatchTokenType;
-import static utils.parserUtils.validateCurrentToken;
+import static utils.ParserUtils.tokenMatchTokenType;
+import static utils.ParserUtils.validateCurrentToken;
 
 import expression.Expression;
 import statement.Statement;
@@ -11,12 +11,12 @@ import statement.parsers.expression.CommonExpressionParser;
 import statement.parsers.statment.StatementParser;
 import token.TokenWrapper;
 
-public class printParser extends StatementParser {
-  public printParser() {
+public class PrintParser extends StatementParser {
+  public PrintParser() {
     super();
   }
 
-  public printParser(CommonExpressionParser expressionParser) {
+  public PrintParser(CommonExpressionParser expressionParser) {
     super(expressionParser);
   }
 

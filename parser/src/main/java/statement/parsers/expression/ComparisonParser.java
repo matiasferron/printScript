@@ -2,7 +2,7 @@ package statement.parsers.expression;
 
 import static token.TokenType.*;
 import static token.TokenType.LESSEQ;
-import static utils.parserUtils.tokenMatchTokenType;
+import static utils.ParserUtils.tokenMatchTokenType;
 
 import expression.Expression;
 import expression.impl.BinaryExpression;

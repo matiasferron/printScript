@@ -1,8 +1,8 @@
 package statement.parsers.statment.impl;
 
 import static token.TokenType.*;
-import static utils.parserUtils.tokenMatchTokenType;
-import static utils.parserUtils.validateCurrentToken;
+import static utils.ParserUtils.tokenMatchTokenType;
+import static utils.ParserUtils.validateCurrentToken;
 
 import expression.Expression;
 import java.util.ArrayList;
