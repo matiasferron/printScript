@@ -5,7 +5,7 @@ import token.Token;
 import token.TokenType;
 import token.TokenWrapper;
 
-public class parserUtils {
+public class ParserUtils {
 
   public static Token validateCurrentToken(TokenWrapper tokens, TokenType type, String message) {
     if (tokens.check(type)) return tokens.getCurrentAndAdvance();

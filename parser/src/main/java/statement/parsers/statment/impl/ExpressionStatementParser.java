@@ -1,7 +1,7 @@
 package statement.parsers.statment.impl;
 
 import static token.TokenType.SEMICOLON;
-import static utils.parserUtils.validateCurrentToken;
+import static utils.ParserUtils.validateCurrentToken;
 
 import expression.Expression;
 import statement.Statement;

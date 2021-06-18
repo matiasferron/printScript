@@ -1,8 +1,8 @@
 package statement.parsers.expression;
 
 import static token.TokenType.*;
-import static utils.parserUtils.tokenMatchTokenType;
-import static utils.parserUtils.validateCurrentToken;
+import static utils.ParserUtils.tokenMatchTokenType;
+import static utils.ParserUtils.validateCurrentToken;
 
 import exception.ParseException;
 import expression.Expression;

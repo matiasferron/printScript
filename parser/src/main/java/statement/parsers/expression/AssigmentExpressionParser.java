@@ -1,7 +1,7 @@
 package statement.parsers.expression;
 
 import static token.TokenType.EQUALS;
-import static utils.parserUtils.tokenMatchTokenType;
+import static utils.ParserUtils.tokenMatchTokenType;
 
 import exception.ParseException;
 import expression.Expression;
