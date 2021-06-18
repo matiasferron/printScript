@@ -39,6 +39,7 @@ task installGitHooks(type: Copy) {
     fileMode 0777
 }
 build.dependsOn(tasks.googleJavaFormat)
+build.dependsOn (tasks.installGitHooks)
 build.dependsOn(tasks.format)
 
 jacoco {
