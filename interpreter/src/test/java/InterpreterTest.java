@@ -15,7 +15,7 @@ import parser.factory.ParserFactoryImpl;
 import statement.Statement;
 import token.Token;
 
-public class interpreterTest {
+public class InterpreterTest {
 
   ParserFactory parserFactory = ParserFactoryImpl.newParserFactory();
   private final Parser basicParser = parserFactory.createParser("1.0");

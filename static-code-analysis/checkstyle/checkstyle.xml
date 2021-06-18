@@ -145,27 +145,10 @@ page at http://checkstyle.sourceforge.net/config.html -->
             <property name="severity" value="warning"/>
         </module>
 
-        <module name="LocalFinalVariableName">
-            <!-- Validates identifiers for local final variables against the
-              expression "^[a-z][a-zA-Z0-9]*$". -->
-            <property name="severity" value="warning"/>
-        </module>
-
-        <module name="LocalVariableName">
-            <!-- Validates identifiers for local variables against the
-              expression "^[a-z][a-zA-Z0-9]*$". -->
-            <property name="severity" value="warning"/>
-        </module>
-
 
         <!--
         LENGTH and CODING CHECKS
         -->
-
-        <module name="LeftCurly">
-            <!-- Checks for placement of the left curly brace ('{'). -->
-            <property name="severity" value="warning"/>
-        </module>
 
         <module name="RightCurly">
             <!-- Checks right curlies on CATCH, ELSE, and TRY blocks are on

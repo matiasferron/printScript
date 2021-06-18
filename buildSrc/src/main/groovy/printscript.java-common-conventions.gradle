@@ -1,4 +1,4 @@
-    plugins {
+plugins {
     id 'java'
     id 'jacoco'
     id 'checkstyle'
@@ -21,6 +21,7 @@ test {
 check {
     checkstyle
 }
+
 check.dependsOn jacocoTestCoverageVerification
 
 java {
@@ -33,11 +34,13 @@ task format {
 }
 
 task installGitHooks(type: Copy) {
-  from file("$rootDir/config/hooks")
+    from file("$rootDir/config/hooks")
     into file("$rootDir/.git/hooks")
-    fileMode 8777
+    fileMode 0777
 }
 build.dependsOn(tasks.googleJavaFormat)
+build.dependsOn (tasks.installGitHooks)
+build.dependsOn(tasks.format)
 
 jacoco {
     toolVersion = "0.8.6"
