@@ -1,8 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Gradle template
 .gradle
-/build/
-!src//build/
+/build/!src/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -74,3 +73,5 @@ build/
 
 ### Security ###
 email.properties
+/buildSrc/.gradle/
+/buildSrc/build/

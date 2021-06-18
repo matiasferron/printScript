@@ -2,7 +2,7 @@ package statement.parsers.expression;
 
 import static token.TokenType.MINUS;
 import static token.TokenType.PLUS;
-import static utils.parserUtils.tokenMatchTokenType;
+import static utils.ParserUtils.tokenMatchTokenType;
 
 import expression.Expression;
 import expression.impl.BinaryExpression;
