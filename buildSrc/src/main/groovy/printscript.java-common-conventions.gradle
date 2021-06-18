@@ -36,7 +36,7 @@ task format {
 task installGitHooks(type: Copy) {
     from file("$rootDir/config/hooks")
     into file("$rootDir/.git/hooks")
-    fileMode 8777
+    fileMode 0777
 }
 build.dependsOn(tasks.googleJavaFormat)
 build.dependsOn(tasks.format)
